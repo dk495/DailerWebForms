@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Submission Form Ring</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Lead Form Ring</h2>
+    <form id="leadForm">
+<div class="form-row">
+              
+        <div class="form-group col-md-4">
+ 
+        <label for="tcpa_opt_in">tcpa_opt_in (ex: 2023-11-20 19:13:21)</label>
+        <input type="text" class="form-control" id="tcpa_opt_in" placeholder="YYYY-MM-DD HH:MM:SS" required>
+      </div>
+
+</div>
+<div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="phone_home">Phone</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+      </div>
+      
+
+      </div>
+
+
+
+      
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/ApiJS/mm_ringba.js"></script>
+
+    
+
+
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+</body>
+</html>
+
