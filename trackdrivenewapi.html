@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lead Submission Form</title>
+ 
+</head>
+<body>
+
+<div class="container">
+  <h2>Lead Submission Form </h2>
+  <form id="leadForm">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input type="text" class="form-control" id="first_name" name="first_name" required>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input type="text" class="form-control" id="last_name" name="last_name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone_home">Phone</label>
+      <input type="text" class="form-control" id="caller_id"  required>
+    </div>
+    <div class="form-group">
+      <label for="address">DOB Month</label>
+      <input type="text" class="form-control" id=“dob_mm” name="address" placeholder=“12” required>
+    </div>
+ <div class="form-group">
+      <label for="address">DOB Day</label>
+      <input type="text" class="form-control" id="dob_dd” name="address2" placeholder=“21” required>
+    </div>
+<div class="form-group">
+      <label for="address"> DOB YEAR</label>
+      <input type="text" class="form-control" id="dob_yyyy” name="address2" placeholder=“1995” required>
+    </div>
+ 
+    <div class="form-group">
+      <label for="state">State</label>
+      <input type="text" class="form-control" id="state" name="state" required>
+    </div>
+    <div class="form-group">
+      <label for="zip_code">Zip Code</label>
+      <input type="text" class="form-control" id="zip" name="zip_code" required>
+    </div>
+ 
+  
+    
+    <div class="form-group">
+      <label for="jornaya_leadid">Jornaya Lead ID</label>
+      <input type="text" class="form-control" id="jornaya_leadid" name="jornaya_leadid">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+ <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/trackdrivenewapi.js"></script>
+
+    
+
+
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+ 
+</body>
+</html>
