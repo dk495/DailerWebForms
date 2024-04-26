@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>Agent Check ApiForm Ping/Post</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      text-align: left; /* Align labels to the left */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Ping/Post Form</h2>
+    <form id="leadForm">
+
+
+ <div class="form-group">
+        <label for="caller_id">Phone (ex: 7103847563)</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+      </div>
+
+
+    </form>
+ <div id="alertContainer"></div>
+<button type="button" class="btn btn-primary" id="submitBtn" onclick="pingAPI()">Ping/Post</button>
+
+<!-- Display API response using Bootstrap alert -->
+<div class="alert alert-info mt-3" role="alert" id="apiResponse">
+  
+</div>
+
+    
+
+
+   
+
+
+
+    
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/ApiJS/AgentAvialibilitycheck_TDLVBaker.js"></script>
+
+    
+
+
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+ 
+</body>
+</html>
