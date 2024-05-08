@@ -27,7 +27,8 @@ function submitForm() {
         body: JSON.stringify(data)
     })
     .then(response => {
-        if (response.ok || response.status == 201) {
+        if (response.ok || response.status == 201 || response.status == 200) {
+		task_idSubmission(task_id);
             // Enable submit button after successful response
             document.getElementById("submitBtn").disabled = false;
             // Display success message using Bootstrap alert
@@ -49,8 +50,20 @@ function submitForm() {
         document.getElementById("submitBtn").disabled = false;
         // Display error message on the screen
         document.getElementById("response").innerText = "An error occurred. Please try again.";
+    });}
+function task_idSubmission(taskid) {
+  try {
+    fetch('https://pinnacledebtrelief.com/insert_task.php?task_id='+taskid
+, {
+      method: 'GET',
+      mode: 'no-cors'
     });
+  } catch (error) {
+    
+  }
+
 }
+
 </script>
 </head>
 <body>
