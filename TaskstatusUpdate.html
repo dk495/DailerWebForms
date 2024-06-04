@@ -19,7 +19,7 @@ function submitForm() {
     // Disable submit button to prevent multiple submissions
     document.getElementById("submitBtn").disabled = true;
 
-    fetch('https://corsproxy.io/?https://callback.textback.ai/jornaya/task/status', {
+    fetch('https://callback.textback.ai/jornaya/task/status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ function submitForm() {
             // Hide success message after 3 seconds
             setTimeout(function() {
                 $('.alert').alert('close');
-            }, 3000);
+            }, 10000);
         }
         return response.json();
     })
