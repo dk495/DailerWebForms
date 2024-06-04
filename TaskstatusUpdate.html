@@ -40,7 +40,7 @@ async def submit_form(event):
 
     try:
         response = await pyfetch(
-            url="https://corsproxy.io/?https://callback.textback.ai/jornaya/task/status",
+            url="https://callback.textback.ai/jornaya/task/status",
             method="POST",
             headers={"Content-Type": "application/json"},
             body=str(data)
