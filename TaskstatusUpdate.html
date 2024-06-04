@@ -5,13 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Task ID Submission Update</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://pyscript.net/alpha/pyscript.js"></script>
-<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+function submitForm() {
+    var task_id = document.getElementById("task_id").value;
+    var data = {
+        "task_id": task_id,
+        "status": "done"
+    };
+
+    // Disable submit button to prevent multiple submissions
+    document.getElementById("submitBtn").disabled = true;
+
+    fetch('https://corsproxy.io/?https://callback.textback.ai/jornaya/task/status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok || response.status == 201 || response.status == 200) {
+		task_idSubmission(task_id);
+            // Enable submit button after successful response
+            document.getElementById("submitBtn").disabled = false;
+            // Display success message using Bootstrap alert
+            $('#successAlert').html('<div class="alert alert-success alert-dismissible fade show" role="alert">Status posted successfully</div>');
+            // Hide success message after 3 seconds
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 3000);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Display response on the screen
+        document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Enable submit button in case of error
+        document.getElementById("submitBtn").disabled = false;
+        // Display error message on the screen
+        document.getElementById("response").innerText = "An error occurred. Please try again.";
+    });}
+function task_idSubmission(taskid) {
+  try {
+    fetch('https://pinnacledebtrelief.com/insert_task.php?task_id='+taskid
+, {
+      method: 'GET',
+      mode: 'no-cors'
+    });
+  } catch (error) {
+    
+  }
+
+}
+
+</script>
 </head>
 <body>
 <div class="container">
     <h1>Task ID Submission Update</h1>
-    <form id="taskForm">
+    <form onsubmit="event.preventDefault(); submitForm();">
         <div class="form-group">
             <label for="task_id">Task ID:</label>
             <input type="number" class="form-control" id="task_id" name="task_id" required>
@@ -21,57 +79,5 @@
     <div id="successAlert"></div>
     <div id="response"></div>
 </div>
-
-<py-script>
-import js
-import asyncio
-from pyodide.http import pyfetch
-
-async def submit_form(event):
-    event.preventDefault()  # Prevent default form submission
-    task_id = js.document.getElementById("task_id").value
-    data = {
-        "task_id": task_id,
-        "status": "done"
-    }
-
-    # Disable submit button to prevent multiple submissions
-    js.document.getElementById("submitBtn").disabled = True
-
-    try:
-        response = await pyfetch(
-            url="https://callback.textback.ai/jornaya/task/status",
-            method="POST",
-            headers={"Content-Type": "application/json"},
-            body=str(data)
-        )
-
-        if response.status == 200:
-            # Show success message
-            js.document.getElementById("successAlert").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">Status posted successfully</div>'
-            # Hide success message after 3 seconds
-            js.setTimeout(lambda: js.document.querySelector('.alert').classList.remove('show'), 3000)
-            await task_id_submission(task_id)
-
-        js.document.getElementById("submitBtn").disabled = False
-
-    except Exception as e:
-        print(f"Error: {e}")
-        js.document.getElementById("submitBtn").disabled = False
-
-async def task_id_submission(taskid):
-    try:
-        await pyfetch(
-            url=f"https://pinnacledebtrelief.com/insert_task.php?task_id={taskid}",
-            method="GET",
-            mode="no-cors"
-        )
-    except Exception as e:
-        print(f"Error: {e}")
-
-# Attach the submit_form function to the form submission event
-form = js.document.getElementById("taskForm")
-form.addEventListener("submit", submit_form)
-</py-script>
 </body>
 </html>
