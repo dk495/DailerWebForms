@@ -1,0 +1,293 @@
+<html>
+<head>
+  <title>Up Lead Form MVA TD</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      text-align: left; /* Align labels to the left */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Lead Form MVA TD</h2>
+   <form id="leadForm">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="caller_id">Phone (ex: 7123456789)</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="john@example.com" required>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="state">State</label>
+        <select class="form-control" id="state" required>
+  <option value="">Select State</option>
+  <option value="AL">Alabama</option>
+  <option value="AK">Alaska</option>
+  <option value="AZ">Arizona</option>
+  <option value="AR">Arkansas</option>
+  <option value="CA">California</option>
+  <option value="CO">Colorado</option>
+  <option value="CT">Connecticut</option>
+  <option value="DE">Delaware</option>
+  <option value="DC">District Of Columbia</option>
+  <option value="FL">Florida</option>
+  <option value="GA">Georgia</option>
+  <option value="HI">Hawaii</option>
+  <option value="ID">Idaho</option>
+  <option value="IL">Illinois</option>
+  <option value="IN">Indiana</option>
+  <option value="IA">Iowa</option>
+  <option value="KS">Kansas</option>
+  <option value="KY">Kentucky</option>
+  <option value="LA">Louisiana</option>
+  <option value="ME">Maine</option>
+  <option value="MD">Maryland</option>
+  <option value="MA">Massachusetts</option>
+  <option value="MI">Michigan</option>
+  <option value="MN">Minnesota</option>
+  <option value="MS">Mississippi</option>
+  <option value="MO">Missouri</option>
+  <option value="MT">Montana</option>
+  <option value="NE">Nebraska</option>
+  <option value="NV">Nevada</option>
+  <option value="NH">New Hampshire</option>
+  <option value="NJ">New Jersey</option>
+  <option value="NM">New Mexico</option>
+  <option value="NY">New York</option>
+  <option value="NC">North Carolina</option>
+  <option value="ND">North Dakota</option>
+  <option value="OH">Ohio</option>
+  <option value="OK">Oklahoma</option>
+  <option value="OR">Oregon</option>
+  <option value="PA">Pennsylvania</option>
+  <option value="RI">Rhode Island</option>
+  <option value="SC">South Carolina</option>
+  <option value="SD">South Dakota</option>
+  <option value="TN">Tennessee</option>
+  <option value="TX">Texas</option>
+  <option value="UT">Utah</option>
+  <option value="VT">Vermont</option>
+  <option value="VA">Virginia</option>
+  <option value="WA">Washington</option>
+  <option value="WV">West Virginia</option>
+  <option value="WI">Wisconsin</option>
+  <option value="WY">Wyoming</option>
+</select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="zipcode">Zipcode</label>
+        <input type="text" class="form-control" id="zip" placeholder="5 digit" required>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" placeholder="New York City" required>
+      </div>
+    </div>
+   
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="currently_represented">Already Represented??</label>
+        <select class="form-control" id="currently_represented" required>
+<option value="No">No</option> 
+          <option value="Yes">Yes</option>
+               
+        </select>
+      </div>
+    </div>
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="hospitalized_or_treated">Hospitalized/Treated?</label>
+        <select class="form-control" id="hospitalized_or_treated" required>
+<option value="No">No</option> 
+          <option value="Yes">Yes</option>
+               
+        </select>
+      </div>
+    </div>
+</div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="person_at_fault">Person at Fault</label>
+        <select class="form-control" id="person_at_fault" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>      
+        </select>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="injury_type">Injury Type</label>
+         <select class="form-control" id="injury_type">
+		<option value="Anxiety">Anxiety</option>  
+          <option value="Back or Neck Pain">Back or Neck Pain</option>
+<option value="Brain Injury">Brain Injury</option>  
+          <option value="Broken Bones">Broken Bones</option>
+<option value="Cuts and Bruises">Cuts and Bruises</option>  
+          <option value="Headaches">Headaches</option>
+<option value="Loss of Life">Loss of Life</option>  
+          <option value="Loss of Limb">Loss of Limb</option>
+<option value="Memory Loss">Memory Loss</option>  
+          <option value="No Injury">No Injury</option>
+<option value="Spinal Cord Injury or Paralysis">Spinal Cord Injury or Paralysis</option>
+<option value="Whiplash">Whiplash</option>
+              
+        </select>
+      </div>
+    </div>
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="auto_accident_in_past_2_Years">Auto Accident in Past 12 Months</label>
+        <select class="form-control" id="auto_accident_in_past_12_months">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>      
+        </select>
+      </div>
+    </div>
+  </div>
+ <div class="row">
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="needs_attorney">Interested in Speaking with Attorney</label>
+        <select class="form-control" id="needs_attorney">
+ <option value="Yes">Yes</option>
+<option value="No">No</option> 
+         
+               
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+<div class="form-group">
+ <label for="ip_address">Incident date</label>
+         <input type="date" class="form-control" id="incident_date" name="incident_date" required placeholder="Date of incident" >
+   </div>
+  </div>
+    <div class="col-md-4">
+<div class="form-group">
+ <label for="accident_type">Type of Accident</label>
+        <select class="form-control" id="accident_type" name="accident_type">
+            <option value="Car Accident">Car Accident</option>
+            <option value="Motorcycle Accident">Motorcycle Accident</option>
+            <option value="Truck Accident">Truck Accident</option>
+            <option value="Bicycle Accident">Bicycle Accident</option>
+            <option value="Pedestrian Accident">Pedestrian Accident</option>
+            <option value="Passenger Accident">Passenger Accident</option>
+        </select>
+   </div>
+  </div>
+</div>
+
+
+ <div class="row">
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="injured">Injured?</label>
+        <select class="form-control" id="injured">
+ <option value="Yes">Yes</option>
+<option value="No">No</option> 
+         
+               
+        </select>
+      </div>
+    </div>
+    <div class="col-md-8">
+ <label for="trusted_form_cert_url">Trusted Form Cert URL</label>
+         <input type="text" class="form-control" id="trusted_form_cert_url" required name="trusted_form_cert_url" placeholder="Trusted Form URL from Website" >
+   </div>
+  </div>
+<br>
+ 
+ <div class="row">
+    <div class="col-md-12">
+ <label for="source_url">Source URL</label>
+         <input type="text" class="form-control" id="source_url" required placeholder="Landing Page URL" >
+   </div>
+  </div>
+       <div class="form-group">
+                <label for="have_attorney">Do you have an attorney?</label>
+                <input type="text" class="form-control" id="have_attorney" name="have_attorney" placeholder="Already have an Attorney" required>
+            </div>
+            <div class="form-group">
+                <label for="driver_insurance">Did the other driver, who was at fault, have auto insurance?</label>
+                <input type="text" class="form-control" id="driver_insurance" name="driver_insurance" placeholder="Did other driver has Insurance" required>
+            </div>
+            <div class="form-group">
+                <label for="accident_description">Describe your case</label>
+                <textarea class="form-control" id="accident_description" name="accident_description" placeholder="Accident Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="role_in_accident">Were you the driver, passenger or pedestrian?</label>
+                <input type="text" class="form-control" id="role_in_accident" name="role_in_accident" placeholder="Role in Accident" required>
+            </div>
+            <div class="form-group">
+                <label for="settled_insurance">Have you settled with the insurance company regarding your injuries?</label>
+                <input type="text" class="form-control" id="settled_insurance" name="settled_insurance" placeholder="Have you Already Settled the Insurance?" required>
+            </div>
+            <div class="form-group">
+                <label for="signed_retainer">Have you ever signed a retainer with a law firm regarding this case? Must be No</label>
+                <input type="text" class="form-control" id="signed_retainer" name="signed_retainer" placeholder="Already Signed Retainer" required>
+            </div>
+            <div class="form-group">
+                <label for="accident_vehicle_count">How many cars were involved in the accident?</label>
+                <input type="number" class="form-control" id="accident_vehicle_count" name="accident_vehicle_count" placeholder="Accident Vehicle Count" required>
+            </div>
+<br>
+  <div class="row">
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+    </div>
+  </div>
+</form>
+
+ <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/ApiJS/up_pm_td_MVA.js"></script>
+
+  <!-- Custom script for form submission and notification -->
+   <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Prevent the context menu from appearing
+        });
+    </script>
+</body>
+</html>
