@@ -28,42 +28,44 @@ function submitForm() {
     })
     .then(response => {
         if (response.ok || response.status == 201 || response.status == 200) {
-		task_idSubmission(task_id);
-            // Enable submit button after successful response
-            document.getElementById("submitBtn").disabled = false;
             // Display success message using Bootstrap alert
             $('#successAlert').html('<div class="alert alert-success alert-dismissible fade show" role="alert">Status posted successfully</div>');
             // Hide success message after 3 seconds
             setTimeout(function() {
                 $('.alert').alert('close');
             }, 3000);
+
+            // Handle additional task submission
+            task_idSubmission(task_id);
+        } else {
+            throw new Error('Network response was not ok.');
         }
-        return response.json();
-    })
-    .then(data => {
-        // Display response on the screen
-        document.getElementById("response").innerText = JSON.stringify(data, null, 2);
     })
     .catch(error => {
         console.error('Error:', error);
-        // Enable submit button in case of error
-        document.getElementById("submitBtn").disabled = false;
         // Display error message on the screen
-        document.getElementById("response").innerText = "An error occurred. Please try again.";
-    });}
-function task_idSubmission(taskid) {
-  try {
-    fetch('https://pinnacledebtrelief.com/insert_task.php?task_id='+taskid
-, {
-      method: 'GET',
-      mode: 'no-cors'
+        $('#successAlert').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">An error occurred. Please try again.</div>');
+        // Hide error message after 3 seconds
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 3000);
+    })
+    .finally(() => {
+        // Enable submit button after response is processed or in case of error
+        document.getElementById("submitBtn").disabled = false;
     });
-  } catch (error) {
-    
-  }
-
 }
 
+function task_idSubmission(taskid) {
+    try {
+        fetch('https://pinnacledebtrelief.com/insert_task.php?task_id=' + taskid, {
+            method: 'GET',
+            mode: 'no-cors'
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 </script>
 </head>
 <body>
