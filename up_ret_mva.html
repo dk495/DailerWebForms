@@ -166,103 +166,41 @@
                         <option value="No">No</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="accident_type">Accident Type</label>
-                    <input type="text" class="form-control" id="accident_type" name="accident_type" placeholder="Type of accident" required>
+              <div class="form-group col-md-6">
+                    <label for="date_injured">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="dob" required>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="accident_report_number">Accident Report Number</label>
-                    <input type="text" class="form-control" id="accident_report_number" name="accident_report_number" placeholder="Report number" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="date_injured">Date Injured</label>
-                    <input type="date" class="form-control" id="date_injured" name="date_injured" required>
-                </div>
-            </div>
+          
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="incident_date">Incident Date</label>
                     <input type="date" class="form-control" id="incident_date" name="incident_date" required>
                 </div>
+            
+            </div>
+           
+           
+            
+            
+            <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="last_treatment_date">Last Treatment Date</label>
-                    <input type="date" class="form-control" id="last_treatment_date" name="last_treatment_date" required>
+                    <label for="trusted_form_cert_url">Trusted Form Cert URL/label>
+                    <input type="text" class="form-control" id="trusted_form_cert_url" name="trusted_form_cert_url" placeholder="https://" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="jornaya_leadid">Jornaya Leadid</label>
+                    <input type="text" class="form-control" id="jornaya_leadid" name="jornaya_leadid" placeholder="Jornaya Token" >
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="auto_accident_in_past_2_years">Auto Accident in Past 2 Years</label>
-                    <select class="form-control" id="auto_accident_in_past_2_years" name="auto_accident_in_past_2_years" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
+                    <label for="source_url">Source URL</label>
+                    <input type="text" class="form-control" id="source_url" name="source_url" placeholder="Landing Page URL" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="at_fault_driver_had_insurance">At Fault Driver Had Insurance</label>
-                    <select class="form-control" id="at_fault_driver_had_insurance" name="at_fault_driver_had_insurance" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="insured_time_of_accident">Insured Time of Accident</label>
-                    <input type="text" class="form-control" id="insured_time_of_accident" name="insured_time_of_accident" placeholder="Insurance at accident time" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="policy_number">Policy Number</label>
-                    <input type="text" class="form-control" id="policy_number" name="policy_number" placeholder="Policy number" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="needs_attorney">Needs Attorney</label>
-                    <select class="form-control" id="needs_attorney" name="needs_attorney" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="still_being_treated">Still Being Treated</label>
-                    <select class="form-control" id="still_being_treated" name="still_being_treated" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="hospitalized">Hospitalized</label>
-                    <select class="form-control" id="hospitalized" name="hospitalized" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="treatment_needed">Treatment Needed</label>
-                    <select class="form-control" id="treatment_needed" name="treatment_needed" required>
-                        <option value="No">No</option>
-                        <option value="Yes">Yes</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="transported_in_ambulance">Transported in Ambulance</label>
-                    <input type="text" class="form-control" id="transported_in_ambulance" name="transported_in_ambulance" placeholder="Yes/No" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="uninsured_motorist_coverage">Uninsured Motorist Coverage</label>
-                    <input type="text" class="form-control" id="uninsured_motorist_coverage" name="uninsured_motorist_coverage" placeholder="Coverage details" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label for="where_were_you_injured">Where Were You Injured</label>
-                    <input type="text" class="form-control" id="where_were_you_injured" name="where_were_you_injured" placeholder="Location of injury" required>
+                    <label for="ip_address">Ip Address</label>
+                    <input type="text" class="form-control" id="ip_address" name="ip_address" placeholder="Ip address where lead was captured" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
