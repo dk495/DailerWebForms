@@ -51,8 +51,18 @@
           </div>
         </div>
       </div>
+       <div class="form-group">
+        <label for="caller_id">Phone (ex: 7123456789)</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+      </div>
 <div class="row">
-<div class="col-md-6">
+  <div class="col-md-4">
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="ex: new york city" required>
+          </div>
+        </div>
+<div class="col-md-4">
           <div class="form-group">
             <label for="zip">Zipcode</label>
             <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
@@ -60,7 +70,7 @@
         </div>
      
    
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="state">State</label>
               <select class="form-control" id="state" required>
@@ -121,18 +131,25 @@
 </div>
 
 </div>
-      <div class="form-group">
-        <label for="caller_id">Phone (ex: 7123456789)</label>
-        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
-      </div>
+     
 <div class="form-group">
         <label for="source_url">Source URL</label>
         <input type="text" class="form-control" id="source_url" placeholder="Site where the original lead form was submitted" required>
       </div>
+      <div class="row">
+        <div class="col-md-6">
 <div class="form-group">
         <label for="original_lead_submit_date">Date Original Lead Submitted</label>
         <input type="datetime-local" class="form-control" id="original_lead_submit_date" placeholder="Original Date the consumer submitted the lead. Standard Format for such a field is YYYY-MM-DD HH:MM:SS." required>
       </div>
+           </div>
+                <div class="col-md-6">
+<div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" class="form-control" id="dob" placeholder="dob" required>
+      </div>
+         </div>
+           </div>
 
 
 
