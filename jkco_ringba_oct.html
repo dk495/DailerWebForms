@@ -1,0 +1,115 @@
+<html>
+<head>
+  <title>Jk&co Ringba Lead Form Oct</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      text-align: left; /* Align labels to the left */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Api Form</h2>
+   <form id="leadForm">
+  <!-- Row 4: First Name and Last Name -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+        </div>
+   <!-- Row 2: Phone and Email -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="phone" class="form-label">Phone (ex: 7107392810)</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+        </div>
+ <!-- Row 7: Zip -->
+        <div class="row mb-3">
+    <div class="col-md-4">
+                <label for="age" class="form-label">Age (55-61)</label>
+                <input type="number" class="form-control" id="age" name="age" min="55" max="61" required>
+            </div>
+            <div class="col-md-4">
+                <label for="zip" class="form-label">ZIP</label>
+                <input type="text" class="form-control" id="zip" name="zip" required>
+            </div>
+ <div class="col-md-4">
+                <label for="ip_address" class="form-label">IP Address</label>
+                <input type="text" class="form-control" id="ip_address" name="ip_address" required>
+            </div>
+        </div>
+<!-- Row 1: Age -->
+        <div class="row mb-3">
+        
+        </div>
+
+     
+
+        <!-- Row 3: Consent -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label for="consent" class="form-label">Consent</label>
+                <textarea class="form-control" id="consent" readonly name="consent" rows="3" required>By clicking Submit, I clarify that I am a US resident over 18, and I agree to the By clicking “Submit”, I expressly consent to receive marketing phone calls and/or text SMS messages from Benefit Guidance and Citizens Disability LLC on the landline and/or mobile number that I have provided, regarding my disability claim, Benefits Optimization, Medicare, and/or Pharmacy services. I confirm that the phone number above is accurate and I am the regular user of that phone. I understand that these calls and/or text messages may be generated using an autodialer and may contain pre-recorded and/or artificial voice messages. I also agree to My Disability Assist and Citizens Disability SMS Terms & Conditions and Privacy Policy. Consent is not required to obtain any good or service. Reply STOP to cancel, HELP for info. Msg & data rates may apply. Message frequency varies.</textarea>
+            </div>
+        </div>
+
+      
+
+        <!-- Row 5: IP Address and Jornaya Lead ID -->
+        <div class="row mb-3">
+           
+            <div class="col-md-12">
+                <label for="jornaya_lead_id" class="form-label">Jornaya Lead ID</label>
+                <input type="text" class="form-control" id="jornaya_lead_id" name="jornaya_lead_id" required>
+            </div>
+        </div>
+
+        <!-- Row 6: Opt-in Timestamp and Opt-in URL -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="optin_timestamp" class="form-label">Opt-in Timestamp</label>
+                <input type="datetime-local" class="form-control" id="optin_timestamp" name="optin_timestamp" required>
+            </div>
+            <div class="col-md-6">
+                <label for="optin_url" class="form-label">Opt-in URL</label>
+                <input type="url" class="form-control" id="optin_url" name="optin_url" readonly value="https://benefit-guidance.com/" required>
+            </div>
+        </div>
+
+       
+
+  <div class="row">
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+ <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/ApiJS/jkco_ringba_oct.js"></script>
+
+  <!-- Custom script for form submission and notification -->
+   <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Prevent the context menu from appearing
+        });
+    </script>
+</body>
+</html>
