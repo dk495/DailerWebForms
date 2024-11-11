@@ -1,0 +1,103 @@
+<html>
+<head>
+  <title>JK&Co RTB Home</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+  <style>
+    body {
+      background-color: #f8f9fa; /* Light gray background */
+    }
+    .container {
+      background-color: #ffffff; /* White background for the form container */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    }
+    h2 {
+      color: #007bff; /* Bootstrap primary color */
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px; /* Rounded input fields */
+    }
+    .btn-primary {
+      border-radius: 50px; /* Rounded button */
+      background-color: #007bff; /* Bootstrap primary color */
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px; /* Space above the alert */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Api Form (RTB)</h2>
+   <form id="leadForm">
+ 
+<div class="row">
+             
+            
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="caller_id">Phone no. (ex. 7026435297)</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="CallerID" required>
+      </div>
+    </div>
+</div>
+    
+  
+<div class="row">
+<div class="form-group col-md-4">
+                <label for="landing_page">Zipcode</label>
+                <input type="text" class="form-control" id="zip"  placeholder="5 digit zipcode">
+            </div>
+<div class="form-group col-md-4">
+ <label for="campaignSelect"  class="form-label">Select Project</label>
+            <select id="campaignSelect" class="form-control">
+  <option value="171f716f77844f2aa4bcba450f5010ed">Bath</option>
+  <option value="47ac860895f7467b8474c24eb3f2f5b2">Gutter</option>
+  <option value="f80794536f1445d88befab725f662dee">HVAC</option>
+  <option value="56eebfbeff894220a42d5b2ee1327a6c">Kitchen</option>
+  <option value="b185482f15b44b18b82166ac4d23d4cd">Pest Control</option>
+  <option value="7b1646fe7d9f47bf86b2f51d1fa67697">Plumbing</option>
+  <option value="4984507500874950bc570c9151e0292c">Roofing</option>
+  <option value="512c5faa3fc442c5a14c8a6d337cffe2">Windows</option>
+            </select>
+ </div>
+
+      
+ </div>
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+ <div id="alertContainer"></div>
+  </div>
+
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://dk495.github.io/ApiJS/JK&co_RTB_home.js"></script>
+
+  <!-- Custom script for form submission and notification -->
+   <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Prevent the context menu from appearing
+        });
+    </script>
+</body>
+</html>
