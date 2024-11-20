@@ -8,37 +8,50 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 20px;
         }
         .btn-large {
-            padding: 20px 40px;
-            font-size: 24px;
-            margin: 15px;
-            width: 100%;
+            padding: 15px 30px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+            border-radius: 8px;
         }
-        .button-container {
-            max-width: 600px;
-            margin: auto;
+        .btn-large:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
-
-    <div class="container text-center">
-        <h1 class="mb-5">Client Posting Forms (AZURE)</h1>
+    <div class="card">
+        <h1>Client Posting Forms (AZURE)</h1>
         <div class="button-container">
             <a href="https://forms.formifyweb.com/provoice_azure_window.html" class="btn btn-primary btn-large btn-block">Window</a>
-            <a href="https://forms.formifyweb.com/provoice_azure_window - Live Transfer.html" class="btn btn-danger btn-large btn-block">Window - Live Transfer</a>
+            
             <a href="https://forms.formifyweb.com/provoice_azure_roof.html" class="btn btn-success btn-large btn-block">Roof</a>
-            <a href="https://forms.formifyweb.com/provoice_azure_kitchenRemodel.html" class="btn btn-danger btn-large btn-block">Kitchen Remodeling</a>
+            <a href="https://forms.formifyweb.com/provoice_azure_kitchenRemodel.html" class="btn btn-info btn-large btn-block">Kitchen Remodeling</a>
             <a href="https://forms.formifyweb.com/provoice_azure_hvac.html" class="btn btn-warning btn-large btn-block">HVAC</a>
-            <a href="https://forms.formifyweb.com/provoice_azure_bathroom.html" class="btn btn-danger btn-large btn-block">Bathroom</a>
-            <a href="https://forms.formifyweb.com/provoice_azure_gutter.html" class="btn btn-primary btn-large btn-block">Gutter</a>
+            <a href="https://forms.formifyweb.com/provoice_azure_bathroom.html" class="btn btn-secondary btn-large btn-block">Bathroom</a>
+            <a href="https://forms.formifyweb.com/provoice_azure_gutter.html" class="btn btn-dark btn-large btn-block">Gutter</a>
         </div>
     </div>
 
