@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RTB Posting</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .form-group {
+      text-align: left; /* Align labels to the left */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">RTB posting</h2>
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="caller_id">Phone no. (ex. 7026435297)</label>
+            <input type="text" class="form-control" id="caller_id" placeholder="CallerID" required>
+          </div>
+        </div>
+<div class="col-md-4">
+          <div class="form-group">
+            <label for="zip">Zipcode</label>
+            <input type="text" class="form-control" id="Zipcode" placeholder="5 digit US zipcode" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+<div class="col-md-2">
+          <button type="button" class="btn btn-primary" id="btn1">0700-Bathroom</button>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary" id="btn2">0701-Roofing</button>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary" id="btn3">0702-Windows</button>
+        </div>
+        
+      </div>
+    </form>
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://js.formifyweb.com/provoice_RTB_jan25.js"></script>
+
+  <!-- Custom script for form submission and notification -->
+  <script>
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault(); // Prevent the context menu from appearing
+    });</script>
+</body>
+</html>
