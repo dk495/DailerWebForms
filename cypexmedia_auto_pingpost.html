@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>CypexMedia FE Post AUTO</title>
+  <title>CypexMedia Post form</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
@@ -36,21 +36,361 @@
 <body>
   <div class="container mt-5">
     <h2 class="text-center">Api Post Form</h2>
-    <form id="leadForm">
-   
+  <form id="leadForm">
+ <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+      </div>
+    </div>
+  <div class="col-md-4">
       <div class="form-group">
         <label for="caller_id">Phone (ex: 7103847563)</label>
         <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
       </div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+      </div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+ <label for="city">City</label>
+         <input type="text" class="form-control" id="city" placeholder="ny city" required>
+   </div>
+  </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="state">State</label>
+        <select class="form-control" id="state" required>
+  <option value="">Select State</option>
+  <option value="AL">Alabama</option>
+  <option value="AK">Alaska</option>
+  <option value="AZ">Arizona</option>
+  <option value="AR">Arkansas</option>
+  <option value="CA">California</option>
+  <option value="CO">Colorado</option>
+  <option value="CT">Connecticut</option>
+  <option value="DE">Delaware</option>
+  <option value="DC">District Of Columbia</option>
+  <option value="FL">Florida</option>
+  <option value="GA">Georgia</option>
+  <option value="HI">Hawaii</option>
+  <option value="ID">Idaho</option>
+  <option value="IL">Illinois</option>
+  <option value="IN">Indiana</option>
+  <option value="IA">Iowa</option>
+  <option value="KS">Kansas</option>
+  <option value="KY">Kentucky</option>
+  <option value="LA">Louisiana</option>
+  <option value="ME">Maine</option>
+  <option value="MD">Maryland</option>
+  <option value="MA">Massachusetts</option>
+  <option value="MI">Michigan</option>
+  <option value="MN">Minnesota</option>
+  <option value="MS">Mississippi</option>
+  <option value="MO">Missouri</option>
+  <option value="MT">Montana</option>
+  <option value="NE">Nebraska</option>
+  <option value="NV">Nevada</option>
+  <option value="NH">New Hampshire</option>
+  <option value="NJ">New Jersey</option>
+  <option value="NM">New Mexico</option>
+  <option value="NY">New York</option>
+  <option value="NC">North Carolina</option>
+  <option value="ND">North Dakota</option>
+  <option value="OH">Ohio</option>
+  <option value="OK">Oklahoma</option>
+  <option value="OR">Oregon</option>
+  <option value="PA">Pennsylvania</option>
+  <option value="RI">Rhode Island</option>
+  <option value="SC">South Carolina</option>
+  <option value="SD">South Dakota</option>
+  <option value="TN">Tennessee</option>
+  <option value="TX">Texas</option>
+  <option value="UT">Utah</option>
+  <option value="VT">Vermont</option>
+  <option value="VA">Virginia</option>
+  <option value="WA">Washington</option>
+  <option value="WV">West Virginia</option>
+  <option value="WI">Wisconsin</option>
+  <option value="WY">Wyoming</option>
+</select>
+      </div>
+    </div>
+
+ </div>
+<div class="row">
+<div class="col-md-4">
+<div class="form-group">
+ <label for="zip">Zip</label>
+         <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
+   </div>
+  </div>
+ </div>
+<div class="row">
+ <div class="col-md-4">
+      <div class="form-group">
+        <label for="insurance_company">Insurance Provider</label>
+<select id="insurance_company" class="form-control" required>
+    <option value="company_not_listed">** Company Not Listed</option>
+    <option value="not_currently_insured">** Not Currently Insured</option>
+    <option value="unknown">** Unknown</option>
+    <option value="21st_century">21st Century</option>
+    <option value="aaa">AAA</option>
+    <option value="aarp">AARP</option>
+    <option value="acceptance">Acceptance</option>
+    <option value="aig">AIG</option>
+    <option value="alfa_insurance">Alfa Insurance</option>
+    <option value="allied_insurance">Allied Insurance</option>
+    <option value="allstate">Allstate</option>
+    <option value="american_family">American Family Insurance</option>
+    <option value="american_national">American National</option>
+    <option value="ameriprise">Ameriprise</option>
+    <option value="amica_mutual_insurance">Amica Mutual Insurance</option>
+    <option value="auto_owners_insurance">Auto-Owners Insurance</option>
+    <option value="comparenow">Compare Now</option>
+    <option value="country_financial">Country Financial</option>
+    <option value="cssa_insurance_exchange">CSAA Insurance Exchange</option>
+    <option value="cure_auto_insurance">CURE Auto Insurance</option>
+    <option value="direct_auto_insurance">Direct Auto Insurance</option>
+    <option value="direct_general">Direct General</option>
+    <option value="efinancial">eFinancial</option>
+    <option value="erie_insurance_group">Erie Insurance Group</option>
+    <option value="esurance">Esurance</option>
+    <option value="farm_bureau">Farm Bureau</option>
+    <option value="farmers">Farmers Insurance Group</option>
+    <option value="freeway_insurance">Freeway Insurance</option>
+    <option value="gainsco">Gainsco Insurance</option>
+    <option value="geico">Geico</option>
+    <option value="goji">Goji</option>
+    <option value="good2go">Good2Go Auto Insurance</option>
+    <option value="hartford">Hartford</option>
+    <option value="healthiq">Healthiq</option>
+    <option value="independent_agent">Independent Agent</option>
+    <option value="kemper_insurance">Kemper Insurance</option>
+    <option value="kin_insurance">Kin Insurance</option>
+    <option value="lemonade_insurance">Lemonade Insurance</option>
+    <option value="liberty_mutual">Liberty Mutual</option>
+    <option value="mapfre_insurance">MAPFRE Insurance</option>
+    <option value="mercury">Mercury Insurance</option>
+    <option value="metlife">Metlife</option>
+    <option value="metromile">Metromile</option>
+    <option value="mutual_of_omaha">Mutual Of Omaha</option>
+    <option value="myhippo">Myhippo</option>
+    <option value="national_general">National General Insurance</option>
+    <option value="nationwide">Nationwide</option>
+    <option value="navy_mutual">Navy Mutual</option>
+    <option value="new_york_life">New York Life</option>
+    <option value="ny_life">New York Life</option>
+    <option value="njm_auto_insurance">NJM Auto Insurance</option>
+    <option value="noblr">Noblr</option>
+    <option value="northwestern_mutual">Northwestern Mutual</option>
+    <option value="oscar">Oscar</option>
+    <option value="plymouth_rock">Plymouth Rock</option>
+    <option value="progressive">Progressive</option>
+    <option value="prudential">Prudential</option>
+    <option value="root">Root Insurance</option>
+    <option value="safe_auto">Safe Auto Insurance Company</option>
+    <option value="safeco">Safeco</option>
+    <option value="selectquote">Selectquote</option>
+    <option value="sentry_insurance">Sentry Insurance</option>
+    <option value="shelter_insurance">Shelter Insurance</option>
+    <option value="state_auto">State Auto</option>
+    <option value="state_farm">State Farm</option>
+    <option value="the_general">The General</option>
+    <option value="the_hanover_insurance_group">The Hanover Insurance Group</option>
+    <option value="travelers">Travelers Insurance Company</option>
+    <option value="tristate">Tristate</option>
+    <option value="united_auto_insurance">United Auto Insurance</option>
+    <option value="usaa">USAA</option>
+    <option value="verti">Verti Insurance</option>
+    <option value="western_and_southern">Western & Southern Financial</option>
+    <option value="aiu_insurance">AIU Insurance</option>
+    <option value="alfa">Alfa</option>
+    <option value="amco">Amco</option>
+    <option value="american_alliance">American Alliance</option>
+    <option value="american_automobile_insurance">American Automobile Insurance</option>
+    <option value="american_casualty">American Casualty</option>
+    <option value="american_direct_business_insurance">American Direct Business Insurance</option>
+    <option value="american_economy">American Economy</option>
+    <option value="american_empire_insurance">American Empire Insurance</option>
+    <option value="american_financial">American Financial</option>
+    <option value="american_home_assurance">American Home Assurance</option>
+    <option value="american_insurance">American Insurance</option>
+    <option value="american_international_ins">American International Ins</option>
+    <option value="american_international_pacific">American International Pacific</option>
+    <option value="american_international_south">American International South</option>
+    <option value="american_manufacturers">American Manufacturers</option>
+    <option value="american_motorists_insurance">American Motorists Insurance</option>
+    <option value="american_national_property_and_casualty">American National Property And Casualty</option>
+    <option value="american_protection_insurance">American Protection Insurance</option>
+    <option value="american_reliable">American Reliable</option>
+    <option value="american_republic">American Republic</option>
+    <option value="american_service_insurance">American Service Insurance</option>
+    <option value="american_skyline_insurance_company">American Skyline Insurance Company</option>
+    <option value="american_spirit_insurance">American Spirit Insurance</option>
+    <option value="american_standard_insurance_oh">American Standard Insurance - Oh</option>
+    <option value="american_standard_insurance_wi">American Standard Insurance - Wi</option>
+    <option value="amex_assurance">Amex Assurance</option>
+    <option value="amica_insurance">Amica Insurance</option>
+    <option value="anthem">Anthem</option>
+    <option value="associated_indemnity">Associated Indemnity</option>
+    <option value="atlanta_casualty">Atlanta Casualty</option>
+    <option value="atlantic_indemnity">Atlantic Indemnity</option>
+    <option value="atlantic_mutual">Atlantic Mutual</option>
+    <option value="auto_club_insurance_company">Auto Club Insurance Company</option>
+    <option value="bristol">Bristol</option>
+    <option value="brooke_insurance">Brooke Insurance</option>
+    <option value="cal_farm_insurance">Cal Farm Insurance</option>
+    <option value="california_automobile">California Automobile</option>
+    <option value="california_casualty_and_fire">California Casualty And Fire</option>
+    <option value="california_state_auto_assoc">California State Auto Assoc</option>
+    <option value="capital">Capital</option>
+    <option value="century_national">Century National</option>
+    <option value="chubb">Chubb</option>
+    <option value="clarendon_national_insurance">Clarendon National Insurance</option>
+    <option value="cna">CAN</option>
+    <option value="colonial_penn">Colonial Penn</option>
+    <option value="commerce_insurance">Commerce Insurance</option>
+    <option value="commerce_west">Commerce West</option>
+    <option value="commercial_union">Commercial Union</option>
+    <option value="continental_casualty">Continental Casualty</option>
+    <option value="continental_divide_insurance">Continental Divide Insurance</option>
+    <option value="continental_insurance">Continental Insurance</option>
+    <option value="cotton_states_insurance">Cotton States Insurance</option>
+    <option value="countrywide_insurance">Countrywide Insurance</option>
+    <option value="dairyland_insurance">Dairyland Insurance</option>
+    <option value="direct_auto">Direct Auto</option>
+    <option value="eagle">Eagle</option>
+    <option value="electric_insurance">Electric Insurance</option>
+    <option value="elephant_insurance">Elephant Insurance</option>
+    <option value="empire_fire_and_marine">Empire Fire And Marine</option>
+    <option value="erie_insurance">Erie Insurance</option>
+    <option value="explorer">Explorer</option>
+    <option value="farmers_union">Farmers Union</option>
+    <option value="federal_insurance">Federal Insurance</option>
+    <option value="financial_indemnity">Financial Indemnity</option>
+    <option value="fire_and_casualty_insurance_co_of_ct">Fire And Casualty Insurance Co Of Ct</option>
+    <option value="firemans_fund">Firemans Fund</option>
+    <option value="foremost">Foremost</option>
+    <option value="garrison">Garrison</option>
+    <option value="geico_casualty">Geico Casualty</option>
+    <option value="general_accident_insurance">General Accident Insurance</option>
+    <option value="gmac_insurance">GMAC Insurance</option>
+    <option value="goauto_insurance">Goauto Insurance</option>
+    <option value="great_american">Great American</option>
+    <option value="guaranty_national_insurance">Guaranty National Insurance</option>
+    <option value="guide_one_insurance">Guide One Insurance</option>
+    <option value="hanover_lloyds_insurance_company">Hanover Lloyds Insurance Company</option>
+    <option value="hartford_accident_and_indemnity">Hartford Accident And Indemnity</option>
+    <option value="high_point_insurance">High Point Insurance</option>
+    <option value="ifa_auto_insurance">IFA Auto Insurance</option>
+    <option value="infinity_insurance">Infinity Insurance</option>
+    <option value="insurance_of_the_west">Insurance Of The West</option>
+    <option value="integon">Integon</option>
+    <option value="leader_national">Leader National</option>
+    <option value="liberty_insurance_corp">Liberty Insurance Corp</option>
+    <option value="liberty_northwest_insurance">Liberty Northwest Insurance</option>
+    <option value="lumbermens_mutual">Lumbermens Mutual</option>
+    <option value="maryland_casualty">Maryland Casualty</option>
+    <option value="mid_century_insurance">Mid Century Insurance</option>
+    <option value="mid-continent_casualty">Mid-Continent Casualty</option>
+    <option value="middlesex_insurance">Middlesex Insurance</option>
+    <option value="molina">Molina</option>
+    <option value="national_ben_franklin_insurance">National Ben Franklin Insurance</option>
+    <option value="national_casualty">National Casualty</option>
+    <option value="national_continental_insurance">National Continental Insurance</option>
+    <option value="national_fire_insurance_company_of_hartford">National Fire Insurance Company Of Hartford</option>
+    <option value="national_union_fire_insurance_of_la">National Union Fire Insurance Of La</option>
+    <option value="national_union_fire_insurance_of_pa">National Union Fire Insurance Of Pa</option>
+    <option value="nj_skylands_insurance">NJ Skylands Insurance</option>
+    <option value="northwestern_pacific_indemnity">Northwestern Pacific Indemnity</option>
+    <option value="ohio_casualty">Ohio Casualty</option>
+<option value="omni_insurance">Omni Insurance</option>
+<option value="orion_auto">Orion Auto</option>
+<option value="pacific_indemnity">Pacific Indemnity</option>
+<option value="pacific_insurance">Pacific Insurance</option>
+<option value="palisades_insurance">Palisades Insurance</option>
+<option value="patriot_general_insurance">Patriot General Insurance</option>
+<option value="peak_property_and_casualty_insurance">Peak Property And Casualty Insurance</option>
+<option value="pemco_insurance">Pemco Insurance</option>
+<option value="permanent_general">Permanent General</option>
+<option value="quote_manage">Quote Manage</option>
+<option value="republic_indemnity">Republic Indemnity</option>
+<option value="response_insurance">Response Insurance</option>
+<option value="safeway_insurance">Safeway Insurance</option>
+<option value="say_insurance">Say Insurance</option>
+<option value="selective">Selective</option>
+<option value="sentinel_insurance">Sentinel Insurance</option>
+<option value="st_paul">St Paul</option>
+<option value="standard_fire_insurance_company">Standard Fire Insurance Company</option>
+<option value="state_and_county_mutual_fire_insurance">State And County Mutual Fire Insurance</option>
+<option value="state_national_insurance">State National Insurance</option>
+<option value="superior_guaranty_insurance">Superior Guaranty Insurance</option>
+<option value="superior_insurance">Superior Insurance</option>
+<option value="tico_insurance">Tico Insurance</option>
+<option value="tig_insurance_group">Tig Insurance Group</option>
+<option value="titan">Titan</option>
+<option value="tsc_insurance">TSC Insurance</option>
+<option value="unigard">Unigard</option>
+<option value="united_services_automobile_association">United Services Automobile Association</option>
+<option value="unitrin_direct">Unitrin Direct</option>
+<option value="us_agencies">US Agencies</option>
+<option value="usf_and_g">USF And G</option>
+<option value="verti_insurance">Verti Insurance</option>
+<option value="wawanesa_insurance">Wawanesa Insurance</option>
+<option value="wawanesa_mutual">Wawanesa Mutual</option>
+<option value="workmens_auto_insurance">Workmens Auto Insurance</option>
+<option value="zurich_ins_group">Zurich Ins Group</option>
+</select>
+      </div>
+    </div>
+ <div class="col-md-4">
+      <div class="form-group">
+        <label for="homeowner">Home Owner</label>
+<select name="homeowner" id="homeowner" class="form-control">
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+</select>
+</div>
+    </div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label for="currently_insured">Currently Insured</label>
+    <select name="currently_insured" id="currently_insured" class="form-control">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+  </div>
+</div>
+</div>
+ 
 
 
   
-<button type="Submit" class="btn btn-primary" id="submitBtn" >Post</button>
+<button type="Submit" class="btn btn-primary" id="submitBtn">Post</button>
     </form>
  <div id="alertContainer"></div>
 
 
-
+<!-- Display API response using Bootstrap alert -->
+<div class="alert alert-info mt-3" role="alert" id="apiResponse">
+  
+</div>
 
     
 
