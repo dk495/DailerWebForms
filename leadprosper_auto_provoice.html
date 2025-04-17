@@ -133,6 +133,106 @@
                 <label for="jornaya_lead_id">Jornaya Lead ID:</label>
                 <input type="text" class="form-control" id="jornaya_lead_id" name="jornaya_lead_id" required placeholder="Enter Jornaya Lead ID">
             </div>
+<div class="row">
+    <div class="col-md-4">
+<div class="form-group">
+        <label for="vehicle1_year">Vehicle 1 Year</label>
+        <input type="number" id="vehicle1_year" name="vehicle1_year" class="form-control" placeholder="ex: 2024" min="1900" max="2200" required>
+    </div>
+</div>
+    <div class="col-md-4">
+<div class="form-group">
+        <label for="vehicle1_make">Vehicle 1 Make</label>
+        <input type="text" id="vehicle1_make" class="form-control" placeholder="ex: Honda" name="vehicle1_make" required>
+    </div>
+</div>
+    <div class="col-md-4">
+<div class="form-group">
+        <label for="vehicle1_model">Vehicle 1 Model</label>
+        <input type="text" id="vehicle1_model" class="form-control" placeholder="ex: Civic" name="vehicle1_model" required>
+    </div>
+</div>
+</div>
+<div class="row">
+                   <div class="col-md-4">
+          <div class="form-group">
+<label for="sr22">Is the lead seeking an SR22 certificate?</label>
+<select name="sr22" class="form-control" id="sr22">
+ <option value="FALSE">No</option>
+    <option value="TRUE">Yes</option>
+   
+</select>
+        </div>
+</div>
+   <div class="col-md-4">
+          <div class="form-group">
+<label for="state_minimum">Is the lead seeking state-minimum insurance?</label>
+<select name="state_minimum" class="form-control" id="state_minimum">
+<option value="FALSE">No</option>
+    <option value="TRUE">Yes</option>
+    
+</select>
+        </div>
+</div>
+</div>
+
+<div class="row">
+   <div class="col-md-4">
+          <div class="form-group">
+<label for="currently_insured">Currently Insured</label>
+<select name="currently_insured" class="form-control" id="currently_insured">
+ <option value="TRUE">Yes</option>
+ <option value="FALSE">No</option>
+   
+   
+</select>
+        </div>
+</div>
+   
+ <div class="col-md-4">
+          <div class="form-group">
+<label for="licensed">Licensed</label>
+<select name="licensed" class="form-control" id="licensed">
+   <option value="TRUE">Yes</option>
+ <option value="FALSE">No</option>
+   
+   
+</select>
+        </div>
+</div>
+</div>
+<div class="row">
+ 
+     
+   <div class="col-md-4">
+          <div class="form-group">
+<label for="dui">DUI</label>
+<select name="dui" class="form-control" id="dui">
+<option value="FALSE">No</option>
+    <option value="TRUE">Yes</option>
+    
+</select>
+        </div>
+</div>
+          <div class="col-md-4">
+          <div class="form-group">
+<label for="tickets">Tickets</label>
+<select name="tickets" class="form-control" id="tickets">
+<option value="FALSE">No</option>
+    <option value="TRUE">Yes</option>
+    
+</select>
+        </div>
+</div>
+   <div class="col-md-4">
+          <div class="form-group">
+<label for="vehicle_count">Vehicles Count</label>
+<input type="number" class="form-control" id="vehicle_count" name="vehicle_count" " required placeholder="1, 2">
+    
+</select>
+        </div>
+</div>
+</div>
 
       <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
     </form>
