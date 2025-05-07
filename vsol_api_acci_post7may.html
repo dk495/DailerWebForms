@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vsol MVA API Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-header">API Form</h1>
+            <div id="alertContainer"></div>
+            <form id="leadForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="lead_first_name">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="lead_last_name">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="lead_email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="phone" name="lead_phone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="zip_code" class="form-label">Zip Code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="zip_code" name="zip_code" required>
+                </div>
+                <div class="mb-3">
+                    <label for="incident_date" class="form-label">When did the accident happen? <span class="text-danger">*</span></label>
+                    <select class="form-select" id="incident_date" name="incident_date_option_b" required>
+                        <option value="">Select...</option>
+                        <option value="Less than 1 year">Less 1 year or less</option>
+                        <option value="Less than 2 years">2 years or less</option>
+                        <option value="Less than 3 years">3 years or less</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="were_you_injured" class="form-label">Were you injured? <span class="text-danger">*</span></label>
+                    <select class="form-select" id="were_you_injured" name="were_you_injured" required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="injury_cause" class="form-label">What caused your injury?</label>
+                    <select class="form-select" id="injury_cause" name="injury_cause">
+                        <option value="">Select...</option>
+                        <option value="Car Accident">Car Accident</option>
+                        <option value="Motorcycle Accident">Motorcycle Accident</option>
+                        <option value="Truck Accident">Truck Accident</option>
+                        <option value="Bicycle Accident">Bicycle Accident</option>
+                        <option value="Pedestrian Accident">Pedestrian Accident</option>
+                        <option value="Passenger Accident">Passenger Accident</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="have_attorney" class="form-label">Do you have an attorney? <span class="text-danger">*</span></label>
+                    <select class="form-select" id="have_attorney" name="have_attorney" required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="doctor_treatment" class="form-label">Did you receive medical treatment? <span class="text-danger">*</span></label>
+                    <select class="form-select" id="doctor_treatment" name="doctor_treatment" required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="primary_injury" class="form-label">Primary type of injury</label>
+                    <select class="form-select" id="primary_injury" name="primary_injury">
+                        <option value="">Select...</option>
+                        <option value="Back or Neck Pain">Back or Neck Pain</option>
+                        <option value="Broken Bones">Broken Bones</option>
+                        <option value="Cuts and Bruises">Cuts and Bruises</option>
+                        <option value="Headaches">Headaches</option>
+                        <option value="Memory Loss">Memory Loss</option>
+                        <option value="Loss of Limb">Loss of Limb</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="were_you_at_fault" class="form-label">Were you at fault? <span class="text-danger">*</span></label>
+                    <select class="form-select" id="were_you_at_fault" name="were_you_at_fault" required>
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="expressed_interest" class="form-label">Do you want to speak to an attorney?</label>
+                    <select class="form-select" id="expressed_interest" name="expressed_interest">
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="settled_insurance" class="form-label">Have you settled with insurance?</label>
+                    <select class="form-select" id="settled_insurance" name="settled_insurance">
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="signed_retainer" class="form-label">Have you signed a retainer?</label>
+                    <select class="form-select" id="signed_retainer" name="signed_retainer">
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="role_in_accident" class="form-label">Your role in the accident</label>
+                    <select class="form-select" id="role_in_accident" name="role_in_accident">
+                        <option value="">Select...</option>
+                        <option value="driver">Driver</option>
+                        <option value="passenger">Passenger</option>
+                        <option value="pedestrian">Pedestrian</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="driver_insured" class="form-label">Did the other driver have insurance?</label>
+                    <select class="form-select" id="driver_insured" name="driver_insured">
+                        <option value="">Select...</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="accident_vehicle_count" class="form-label">Number of vehicles involved</label>
+                    <input type="number" class="form-control" id="accident_vehicle_count" name="accident_vehicle_count">
+                </div>
+                <div class="mb-3">
+                    <label for="comments" class="form-label">Additional comments</label>
+                    <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="certificate_type" class="form-label">Certificate Type <span class="text-danger">*</span></label>
+                    <select class="form-select" id="certificate_type" name="certificate_type" required>
+                        <option value="">Select...</option>
+                        <option value="Jornaya">Jornaya</option>
+                        <option value="Trusted Form">Trusted Form</option>
+                    </select>
+                auspicious
+                </div>
+                <div class="mb-3">
+                    <label for="certificate_id" class="form-label">Certificate ID <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="certificate_id" name="certificate_id" required>
+                </div>
+                <div class="mb-3">
+                    <label for="certificate_url" class="form-label">Certificate URL <span class="text-danger">*</span></label>
+                    <input type="url" class="form-control" id="certificate_url" name="certificate_url" required>
+                </div>
+                <div class="mb-3">
+                    <label for="source_url" class="form-label">Source URL <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="source_url" name="source_url" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ip_address" class="form-label">IP Address <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="ip_address" name="ip_address" required>
+                </div>
+               
+                <button type="submit" class="btn btn-primary w-100" id="submitBtn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://js.formifyweb.com/vsol_api_acci_post7may.js"></script>
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+</body>
+</html>
