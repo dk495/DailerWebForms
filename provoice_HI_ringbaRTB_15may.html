@@ -1,0 +1,103 @@
+<html>
+<head>
+  <title>Provocie Home Improvement RTB RINGBA</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Api Form (RTB Posting)</h2>
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="caller_id">Phone no. (ex. 7026435297)</label>
+            <input type="text" class="form-control" id="caller_id" placeholder="CallerID" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="zipcode">Zipcode</label>
+            <input type="text" class="form-control" id="zipcode" placeholder="5 digit zipcode" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="campaign">Select Campaign</label>
+            <select class="form-control" id="campaign" required>
+              <option value="">-- Choose a Campaign --</option>
+              <option value="https://rtb.ringba.com/v1/production/6c257870b6af4f3488a5a18b3b5d9589.json">Window Installation</option>
+              <option value="https://rtb.ringba.com/v1/production/e5fe4a4a75f54cf1a6960a9af38d28e0.json">Water Damage</option>
+              <option value="https://rtb.ringba.com/v1/production/43f4d93123ce4dd687b993b4ada80cdb.json">HVAC</option>
+              <option value="https://rtb.ringba.com/v1/production/8f9568f50f0d4c16852cc551080536a5.json">Roofing</option>
+              <option value="https://rtb.ringba.com/v1/production/bdb5bfb80aa1439482233a2a2a0a133f.json">Electrical</option>
+              <option value="https://rtb.ringba.com/v1/production/7175667ed80f486aac6ed9e04147b173.json">Pest Control</option>
+              <option value="https://rtb.ringba.com/v1/production/4ca30dbb243f49d3b2b2b75334ce73f2.json">Plumbing</option>
+              <option value="https://rtb.ringba.com/v1/production/3f0bf55f8e5745a0b9400820b42545c9.json">Appliance Repair</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://js.formifyweb.com/provoice_HI_ringbaRTB_15may.js"></script>
+
+
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+</body>
+</html>
