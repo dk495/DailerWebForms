@@ -157,7 +157,7 @@
       }
     };
 
-    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping");
+    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping_test");
 
     // Send ping
     fetch(pingUrl, {
@@ -174,7 +174,7 @@
       if (data.status === 'success') {
         lead.auth_code = data.auth_code;
 
-        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post");
+        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post_test");
 
         // Send full post
         return fetch(postUrl, {
@@ -217,4 +217,5 @@
   }
 </script>
 </body>
+
 </html>
