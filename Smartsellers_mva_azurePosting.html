@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVA Live Transfer Lead Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .form-group {
+            text-align: left;
+        }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+        .section-header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">MVA Live Transfer Lead Form</h2>
+        <form id="leadForm">
+            <!-- Personal Information Section -->
+            <div class="section-header">
+                <h4>Personal Information</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first_name" class="required-field">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last_name" class="required-field">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone_home" class="required-field">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone_home" name="phone_home" pattern="[0-9]{10}" required placeholder="Enter 10-digit phone number">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email_address">Email</label>
+                        <input type="email" class="form-control" id="email_address" name="email_address">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="address" class="required-field">Address</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city" class="required-field">City</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="state" class="required-field">State</label>
+                        <select class="form-control" id="state" name="state" required>
+                            <option value="">Select State</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="zip_code" class="required-field">Zip Code</label>
+                        <input type="text" class="form-control" id="zip_code" name="zip_code" pattern="\d{5}" required placeholder="Enter 5-digit zip code">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" name="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <div class="row">
+                            <div class="col-4">
+                                <input type="number" class="form-control" id="monthbirth" name="monthbirth" min="1" max="12" placeholder="MM">
+                            </div>
+                            <div class="col-4">
+                                <input type="number" class="form-control" id="daybirth" name="daybirth" min="1" max="31" placeholder="DD">
+                            </div>
+                            <div class="col-4">
+                                <input type="number" class="form-control" id="yearbirth" name="yearbirth" min="1900" max="2023" placeholder="YYYY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accident Information Section -->
+            <div class="section-header">
+                <h4>Accident Information</h4>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="injured" class="required-field">Were you injured?</label>
+                        <select class="form-control" id="injured" name="injured" required>
+                            <option value="">Select Option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="at_fault" class="required-field">Were you at fault?</label>
+                        <select class="form-control" id="at_fault" name="at_fault" required>
+                            <option value="">Select Option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="doctor_treatment" class="required-field">Have you seen a doctor for treatment?</label>
+                        <select class="form-control" id="doctor_treatment" name="doctor_treatment" required>
+                            <option value="">Select Option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="injury_occur" class="required-field">How did the injury occur?</label>
+                        <input type="text" class="form-control" id="injury_occur" name="injury_occur" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="required-field">Date of Incident</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="number" class="form-control" id="monthincident" name="monthincident" min="1" max="12" placeholder="MM" required>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" class="form-control" id="dayincident" name="dayincident" min="1" max="31" placeholder="DD" required>
+                    </div>
+                    <div class="col-4">
+                        <input type="number" class="form-control" id="yearincident" name="yearincident" min="2020" max="2023" placeholder="YYYY" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="attorney">Do you have an attorney?</label>
+                <select class="form-control" id="attorney" name="attorney">
+                    <option value="">Select Option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="case_description">Case Description</label>
+                <textarea class="form-control" id="case_description" name="case_description" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="btn btn-primary btn-block">Submit</button>
+        </form>
+        
+        <div id="alertContainer" class="mt-3"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Form submission script -->
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('submitBtn').disabled = true;
+            
+            const formData = {
+                campaign_id: '5146',
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
+                phone_home: document.getElementById('phone_home').value,
+                email_address: document.getElementById('email_address').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip_code: document.getElementById('zip_code').value,
+                injured: document.getElementById('injured').value,
+                at_fault: document.getElementById('at_fault').value,
+                doctor_treatment: document.getElementById('doctor_treatment').value,
+                injury_occur: document.getElementById('injury_occur').value,
+                dayincident: document.getElementById('dayincident').value,
+                monthincident: document.getElementById('monthincident').value,
+                yearincident: document.getElementById('yearincident').value,
+                attorney: document.getElementById('attorney').value,
+                case_description: document.getElementById('case_description').value,
+                gender: document.getElementById('gender').value,
+                daybirth: document.getElementById('daybirth').value,
+                monthbirth: document.getElementById('monthbirth').value,
+                yearbirth: document.getElementById('yearbirth').value
+            };
+
+            // Set the POST URL
+            const url = 'https://prod-95.westus.logic.azure.com:443/workflows/1da17f51a0fb4d96af654f96263f9ffb/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=J-YcOSE75Wqs-IysUrEvwQc_gPRI3MXgcGOX79nyKug';
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    response.text().then(responseBody => {
+                        const successAlert = `
+                            <div class="alert alert-success" role="alert">
+                                200 : Form submitted successfully! Response Body: ${responseBody}
+                            </div>`;
+                        document.getElementById('alertContainer').innerHTML = '';
+                        document.getElementById('alertContainer').insertAdjacentHTML('beforeend', successAlert);
+                    });
+                    // Clear form fields
+                    document.getElementById('leadForm').reset();
+                    document.getElementById('submitBtn').disabled = false;
+                } else if (response.status === 201) {
+                    response.text().then(responseBody => {
+                        const successAlert = `
+                            <div class="alert alert-success" role="alert">
+                                201 : Form submitted successfully! Response Body: ${responseBody}
+                            </div>`;
+                        document.getElementById('alertContainer').innerHTML = '';
+                        document.getElementById('alertContainer').insertAdjacentHTML('beforeend', successAlert);
+                    });
+                    // Clear form fields
+                    document.getElementById('leadForm').reset();
+                    document.getElementById('submitBtn').disabled = false;
+                } else if (response.status === 422) {
+                    response.json().then(data => {
+                        const errorAlert = `
+                            <div class="alert alert-danger" role="alert">
+                                Error. Response Body: ${JSON.stringify(data)}
+                            </div>`;
+                        document.getElementById('alertContainer').innerHTML = '';
+                        document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+                        document.getElementById('submitBtn').disabled = false;
+                    });
+                } else {
+                    response.text().then(responseBody => {
+                        const errorAlert = `
+                            <div class="alert alert-danger" role="alert">
+                                Form submission failed. Please try again. Response Body: ${responseBody}
+                            </div>`;
+                        document.getElementById('alertContainer').innerHTML = '';
+                        document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+                        document.getElementById('submitBtn').disabled = false;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorAlert = `
+                    <div class="alert alert-danger" role="alert">
+                        Network error occurred. Please try again.
+                    </div>`;
+                document.getElementById('alertContainer').innerHTML = '';
+                document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+                document.getElementById('submitBtn').disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
