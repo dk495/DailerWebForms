@@ -130,7 +130,8 @@
       },
       meta: {
         jornaya_lead_id: form.trusted_form_cert_id.value,
-        trusted_form_cert_id: form.trusted_form_cert_id.value
+        trusted_form_cert_id: form.trusted_form_cert_id.value,
+        source_id: "49111"
       },
       contact: {
         city: form.city.value,
@@ -148,7 +149,8 @@
       },
       meta: {
         jornaya_lead_id: form.trusted_form_cert_id.value,
-        trusted_form_cert_id: form.trusted_form_cert_id.value
+        trusted_form_cert_id: form.trusted_form_cert_id.value,
+        source_id: "49111"
       },
       contact: {
         first_name: form.first_name.value,
@@ -162,7 +164,7 @@
       }
     };
 
-    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping_test");
+    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping");
 
     // Send ping
     fetch(pingUrl, {
@@ -179,7 +181,7 @@
       if (data.status === 'success') {
         lead.auth_code = data.auth_code;
 
-        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post_test");
+        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post");
 
         // Send full post
         return fetch(postUrl, {
@@ -224,6 +226,7 @@
 </body>
 
 </html>
+
 
 
 
