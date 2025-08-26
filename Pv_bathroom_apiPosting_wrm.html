@@ -136,14 +136,26 @@
       <label class="form-label">Originally Created (ISO Format)</label>
       <input type="datetime-local" class="form-control" id="originally_created" required>
     </div>
-      <div class="col-md-6">
-      <label class="form-label">Source Id</label>
-      <input type="text" class="form-control" id="source_id" value="55237" required>
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Landing Page URL</label>
-      <input type="text" class="form-control" id="landing_page_url" value="www.llamaroofing.com" required>
-    </div>
+ <div class="col-md-6">
+  <label class="form-label">Source Id</label>
+  <select class="form-control" id="source_id" required>
+    <option value="10030">10030</option>
+    <option value="10031">10031</option>
+    <option value="10032">10032</option>
+    <option value="10034">10034</option>
+  </select>
+</div>
+
+<div class="col-md-6">
+  <label class="form-label">Landing Page URL</label>
+  <select class="form-control" id="landing_page_url" required>
+    <option value="www.homeownerrelief.com">www.homeownerrelief.com</option>
+    <option value="www.proinsurancequotes.com">www.proinsurancequotes.com</option>
+    <option value="www.llamaroofing.com" selected>www.llamaroofing.com</option>
+    <option value="www.myhomerevamp.com">www.myhomerevamp.com</option>
+  </select>
+</div>
+
 
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Submit Lead</button>
@@ -159,6 +171,7 @@
     </script>
 </body>
 </html>
+
 
 
 
