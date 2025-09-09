@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CYP Bathroom Lead Form WR</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <h2 class="mb-4">Bathroom Lead Form</h2>
+
+  <div id="alertContainer"></div>
+
+  <form id="leadForm" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">First Name</label>
+      <input type="text" class="form-control" id="first_name" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Last Name</label>
+      <input type="text" class="form-control" id="last_name" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Phone (ex: 20182738490)</label>
+      <input type="text" class="form-control" id="phone" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">City</label>
+      <input type="text" class="form-control" id="city" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">State</label>
+        <input type="text" class="form-control" id="state" required>
+  
+  </div>
+    <div class="col-md-4">
+      <label class="form-label">ZIP Code</label>
+      <input type="text" class="form-control" id="zip_code" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label">Address</label>
+      <input type="text" class="form-control" id="address" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label">IP Address</label>
+      <input type="text" class="form-control" id="ip_address" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Property Ownership</label>
+      <input type="text" class="form-control" id="own_property" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Property Type</label>
+      <input type="text" class="form-control" id="property_type" required>
+    </div>
+    <div class="col-md-12">
+      <label class="form-label">Bathroom Project Type</label>
+      <input type="text" class="form-control" id="bathroom_project_type" required>     
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Lead ID Code (Jornaya/Verisk)</label>
+      <input type="text" class="form-control" id="lead_id_code" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Originally Created (ISO Format)</label>
+      <input type="text" class="form-control" id="originally_created" required>
+    </div>
+ <div class="col-md-6">
+  <label class="form-label">Source Id</label>
+  <input type="text" class="form-control" id="source_id" required>  
+</div>
+
+<div class="col-md-6">
+  <label class="form-label">Landing Page URL</label>
+  <input type="text" class="form-control" id="landing_page_url" required>
+</div>
+
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit Lead</button>
+    </div>
+  </form>
+</div>
+
+<script src="https://js.formifyweb.com/cyp_bathroom_apiPosting_wrm.js"></script>
+  <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Prevent the context menu from appearing
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
