@@ -231,6 +231,23 @@
           </select>
         </div>
         <div class="col-md-6">
+          <label class="form-label">Coverage Type</label>
+          <select class="form-select" id="requested_coverage_types" required>
+            <option value="IndividualFamily">IndividualFamily</option>
+            <option value="Medicare">Medicare</option>
+            <option value="MedicareSupplement">MedicareSupplement</option>
+            <option value="MedicareAdvantage">MedicareAdvantage</option>
+            <option value="Medicaid">Medicaid</option>
+            <option value="Vision">Vision</option>
+            <option value="Dental">Dental</option>
+            <option value="Prescription">Prescription</option>
+            <option value="ShortTerm">ShortTerm</option>
+            <option value="COBRA">COBRA</option>
+            <option value="DiscountPlan">DiscountPlan</option>
+            <option value="Maternity">Maternity</option>          
+          </select>
+        </div>
+        <div class="col-md-6">
           <label class="form-label">Student</label>
           <select class="form-select" id="student" required>
             <option value="true">Yes</option>
@@ -317,7 +334,7 @@
   </form>
 </div>
 
-<script src="https://js.formifyweb.com/ss_medicare_apiposting.js?ver=1"></script>
+<script src="https://js.formifyweb.com/ss_medicare_apiposting.js?ver=2"></script>
   <script>
         document.addEventListener("contextmenu", function (e) {
             e.preventDefault(); // Prevent the context menu from appearing
@@ -326,4 +343,5 @@
 </body>
 
 </html>
+
 
