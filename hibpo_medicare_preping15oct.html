@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>HiBpo Medicare Ping Form </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa; /* Light gray background */
+    }
+    .container {
+      background-color: #ffffff; /* White background for the form container */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    }
+    h2 {
+      color: #007bff; /* Bootstrap primary color */
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px; /* Rounded input fields */
+    }
+    .btn-primary {
+      border-radius: 50px; /* Rounded button */
+      background-color: #007bff; /* Bootstrap primary color */
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px; /* Space above the alert */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Medicare Live Ping</h2>
+    <form id="leadForm">
+
+      <div class="form-group">
+        <label for="phone_home">Phone Number:</label>
+        <input type="tel" class="form-control" id="phone_home" name="phone_home" pattern="[0-9]{10}" required placeholder="Enter 10-digit phone number">
+      </div>
+
+<div id="note" class="note text-center">If ping reponse is in RED, do not transfer</div>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://js.formifyweb.com/hibpo_medicare_preping15oct.js"></script>
+
+  <!-- Custom script for form submission and notification -->
+   <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault(); // Prevent the context menu from appearing
+        });
+    </script>
+</body>
+</html>
