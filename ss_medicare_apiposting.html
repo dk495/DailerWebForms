@@ -271,7 +271,7 @@
       }
     };
 
-    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping_test");
+    const pingUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/ping");
 
     // Send PING
     fetch(pingUrl, {
@@ -292,7 +292,7 @@
           auth_code: data.auth_code
         };
 
-        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post_test");
+        const postUrl = "https://corsproxy.io/?url=" + encodeURIComponent("https://exchange.standardinformation.io/post");
 
         return fetch(postUrl, {
           method: 'POST',
@@ -340,3 +340,4 @@
 </script>
 </body>
 </html>
+
