@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Provoice Medicare Lead Form </title>
+  <title>Medicare Lead Form</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .form-section {
@@ -53,7 +53,7 @@
             <option value="Female">Female</option>
           </select>
         </div>
-       <div class="col-md-4">
+        <div class="col-md-4">
           <label class="form-label">Date of Birth</label>
           <input type="date" class="form-control" id="dob" required>
         </div>
@@ -114,9 +114,7 @@
             <option value="WY">Wyoming</option>
           </select>
         </div>
-        
       </div>
-    
 
       <div class="row">
         <div class="col-12">
@@ -132,7 +130,22 @@
           <label class="form-label">ZIP Code</label>
           <input type="text" class="form-control" id="zip_code" required>
         </div>
-       <div class="col-md-4">
+        <div class="col-md-4">
+          <label class="form-label">IP Address</label>
+          <input type="text" class="form-control" id="ip_address" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Lead ID (Jornaya)</label>
+          <input type="text" class="form-control" id="jornaya_lead_id" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information Section -->
+    <div class="col-12 form-section">
+      <h5 class="section-title">Additional Information</h5>
+      <div class="row">
+        <div class="col-md-4">
           <label class="form-label">Occupation</label>
           <select class="form-select" id="occupation" required>
             <option value="">Select Occupation</option>
@@ -178,176 +191,45 @@
             <option value="Unemployed">Unemployed</option>
           </select>
         </div>
-<div class="col-md-4">
-          <label class="form-label">IP Address</label>
-          <input type="text" class="form-control" id="ip_address" required>
-        </div>
-<div class="col-md-4">
-      <label class="form-label">Lead ID (Jornaya)</label>
-      <input type="text" class="form-control" id="jornaya_lead_id" required>
-    </div>
         <div class="col-md-4">
-      <label class="form-label">Source ID</label>
-      <input type="text" class="form-control" id="source_id" required>
-    </div>
-      </div>
-    </div>
-
-    <!-- Health Information Section -->
-    <div class="col-12 form-section">
-      <h5 class="section-title">Health Information</h5>
-      <div class="row">
-        <div class="col-md-3">
-          <label class="form-label">Height (inches)</label>
-          <input type="number" class="form-control" id="height" required>
+          <label class="form-label">Height (Feet)</label>
+          <input type="number" class="form-control" id="height_ft" required min="4" max="7">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
+          <label class="form-label">Height (Inches)</label>
+          <input type="number" class="form-control" id="height_inches" required min="0" max="11">
+        </div>
+        <div class="col-md-4">
           <label class="form-label">Weight (pounds)</label>
           <input type="number" class="form-control" id="weight" required>
         </div>
-        <div class="col-md-3">
-          <label class="form-label">BMI</label>
-          <input type="number" class="form-control" id="bmi" required>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <label class="form-label">Household Income ($)</label>
           <input type="number" class="form-control" id="household_income" required>
         </div>
-
-        <div class="col-md-6">
-          <label class="form-label">Marital Status</label>
-          <select class="form-select" id="marital_status" required>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
+        <div class="col-md-4">
+          <label class="form-label">Insurance Company</label>
+          <select class="form-select" id="insurance_company" required>
+            <option value="">Select Insurance Company</option>
+            <option value="AARP">AARP</option>
+            <option value="Aetna">Aetna</option>
+            <option value="Blue Cross Blue Shield">Blue Cross Blue Shield</option>
+            <option value="Cigna">Cigna</option>
+            <option value="Humana">Humana</option>
+            <option value="Kaiser Permanente">Kaiser Permanente</option>
+            <option value="UnitedHealthcare">UnitedHealthcare</option>
+            <option value="Other">Other</option>
           </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Coverage Type</label>
-          <select class="form-select" id="requested_coverage_types" required>
-            <option value="IndividualFamily">IndividualFamily</option>
-            <option value="Medicare">Medicare</option>
-            <option value="MedicareSupplement">MedicareSupplement</option>
-            <option value="MedicareAdvantage">MedicareAdvantage</option>
-            <option value="Medicaid">Medicaid</option>
-            <option value="Vision">Vision</option>
-            <option value="Dental">Dental</option>
-            <option value="Prescription">Prescription</option>
-            <option value="ShortTerm">ShortTerm</option>
-            <option value="COBRA">COBRA</option>
-            <option value="DiscountPlan">DiscountPlan</option>
-            <option value="Maternity">Maternity</option>          
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Currently Employed</label>
-          <select class="form-select" id="currently_employed" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Currently Insured</label>
-          <select class="form-select" id="currently_insured" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Self Employed</label>
-          <select class="form-select" id="self_employed" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Student</label>
-          <select class="form-select" id="student" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Tobacco User</label>
-          <select class="form-select" id="tobacco" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">DUI</label>
-          <select class="form-select" id="dui" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Expectant Mother</label>
-          <select class="form-select" id="expectant_mother" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Hospitalized</label>
-          <select class="form-select" id="hospitalized" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Ongoing Medical Treatment</label>
-          <select class="form-select" id="ongoing_medical_treatment" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Preexisting Medical Conditions</label>
-          <select class="form-select" id="preexisting_medical_conditions" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Previously Denied</label>
-          <select class="form-select" id="previously_denied" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Relative with Cancer</label>
-          <select class="form-select" id="relative_cancer" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Relative with Heart Condition</label>
-          <select class="form-select" id="relative_heart" required>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Prescriptions</label>
-          <input type="text" class="form-control" id="prescriptions" required>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Optional Coverage</label>
-          <input type="text" class="form-control" id="optional_coverage" required>
         </div>
       </div>
     </div>
-    
+
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Submit Lead</button>
     </div>
   </form>
 </div>
-
-<script src="https://js.formifyweb.com/pv_medicare_apiposting.js?ver=7"></script>
+<script src="https://js.formifyweb.com/pv_medicare_apiposting.js?ver=8"></script>
   <script>
         document.addEventListener("contextmenu", function (e) {
             e.preventDefault(); // Prevent the context menu from appearing
@@ -356,13 +238,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
