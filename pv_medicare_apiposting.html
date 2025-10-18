@@ -142,8 +142,17 @@
           <label class="form-label">Trusted Form</label>
           <input type="text" class="form-control" id="trusted_form_cert_id" required>
         </div>
+        <div class="col-md-6">
+          <label class="form-label">Marital Status</label>
+          <select class="form-select" id="marital_status" required>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+          </select>
+        </div>
       </div>
     </div>
+    
 
     <!-- Additional Information Section -->
     <div class="col-12 form-section">
@@ -233,7 +242,7 @@
     </div>
   </form>
 </div>
-<script src="https://js.formifyweb.com/pv_medicare_apiposting.js?ver=11"></script>
+<script src="https://js.formifyweb.com/pv_medicare_apiposting.js?ver=12"></script>
   <script>
         document.addEventListener("contextmenu", function (e) {
             e.preventDefault(); // Prevent the context menu from appearing
@@ -242,6 +251,7 @@
 </body>
 
 </html>
+
 
 
 
