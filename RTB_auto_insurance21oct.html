@@ -298,13 +298,14 @@
 </div>
 
 <div class="row">
-               
-               <div class="col-md-4">
+          <div class="col-md-4">
     <div class="form-group">
-        <label for="original_lead_submit_date">Original Lead Submit Date</label>
-        <input type="datetime-local" class="form-control" id="original_lead_submit_date" required>
+        <label for="incident_type">Incident Type</label>
+        <input type="text" class="form-control" id="incident_type" required>
     </div>
 </div>
+     
+               
 
 <div class="col-md-4">
     <div class="form-group">
@@ -324,6 +325,16 @@
 
 
 </div>   
+
+		<div class="row">
+<div class="col-md-4">
+    <div class="form-group">
+        <label for="original_lead_submit_date">Original Lead Submit Date</label>
+        <input type="datetime-local" class="form-control" id="original_lead_submit_date" required>
+    </div>
+</div>
+
+		</div>
   
 <button type="button" class="btn btn-primary" id="submitBtn" onclick="pingAPI()">Ping/Post</button>
     </form>
@@ -353,7 +364,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://js.formifyweb.com/RTB_auto_insurance21oct.js?ver=1"></script>
+  <script src="https://js.formifyweb.com/RTB_auto_insurance21oct.js?ver=2"></script>
 
     
 
@@ -371,6 +382,7 @@
  
 </body>
 </html>
+
 
 
 
