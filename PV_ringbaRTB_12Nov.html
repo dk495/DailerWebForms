@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provoice Final Expense RTB RINGBA</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 5px;
+    }
+    .btn-primary {
+      border-radius: 5px;
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 10px 30px;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+    .required-field::after {
+      content: " *";
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center">Api Form (RTB Posting)</h2>
+    <form id="leadForm">
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone_1" class="required-field">Phone Number</label>
+            <input type="tel" class="form-control" id="phone_1" placeholder="7026435297" required>
+          </div>
+        </div>
+<div class="col-md-4">
+          <div class="form-group">
+            <label for="zipcode" class="required-field">Zipcode</label>
+            <input type="text" class="form-control" id="zipcode" placeholder="5 digit zipcode" required>
+          </div>
+        </div>
+      </div>
+
+            
+      
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js?ver=1"></script>
+  <script src="https://js.formifyweb.com/PV_ringbaRTB_12Nov"></script>
+  
+  <script>
+    // Disable right-click
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    </script>
+</body>
+</html>
