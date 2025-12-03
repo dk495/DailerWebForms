@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <title>Auto Transfer RTB Campaign</title>
@@ -12,8 +11,6 @@
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 30px;
-      margin-bottom: 30px;
     }
     h2 {
       color: #007bff;
@@ -26,8 +23,6 @@
       border-radius: 50px;
       background-color: #007bff;
       border-color: #007bff;
-      padding: 10px 30px;
-      font-weight: bold;
     }
     .btn-primary:hover {
       background-color: #0056b3;
@@ -35,78 +30,30 @@
     }
     .alert {
       margin-top: 20px;
-      border-radius: 10px;
-    }
-    .required::after {
-      content: " *";
-      color: red;
-    }
-    .section-title {
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      margin-top: 30px;
-      color: #495057;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container mt-5">
     <h2 class="text-center">Auto Transfer RTB Campaign Form</h2>
     <form id="leadForm">
-      
-      <!-- Personal Information Section -->
-      <h4 class="section-title">Personal Information</h4>
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="first_name" class="required">First Name</label>
-            <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" id="first_name" placeholder="First Name">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="last_name" class="required">Last Name</label>
-            <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" id="last_name" placeholder="Last Name">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="caller_number" class="required">Phone Number</label>
-            <input type="text" class="form-control" id="caller_number" placeholder="10 digit phone number" required>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Information Section -->
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="email" class="required">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="example@gmail.com" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="ip_address">IP Address</label>
-            <input type="text" class="form-control" id="ip_address" placeholder="">
-          </div>
-        </div>
-      </div>
-
-      <!-- Address Information Section -->
-      <h4 class="section-title">Address Information</h4>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <label for="address" class="required">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="Street address" required>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="zip" class="required">Zip Code</label>
-            <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
+            <label for="caller_number">Phone (ex: 7103847563)</label>
+            <input type="text" class="form-control" id="caller_number" placeholder="10 digit phone number">
           </div>
         </div>
       </div>
@@ -114,14 +61,20 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="city" class="required">City</label>
-            <input type="text" class="form-control" id="city" placeholder="City" required>
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="first-and-last-name@gmail.com">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="state" class="required">State</label>
-            <select class="form-control" id="state" required>
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="City">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="state">State</label>
+            <select class="form-control" id="state">
               <option value="">Select State</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
@@ -177,44 +130,81 @@
             </select>
           </div>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="residence_status" class="required">Residence Status</label>
-            <select class="form-control" id="residence_status" required>
+            <label for="zip">Zipcode</label>
+            <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode">
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Address">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="ip_address">IP Address</label>
+            <input type="text" class="form-control" id="ip_address" placeholder="IPv4 or IPv6">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="jornaya_leadid">Jornaya Lead ID</label>
+            <input type="text" class="form-control" id="jornaya_leadid" placeholder="Jornaya Lead ID">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="original_lead_submit_date">Original Lead Submit Date</label>
+            <input type="text" class="form-control" id="original_lead_submit_date" placeholder="2025-12-03 17:39:32">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="residence_status">Residence Status</label>
+            <select class="form-control" id="residence_status">
               <option value="">Select Status</option>
               <option value="own">Own</option>
               <option value="rent">Rent</option>
               <option value="live_with_parents">Live with Parents</option>
               <option value="dormitory">Dormitory</option>
-              <option value="choice_not_listed">Choice Not Listed</option>
+              <option value="choice_not_llisted">Choice Not Listed</option>
             </select>
           </div>
         </div>
-      </div>
-
-      <!-- Driver Information Section -->
-      <h4 class="section-title">Driver Information</h4>
-      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="driver1_dob" class="required">Date of Birth</label>
-            <input type="date" class="form-control" id="driver1_dob" required>
+            <label for="driver1_dob">Driver Date of Birth</label>
+            <input type="text" class="form-control" id="driver1_dob" placeholder="1968-12-21">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="driver1_gender" class="required">Gender</label>
-            <select class="form-control" id="driver1_gender" required>
+            <label for="driver1_gender">Driver Gender</label>
+            <select class="form-control" id="driver1_gender">
               <option value="">Select Gender</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="driver1_marital_status" class="required">Marital Status</label>
-            <select class="form-control" id="driver1_marital_status" required>
+            <label for="driver1_marital_status">Driver Marital Status</label>
+            <select class="form-control" id="driver1_marital_status">
               <option value="">Select Status</option>
               <option value="single">Single</option>
               <option value="married">Married</option>
@@ -224,87 +214,52 @@
             </select>
           </div>
         </div>
-      </div>
-
-      <!-- Vehicle Information Section -->
-      <h4 class="section-title">Vehicle Information</h4>
-      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="vehicle1_year" class="required">Vehicle Year</label>
-            <input type="text" class="form-control" id="vehicle1_year" placeholder="e.g., 2020" required>
+            <label for="vehicle1_year">Vehicle Year</label>
+            <input type="text" class="form-control" id="vehicle1_year" placeholder="Vehicle Year">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label for="vehicle1_make" class="required">Vehicle Make</label>
-            <input type="text" class="form-control" id="vehicle1_make" placeholder="e.g., Toyota" required>
+            <label for="vehicle1_make">Vehicle Make</label>
+            <input type="text" class="form-control" id="vehicle1_make" placeholder="Vehicle Make">
           </div>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="vehicle1_model" class="required">Vehicle Model</label>
-            <input type="text" class="form-control" id="vehicle1_model" placeholder="e.g., Camry" required>
+            <label for="vehicle1_model">Vehicle Model</label>
+            <input type="text" class="form-control" id="vehicle1_model" placeholder="Vehicle Model">
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="insurance_company">Insurance Company</label>
+            <input type="text" class="form-control" id="insurance_company" placeholder="Insurance Company">
           </div>
         </div>
       </div>
 
-      <!-- Insurance Information Section -->
-      <h4 class="section-title">Insurance Information</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="insurance_company">Current Insurance Company</label>
-            <input type="text" class="form-control" id="insurance_company" placeholder="Current insurance company">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="original_lead_submit_date">Original Lead Submit Date</label>
-            <input type="datetime-local" class="form-control" id="original_lead_submit_date">
-          </div>
-        </div>
-      </div>
-
-      <!-- Additional Information Section -->
-      <h4 class="section-title">Additional Information</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="jornaya_leadid">Jornaya Lead ID</label>
-            <input type="text" class="form-control" id="jornaya_leadid" placeholder="Jornaya Lead ID">
-          </div>
-        </div>
-      </div>
-
-      <!-- Submit Button -->
-      <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">Submit Lead</button>
-      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Post</button>
     </form>
-
-    <!-- Alert Container -->
-    <div id="alertContainer" class="mt-4"></div>
+    
+    <div id="alertContainer"></div>
   </div>
 
   <!-- Bootstrap JS and dependencies -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://js.formifyweb.com/PV_Auto_rtb4dec.js?ver=1"></script>
-  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://js.formifyweb.com/PV_Auto_rtb4dec.js?ver=2"></script>
 
-  
-  <!-- External JavaScript file -->
-  <script src="script.js"></script>
-
-  <!-- Right-click disable script -->
   <script>
-    document.addEventListener('contextmenu', function(event) {
+    function disableRightClick(event) {
       event.preventDefault();
-    });
+    }
+    document.addEventListener('contextmenu', disableRightClick);
   </script>
 </body>
-
 </html>
-
