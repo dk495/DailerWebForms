@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PV Client Posting Portal 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    h1 {
+      color: #f8fafc;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .card-box {
+      border: none;
+      border-radius: 15px;
+      padding: 25px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+      margin-top: 20px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      filter: brightness(1.1);
+    }
+    /* Bathroom - Deep Purple */
+    .bathroom {
+      background: linear-gradient(135deg, #3730a3 0%, #7e22ce 100%);
+    }
+    /* HVAC - Slate/Blue */
+    .hvac {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+    }
+    /* Pest Control - Emerald/Teal */
+    .pest-control {
+      background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #10b981 100%);
+    }
+    /* Roofing - Amber/Orange */
+    .roofing {
+      background: linear-gradient(135deg, #78350f 0%, #d97706 50%, #fbbf24 100%);
+    }
+    /* Siding - Rose/Fuchsia */
+    .siding {
+      background: linear-gradient(135deg, #831843 0%, #be185d 50%, #ec4899 100%);
+    }
+    /* Windows - Indigo/Blue */
+    .windows {
+      background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #818cf8 100%);
+    }
+    h3 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    p {
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container text-center py-5">
+  <h1 class="mb-5 fw-bold">PV Client Posting Portal 3</h1>
+
+  <!-- Services Grid -->
+  <div class="row g-4 justify-content-center">
+    <!-- Bathroom -->
+    <div class="col-md-4">
+      <div class="card-box bathroom" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-Bathroom.html'">
+        <h3>Bathroom</h3>
+        <p>Post to Mili - Bathroom</p>
+      </div>
+    </div>
+    
+    <!-- HVAC -->
+    <div class="col-md-4">
+      <div class="card-box hvac" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-HVAC.html'">
+        <h3>HVAC</h3>
+        <p>Post to Mili - HVAC</p>
+      </div>
+    </div>
+    
+    <!-- Pest Control -->
+    <div class="col-md-4">
+      <div class="card-box pest-control" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-pestcontrol.html'">
+        <h3>Pest Control</h3>
+        <p>Post to Mili - Pest Control</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 justify-content-center mt-4">
+    <!-- Roofing -->
+    <div class="col-md-4">
+      <div class="card-box roofing" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-roofing.html'">
+        <h3>Roofing</h3>
+        <p>Post to Mili - Roofing</p>
+      </div>
+    </div>
+    
+    <!-- Siding -->
+    <div class="col-md-4">
+      <div class="card-box siding" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-siding'">
+        <h3>Siding</h3>
+        <p>Post to Mili - Siding</p>
+      </div>
+    </div>
+    
+    <!-- Windows -->
+    <div class="col-md-4">
+      <div class="card-box windows" onclick="window.location.href='https://forms.formifyweb.com/Pv_clients_ApiPostingPortal3-windows'">
+        <h3>Windows</h3>
+        <p>Post to Mili - Windows</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
