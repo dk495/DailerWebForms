@@ -1,0 +1,131 @@
+<html>
+<head>
+  <title>PV Windows RTB form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa; /* Light gray background */
+    }
+    .container {
+      background-color: #ffffff; /* White background for the form container */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    }
+    h2 {
+      color: #007bff; /* Bootstrap primary color */
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px; /* Rounded input fields */
+    }
+    .btn-primary {
+      border-radius: 50px; /* Rounded button */
+      background-color: #007bff; /* Bootstrap primary color */
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px; /* Space above the alert */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Windows Api Post Form (RTB)</h2>
+  <form id="leadForm">
+  <div class="row">
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+      </div>
+    </div>
+ <div class="col-md-4">
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+      </div>
+    </div>
+
+
+  <div class="col-md-4">
+      <div class="form-group">
+        <label for="caller_id">Phone (ex: 7103847563)</label>
+        <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+      </div>
+</div>
+
+
+</div>
+<div class="row">
+<div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+      </div>
+    </div>
+
+<div class="col-md-4">
+          <div class="form-group">
+            <label for="zip">Zipcode</label>
+            <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
+          </div>
+        </div>
+<div class="col-md-8">
+      <div class="form-group">
+        <label for="trusted_form_url">Trusted form url</label>
+        <input type="text" class="form-control" id="trusted_form_url" placeholder="https://" required>
+      </div>
+</div>
+
+ </div>
+<div class="row">
+
+
+
+
+
+</div>  
+<button type="Submit" class="btn btn-primary" id="submitBtn">Post</button>
+    </form>
+ <div id="alertContainer"></div>
+
+
+
+
+    
+
+
+   
+
+
+
+    
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://js.formifyweb.com/pv_windowsrtb_16jan.js"></script>
+
+    
+
+
+ <script>
+    // Function to handle the contextmenu event
+    function disableRightClick(event) {
+      // Prevent the default right-click behavior
+      event.preventDefault();
+    }
+
+    // Attach the event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+  </script>
+ 
+</body>
+</html>
