@@ -41,8 +41,14 @@
      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="full_name">Full Name</label>
-            <input type="text" class="form-control" id="full_name" placeholder="First and Last Name" required>
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" id="first_name" placeholder="John" required>
+          </div>
+        </div>
+       <div class="col-md-4">
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" id="last_name" placeholder="Smith" required>
           </div>
         </div>
         <div class="col-md-4">
@@ -50,13 +56,8 @@
               <label for="caller_id">Phone no. (ex. 7026435297)</label>
               <input type="text" class="form-control" id="caller_id" placeholder="CallerID" required>
             </div>
-          </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
-          </div>
-        </div>
+          </div>     
+        
       </div>      
 
 
@@ -64,8 +65,13 @@
 
     
     <div class="row">
-        
-        <div class="col-md-4">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+          </div>
+        </div>
+        <div class="col-md-3">
           <div class="form-group">
             <label for="incident_state">State</label>
             <select class="form-control" id="incident_state" required>
@@ -124,13 +130,13 @@
             </select>
           </div>
         </div>
-       <div class="col-md-4">
+       <div class="col-md-3">
           <div class="form-group">
             <label for="zipcode">Zipcode</label>
             <input type="text" class="form-control" id="zipcode" placeholder="5 digit zipcode" required>
           </div>
         </div>
-       <div class="col-md-4">
+       <div class="col-md-3">
           <div class="form-group">
             <label for="incident_date">Incident Date</label>
             <input type="date" class="form-control" id="incident_date" placeholder="mm/dd/yyyy" required>
@@ -282,7 +288,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://js.formifyweb.com/Bluecross_rtb_10dec.js?ver=1"></script>
+  <script src="https://js.formifyweb.com/Bluecross_rtb_10dec.js?ver=2"></script>
   <!-- Custom script for form submission and notification -->
   <script>
     document.addEventListener("contextmenu", function (e) {
@@ -292,3 +298,4 @@
 </body>
 
 </html>
+
