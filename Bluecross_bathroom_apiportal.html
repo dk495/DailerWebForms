@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathroom Remodel - Lead Posting Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bathroom-styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Bathroom Remodel - Lead Submission</h2>
+        <form id="leadForm">
+            <!-- Personal Information -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first_name" class="required">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="John">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last_name" class="required">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Doe">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone" class="required">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="(650) 327-1100">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="john@doe.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Information -->
+            <div class="form-group">
+                <label for="address" class="required">Address</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="123 Main St">
+            </div>
+
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city" class="required">City</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="New York">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="state" class="required">State</label>
+                        <select class="form-control" id="state" name="state" required>
+                            <option value="">Select State</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="zip_code" class="required">Zip Code</label>
+                        <input type="text" class="form-control" id="zip_code" name="zip_code" placeholder="Enter Zipcode" pattern="\d{5}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bathroom Remodel Details -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="project_type" class="required">Project Type</label>
+                        <select class="form-control" id="project_type" name="project_type" required>
+                            <option value="">Select Project Type</option>
+                            <option value="Bath sinks">Bath sinks</option>
+                            <option value="Full bathroom">Full bathroom</option>
+                            <option value="Tile">Tile</option>
+                            <option value="Complete Bathroom Remodel">Complete Bathroom Remodel</option>
+                            <option value="Vanity Replacement">Vanity Replacement</option>
+                            <option value="Bathtub Liner/Shower Enclosure">Bathtub Liner/Shower Enclosure</option>
+                            <option value="Bathtub to Shower Conversion">Bathtub to Shower Conversion</option>
+                            <option value="Shower to Bathtub Conversion">Shower to Bathtub Conversion</option>
+                            <option value="Walk-In Tub Installation">Walk-In Tub Installation</option>
+                            <option value="Bathtub/Shower Updates">Bathtub/Shower Updates</option>
+                            <option value="Not Sure">Not Sure</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="time_frame">Time Frame</label>
+                        <select class="form-control" id="time_frame" name="time_frame">
+                            <option value="">Select Time Frame</option>
+                            <option value="Immediately">Immediately</option>
+                            <option value="Within 1 months">Within 1 month</option>
+                            <option value="1-3 months">1-3 Months</option>
+                            <option value="3+ months">3+ Months</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ownership" class="required">Ownership</label>
+                        <select class="form-control" id="ownership" name="ownership" required>
+                            <option value="">Select Ownership</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Own">Own</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="credit_rating" class="required">Credit Rating</label>
+                        <select class="form-control" id="credit_rating" name="credit_rating" required>
+                            <option value="">Select Credit Rating</option>
+                            <option value="Excellent">Excellent</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                            <option value="Poor">Poor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Fields -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ip_address" class="required">IP Address</label>
+                        <input type="text" class="form-control" id="ip_address" name="ip_address" placeholder="127.0.0.1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="trustedform_cert_url" class="required">TrustedForm Certificate URL</label>
+                        <input type="url" class="form-control" id="trustedform_cert_url" name="trustedform_cert_url" placeholder="https://cert.trustedform.com/...">
+                    </div>
+                </div>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Submit Lead</button>
+        </form>
+
+        <div id="alertContainer" class="mt-3"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="https://js.formifyweb.com/Bluecross_bathroom_apiportal.js"></script>
+</body>
+</html>

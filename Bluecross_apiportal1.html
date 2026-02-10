@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueCross API Portal L-P</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+        }
+        
+        .portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .card-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .card-body p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .btn-service {
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-service:hover {
+            transform: scale(1.05);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Color schemes for each service */
+        .windows-card .card-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+        
+        .windows-card .btn-service {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+        
+        .bathroom-card .card-header {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        }
+        
+        .bathroom-card .btn-service {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        }
+        
+        .roofing-card .card-header {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+        }
+        
+        .roofing-card .btn-service {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+        }
+        
+        .siding-card .card-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+        
+        .siding-card .btn-service {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .instructions h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card-header {
+                height: 120px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .portal-container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+                margin-bottom: 30px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .instructions {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>BlueCross API Portal L-P</h1>
+            <p>Lead Processing Portal for Home Services</p>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3>Portal Instructions</h3>
+            <ul>
+                <li>Select the service type you want to submit leads for</li>
+                <li>Each form is customized for specific home service requirements</li>
+                <li>All forms use the Ping/Post API integration method</li>
+                <li>Required fields are marked with a red asterisk (*)</li>
+                <li>Ensure all information is accurate before submission</li>
+            </ul>
+        </div>
+        
+        <!-- Services Grid -->
+        <div class="services-grid">
+            <!-- Windows Service Card -->
+            <div class="service-card windows-card">
+                <div class="card-header">
+                    Windows Services
+                </div>
+                <div class="card-body">
+                    <h3>Window Installation & Repair</h3>
+                    <p>Submit leads for window installation, repair, replacement, and cleaning services. Includes all window-related home improvement needs.</p>
+                    <a href="https://forms.formifyweb.com/Bluecross_window_apiportal.html" class="btn-service">Open Windows Form</a>
+                </div>
+            </div>
+            
+            <!-- Bathroom Remodel Card -->
+            <div class="service-card bathroom-card">
+                <div class="card-header">
+                    Bathroom Remodel
+                </div>
+                <div class="card-body">
+                    <h3>Bathroom Renovation</h3>
+                    <p>Submit leads for bathroom remodeling, renovation, tub/shower conversions, vanity replacement, and complete bathroom makeovers.</p>
+                    <a href="https://forms.formifyweb.com/Bluecross_bathroom_apiportal.html" class="btn-service">Open Bathroom Form</a>
+                </div>
+            </div>
+            
+            <!-- Roofing Card -->
+            <div class="service-card roofing-card">
+                <div class="card-header">
+                    Roofing Services
+                </div>
+                <div class="card-body">
+                    <h3>Roof Repair & Replacement</h3>
+                    <p>Submit leads for roofing services including repair, replacement, new installations, and all types of roof maintenance.</p>
+                    <a href="https://forms.formifyweb.com/Bluecross_roofing_apiportal.html" class="btn-service">Open Roofing Form</a>
+                </div>
+            </div>
+            
+            <!-- Siding Card -->
+            <div class="service-card siding-card">
+                <div class="card-header">
+                    Siding Services
+                </div>
+                <div class="card-body">
+                    <h3>Siding Installation</h3>
+                    <p>Submit leads for siding installation, repair, and replacement services. All siding materials including vinyl, wood, metal, and stucco.</p>
+                    <a href="https://forms.formifyweb.com/Bluecross_siding_apiportal.html" class="btn-service">Open Siding Form</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Add animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on load
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Add click effect to cards
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('btn-service')) {
+                        const link = this.querySelector('.btn-service');
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                    }
+                });
+                
+                card.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.cursor = 'default';
+                });
+            });
+            
+            // Add service statistics (optional)
+            const serviceStats = {
+                windows: 'Window Repair, Installation, Cleaning, Replacement',
+                bathroom: 'Complete Remodels, Tub/Shower Conversions, Vanity',
+                roofing: 'Roof Repair, Replacement, New Installations',
+                siding: 'Siding Installation, Repair, All Material Types'
+            };
+            
+            // Optional: Add service details on hover
+            const serviceDetails = document.querySelectorAll('.card-body p');
+            serviceDetails.forEach((detail, index) => {
+                const services = Object.values(serviceStats);
+                if (services[index]) {
+                    detail.setAttribute('title', `Services: ${services[index]}`);
+                }
+            });
+        });
+        
+        // Prevent right-click
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
