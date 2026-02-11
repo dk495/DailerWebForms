@@ -144,37 +144,61 @@
       padding-top: 20px;
       border-top: 1px solid #e9ecef;
     }
-    .bid-info {
-      background-color: #e8f4fd;
-      border-left: 4px solid #007bff;
-      padding: 12px 18px;
-      margin-top: 15px;
+    .response-box {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
       border-radius: 8px;
-      font-weight: 500;
+      padding: 20px;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-left: 4px solid #007bff;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 400px;
+      overflow-y: auto;
     }
-    .bid-id {
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      color: #fff;
       font-weight: bold;
+    }
+    .response-title {
       color: #007bff;
-      font-size: 1.1em;
+      font-size: 16px;
     }
-    .bid-amount {
-      font-weight: bold;
-      color: #28a745;
-      font-size: 1.1em;
+    .response-status {
+      background-color: #28a745;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
     }
-    .lead-id {
-      font-weight: bold;
+    .response-timestamp {
       color: #6c757d;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .json-key {
+      color: #9cdcfe;
+    }
+    .json-string {
+      color: #ce9178;
+    }
+    .json-number {
+      color: #b5cea8;
+    }
+    .json-boolean {
+      color: #569cd6;
+    }
+    .json-null {
+      color: #569cd6;
     }
     .debug-info {
-      background-color: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 5px;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 12px;
-      max-height: 200px;
-      overflow-y: auto;
       display: none;
     }
   </style>
@@ -225,9 +249,8 @@
           </button>
         </div>
       </form>
-      <div id="bathroomBidInfo" class="bid-info" style="display: none;"></div>
+      <div id="bathroomResponse" class="response-box" style="display: none;"></div>
       <div id="bathroomAlertContainer" class="mt-3"></div>
-      <div id="bathroomDebug" class="debug-info"></div>
     </div>
 
     <!-- Roofing Form Container -->
@@ -259,9 +282,8 @@
           </button>
         </div>
       </form>
-      <div id="roofingBidInfo" class="bid-info" style="display: none;"></div>
+      <div id="roofingResponse" class="response-box" style="display: none;"></div>
       <div id="roofingAlertContainer" class="mt-3"></div>
-      <div id="roofingDebug" class="debug-info"></div>
     </div>
 
     <!-- Windows Form Container -->
@@ -293,9 +315,8 @@
           </button>
         </div>
       </form>
-      <div id="windowsBidInfo" class="bid-info" style="display: none;"></div>
+      <div id="windowsResponse" class="response-box" style="display: none;"></div>
       <div id="windowsAlertContainer" class="mt-3"></div>
-      <div id="windowsDebug" class="debug-info"></div>
     </div>
   </div>
 
@@ -384,41 +405,70 @@
       }, 5000);
     }
 
-    // Function to show bid information
-    function showBidInfo(bidInfoId, bidId, bidAmount, leadId = null) {
-      const bidInfoDiv = document.getElementById(bidInfoId);
+    // Function to format JSON with syntax highlighting
+    function formatJSON(obj) {
+      const jsonString = JSON.stringify(obj, null, 2);
+      return jsonString.replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+          let cls = 'json-number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'json-key';
+            } else {
+              cls = 'json-string';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'json-boolean';
+          } else if (/null/.test(match)) {
+            cls = 'json-null';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+
+    // Function to show full response
+    function showFullResponse(responseId, responseData, status, url) {
+      const responseDiv = document.getElementById(responseId);
       
-      let html = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <span style="color: #6c757d;">BID ID:</span> 
-            <span class="bid-id">${bidId || 'N/A'}</span>
-          </div>
-          <div>
-            <span style="color: #6c757d;">BID AMOUNT:</span> 
-            <span class="bid-amount">$${bidAmount ? bidAmount.toFixed(2) : '0.00'}</span>
-          </div>
-        </div>
-      `;
+      const timestamp = new Date().toLocaleString();
+      const statusText = status === 'success' ? 'Success' : 'Error';
+      const statusClass = status === 'success' ? 'response-status' : 'response-status bg-danger';
       
-      if (leadId) {
-        html += `
-          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #cce5ff;">
-            <span style="color: #6c757d;">LEAD ID:</span> 
-            <span class="lead-id">${leadId}</span>
-          </div>
-        `;
+      let responseContent = '';
+      
+      if (typeof responseData === 'string') {
+        try {
+          // Try to parse as JSON first
+          const jsonData = JSON.parse(responseData);
+          responseContent = formatJSON(jsonData);
+        } catch (e) {
+          // If not JSON, show as plain text
+          responseContent = `<span class="json-string">${responseData}</span>`;
+        }
+      } else {
+        responseContent = formatJSON(responseData);
       }
       
-      bidInfoDiv.innerHTML = html;
-      bidInfoDiv.style.display = 'block';
+      const html = `
+        <div class="response-header">
+          <span class="response-title">📡 Ringba RTB Response</span>
+          <span class="${statusClass}">${statusText}</span>
+        </div>
+        <div class="response-timestamp">
+          <span>🕐 ${timestamp}</span>
+          <span style="margin-left: 15px;">🔗 ${url || 'N/A'}</span>
+        </div>
+        <div style="border-bottom: 1px solid #333; margin-bottom: 15px;"></div>
+        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px;">${responseContent}</pre>
+      `;
       
-      // Auto hide after 10 seconds
-      setTimeout(() => {
-        if (bidInfoDiv.parentNode) {
-          bidInfoDiv.style.display = 'none';
-        }
-      }, 10000);
+      responseDiv.innerHTML = html;
+      responseDiv.style.display = 'block';
+      
+      // Auto scroll to response
+      responseDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Function to validate phone number (CID)
@@ -431,50 +481,8 @@
       return /^\d{5}$/.test(zip);
     }
 
-    // Function to generate mock bid data (for demo purposes)
-    // In production, this would come from the Ringba response
-    function generateBidData() {
-      const bidId = 'BID-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-      const bidAmount = Math.floor(Math.random() * (35 - 15 + 1) + 15); // Random between $15-$35
-      return { bidId, bidAmount };
-    }
-
-    // Function to extract bid data from Ringba response
-    function extractBidData(responseData) {
-      let bidId = null;
-      let bidAmount = null;
-      let leadId = null;
-      
-      if (responseData) {
-        // Try to extract from various response formats
-        if (responseData.bid_id) bidId = responseData.bid_id;
-        else if (responseData.bidId) bidId = responseData.bidId;
-        else if (responseData.id) bidId = responseData.id;
-        else if (responseData.BidId) bidId = responseData.BidId;
-        
-        if (responseData.bid_amount) bidAmount = parseFloat(responseData.bid_amount);
-        else if (responseData.bidAmount) bidAmount = parseFloat(responseData.bidAmount);
-        else if (responseData.price) bidAmount = parseFloat(responseData.price);
-        else if (responseData.Price) bidAmount = parseFloat(responseData.Price);
-        
-        if (responseData.lead_id) leadId = responseData.lead_id;
-        else if (responseData.leadId) leadId = responseData.leadId;
-        else if (responseData.CallSid) leadId = responseData.CallSid;
-        else if (responseData.call_id) leadId = responseData.call_id;
-      }
-      
-      // If no bid data from response, generate mock data for display
-      if (!bidId || !bidAmount) {
-        const mockData = generateBidData();
-        bidId = bidId || mockData.bidId;
-        bidAmount = bidAmount || mockData.bidAmount;
-      }
-      
-      return { bidId, bidAmount, leadId };
-    }
-
     // Function to submit lead via proxy
-    async function submitLeadViaProxy(endpoint, cid, zip, formName, alertContainer, bidInfoId, submitBtnId, originalText) {
+    async function submitLeadViaProxy(endpoint, cid, zip, formName, alertContainer, responseId, submitBtnId, originalText) {
       // Construct the original URL with ONLY CID and zipcode
       const originalUrl = `${endpoint}?CID=${cid}&zipcode=${zip}`;
       
@@ -496,38 +504,29 @@
         try {
           responseData = JSON.parse(responseText);
         } catch (e) {
-          responseData = { raw: responseText };
+          responseData = responseText;
         }
 
-        // Extract bid data from response
-        const { bidId, bidAmount, leadId } = extractBidData(responseData);
-
+        // Show the full response
+        showFullResponse(responseId, responseData, response.ok ? 'success' : 'error', originalUrl);
+        
         if (response.ok) {
-          let successMessage = `${formName} form submitted successfully!`;
-          showAlert(alertContainer, successMessage, 'success');
-          
-          // Show bid information
-          showBidInfo(bidInfoId, bidId, bidAmount, leadId);
-          
-          // Clear the form
+          showAlert(alertContainer, `${formName} form submitted successfully!`, 'success');
           document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
         } else {
-          // Even if response is not OK, generate mock bid data for display
-          const { bidId, bidAmount, leadId } = extractBidData(null);
-          showAlert(alertContainer, `${formName} form submitted`, 'success');
-          showBidInfo(bidInfoId, bidId, bidAmount, leadId);
+          showAlert(alertContainer, `${formName} form submitted (response received)`, 'info');
           document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
         }
 
-        return { success: response.ok, data: responseData, bidId, bidAmount, leadId };
+        return { success: response.ok, data: responseData };
       } catch (error) {
         console.error('Error:', error);
-        // On error, generate mock bid data for display
-        const { bidId, bidAmount, leadId } = extractBidData(null);
-        showAlert(alertContainer, `${formName} form submitted successfully!`, 'success');
-        showBidInfo(bidInfoId, bidId, bidAmount, leadId);
+        
+        // Show error response
+        showFullResponse(responseId, { error: error.message, message: 'Failed to connect to Ringba' }, 'error', originalUrl);
+        showAlert(alertContainer, `${formName} form submission attempted`, 'warning');
         document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
-        return { success: true, error: error.message, bidId, bidAmount, leadId };
+        return { success: false, error: error.message };
       } finally {
         hideLoading(submitBtnId, originalText);
       }
@@ -564,7 +563,7 @@
         zip,
         'Bathroom',
         'bathroomAlertContainer',
-        'bathroomBidInfo',
+        'bathroomResponse',
         'bathroomSubmitBtn',
         originalText
       );
@@ -601,7 +600,7 @@
         zip,
         'Roofing',
         'roofingAlertContainer',
-        'roofingBidInfo',
+        'roofingResponse',
         'roofingSubmitBtn',
         originalText
       );
@@ -638,7 +637,7 @@
         zip,
         'Windows',
         'windowsAlertContainer',
-        'windowsBidInfo',
+        'windowsResponse',
         'windowsSubmitBtn',
         originalText
       );
