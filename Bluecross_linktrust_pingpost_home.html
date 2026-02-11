@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluecross LinkTrust Ping/Post Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .conditional-dropdown {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+<h2 class="text-center">Bluecross Api Ping/Post</h2>
+        <form id="dynamicForm" class="row g-3">
+            <!-- Required Fields -->
+           
+            <div class="col-md-6">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input type="text" id="_FirstName" name="_FirstName" class="form-control" placeholder="First Name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input type="text" id="_LastName" name="_LastName" class="form-control" placeholder="Last Name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Phone" class="form-label">Phone</label>
+                <input type="text" id="_Phone" name="_Phone" class="form-control" placeholder="Phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" id="Email" name="Email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" id="_Address" name="_Address" class="form-control" placeholder="Address" required>
+            </div>
+            <div class="col-md-6">
+                <label for="City" class="form-label">City</label>
+                <input type="text" id="_City" name="_City" class="form-control" placeholder="City" required>
+            </div>
+            <div class="col-md-6">
+                <label for="State" class="form-label">State</label>
+                <input type="text" id="_State" name="_State" class="form-control" placeholder="State" required>
+            </div>
+            <div class="col-md-6">
+                <label for="PostalCode" class="form-label">Postal Code</label>
+                <input type="text" id="_PostalCode" name="_PostalCode" class="form-control" placeholder="Postal Code" required>
+            </div>
+            <div class="col-md-6">
+                <label for="LandingPageURL" class="form-label">Landing Page URL</label>
+                <input type="text" id="LandingPageURL" name="LandingPageURL" value="https://topamericaninsurance.com/" class="form-control" placeholder="Landing Page URL" required>
+            </div>
+            <div class="col-md-6">
+                <label for="TCPAConsentText" class="form-label">TCPA Consent Text</label>
+                <input type="text" id="TCPAConsentText" name="TCPAConsentText" class="form-control" placeholder="TCPA Consent Text" value="By clicking the "Submit" button, I provide my electronic signature and represent that I am at least 18 and agree to this website\'s Privacy Policy and Terms and Conditions. I also provide my express written consent and authorization to the owner of this website and/or the agents of one or more of the listed Partners to contact me for marketing/telemarketing purposes such as Medicare Supplement Plans, Medicare Advantage, Prescription Drug Plans, Auto Insurance, Life or Final Expense Insurance, at the number and address provided above, including my wireless number if provided, using live operators, automated telephone dialing systems, artificial voice or pre-recorded messages, text messages and/or emails, if applicable, even if I have previously registered the provided number on any Federal or State Do Not Call Registry. I understand that my consent is not required as a condition of purchasing goods or services and can be revoked at any time." readonly required>
+            </div>
+            <div class="col-md-6">
+                <label for="IP" class="form-label">IP</label>
+                <input type="text" id="IP" name="IP" class="form-control" placeholder="IP address here" required>
+            </div>
+            <div class="col-md-6">
+                <label for="TrustedFormCertUrl" class="form-label">Trusted Form Cert URL</label>
+                <input type="text" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" class="form-control" placeholder="Trusted Form Cert URL" required>
+            </div>
+            <div class="col-md-6">
+                <label for="UniversalLeadID" class="form-label">Universal Lead ID</label>
+                <input type="text" id="Universal_Lead_ID" name="Universal_Lead_ID" class="form-control" placeholder="Universal Lead ID" required>
+            </div>
+            <div class="col-md-6">
+                <label for="UserAgent" class="form-label">User Agent</label>
+                <input type="text" id="UA" name="UA" class="form-control" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" placeholder="User Agent" required>
+            </div>
+ <!-- Default Value Dropdowns -->
+            <div class="col-md-6">
+                <label for="Time_Frame" class="form-label">Time Frame</label>
+                <select name="Time_Frame" id="Time_Frame" class="form-select">
+                    <option value="Timing is Flexible">Timing is Flexible</option>
+                    <option value="ASAP">ASAP</option>
+                    <option value="1-2 Weeks">1-2 Weeks</option>
+                    <option value="3-4 Weeks">3-4 Weeks</option>
+                    <option value="5-6 Weeks">5-6 Weeks</option>
+                    <option value="7-8 Weeks">7-8 Weeks</option>
+                    <option value="9-12 Weeks">9-12 Weeks</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="Project_Status" class="form-label">Project Status</label>
+                <select name="Project_Status" id="Project_Status" class="form-select">
+                    <option value="Ready to Hire">Ready to Hire</option>
+                    <option value="Planning and Budgeting">Planning and Budgeting</option>
+                    
+                </select>
+            </div>
+               <!-- Dropdown Fields -->
+            <div class="col-md-6">
+                <label for="HomeService" class="form-label">Home Service</label>
+                <select name="HomeService" id="HomeService" class="form-select" required>
+                    <option value="">-- Select Home Service --</option>
+                    <option value="Additions">Additions</option>
+                    <option value="Additions and Remodels">Additions and Remodels</option>
+                    <option value="Bathroom Remodeling">Bathroom Remodeling</option>
+                    <option value="Cabinets">Cabinets</option>
+                    <option value="HVAC">HVAC</option>
+                    <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Remodeling">Remodeling</option>
+                    <option value="Roofing">Roofing</option>
+                    <option value="Siding">Siding</option>
+                    <option value="Solar Energy">Solar Energy</option>
+                    <option value="Sunrooms">Sunrooms</option>
+                    <option value="Windows">Windows</option>
+                </select>
+            </div>
+
+            <!-- Conditional Dropdowns -->
+            <div id="Additions" class="conditional-dropdown col-md-6">
+                <label for="AdditionsOptions" class="form-label">Addition Options</label>
+                <select name="AdditionsOptions" id="AdditionsOptions" class="form-select">
+                    <option value="">-- Select Option --</option>
+                    <option value="Bathroom Addition">Bathroom Addition</option>
+                    <option value="Below Ground Addition">Below Ground Addition</option>
+                    <option value="Kitchen Addition">Kitchen Addition</option>
+                    <option value="Room Addition">Room Addition</option>
+                    <option value="Second Story Addition">Second Story Addition</option>
+                </select>
+            </div>
+
+            <div id="Additions and Remodels" class="conditional-dropdown col-md-6">
+                <label for="AdditionsRemodelsOptions" class="form-label">Addition and Remodel Options</label>
+                <select name="AdditionsRemodelsOptions" id="AdditionsRemodelsOptions" class="form-select">
+                    <option value="">-- Select Option --</option>
+                    <option value="Additions - Closet">Additions - Closet</option>
+                    <option value="Additions - Garage">Additions - Garage</option>
+                    <option value="Additions - To Existing Structure">Additions - To Existing Structure</option>
+                    <option value="Remodel - Accommodate a Disability">Remodel - Accommodate a Disability</option>
+                    <option value="Remodel - Basement">Remodel - Basement</option>
+                    <option value="Remodel - Garage">Remodel - Garage</option>
+                    <option value="Remodel - Multiple Rooms">Remodel - Multiple Rooms</option>
+                    <option value="Electrical For Home Addition/Remodel">Electrical For Home Addition/Remodel</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="Bathroom Remodeling" class="conditional-dropdown col-md-6">
+                <label for="BathroomRemodelingOptions" class="form-label">Bathroom Remodeling Options</label>
+                <select name="BathroomRemodelingOptions" id="BathroomRemodelingOptions" class="form-select">
+                    <option value="">-- Select Option --</option>
+                    <option value="Bathroom Remodeling">Bathroom Remodeling</option>
+                    <option value="Bathroom/Shower Install">Bathroom/Shower Install</option>
+                    <option value="Bathroom/Shower Repair">Bathroom/Shower Repair</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+<div id="Cabinets" class="conditional-dropdown col-md-6">
+    <label for="CabinetOptions" class="form-label">Cabinet Service Options</label>
+    <select name="CabinetOptions" id="CabinetOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Cabinet Fabrication">Cabinet Fabrication</option>
+        <option value="Cabinet Installation">Cabinet Installation</option>
+        <option value="Cabinet Refacing">Cabinet Refacing</option>
+        <option value="Cabinet Repair">Cabinet Repair</option>
+        <option value="Cabinet Restoration">Cabinet Restoration</option>
+        <option value="Custom Cabinets">Custom Cabinets</option>
+    </select>
+</div>
+<div id="HVAC" class="conditional-dropdown col-md-6">
+    <label for="HVACOptions" class="form-label">HVAC Service Options</label>
+    <select name="HVACOptions" id="HVACOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Install Central A/C">Install Central A/C</option>
+        <option value="Central A/C - Repair/Service">Central A/C - Repair/Service</option>
+        <option value="Ductless (mini-split) A/C Install">Ductless (mini-split) A/C Install</option>
+        <option value="Window A/C Unit Service or Repair">Window A/C Unit Service or Repair</option>
+        <option value="Install Gas or Electric Boiler or Radiator">Install Gas or Electric Boiler or Radiator</option>
+        <option value="Boiler Repair">Boiler Repair</option>
+        <option value="Install Gas or Electric Furnace">Install Gas or Electric Furnace</option>
+        <option value="Install Heat Pump">Install Heat Pump</option>
+        <option value="Install Oil Boiler or Radiator">Install Oil Boiler or Radiator</option>
+        <option value="Radiant Floor Heating System - Install">Radiant Floor Heating System - Install</option>
+        <option value="Radiant Floor Heating System - Repair">Radiant Floor Heating System - Repair</option>
+        <option value="Install Oil Furnace">Install Oil Furnace</option>
+        <option value="Install Swamp Cooler">Install Swamp Cooler</option>
+        <option value="Swimming Pool Heaters Installation">Swimming Pool Heaters Installation</option>
+        <option value="Swimming Pool Heaters Repair">Swimming Pool Heaters Repair</option>
+        <option value="Water Heater Installation">Water Heater Installation</option>
+        <option value="Water Heater Repair">Water Heater Repair</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+<div id="Kitchen Remodeling" class="conditional-dropdown col-md-6">
+    <label for="KitchenRemodelingOptions" class="form-label">Kitchen Remodeling Options</label>
+    <select name="KitchenRemodelingOptions" id="KitchenRemodelingOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+        <option value="Floor plan">Floor plan</option>
+        <option value="Cabinets">Cabinets</option>
+        <option value="Appliances">Appliances</option>
+        <option value="Counter tops or sinks">Counter tops or sinks</option>
+        <option value="Flooring">Flooring</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+<div id="Plumbing" class="conditional-dropdown col-md-6">
+    <label for="PlumbingOptions" class="form-label">Plumbing Service Options</label>
+    <select name="PlumbingOptions" id="PlumbingOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Drain Cleaning">Drain Cleaning</option>
+        <option value="Plumbing Installation">Plumbing Installation</option>
+        <option value="Plumbing Repair">Plumbing Repair</option>
+        <option value="Plumbing System Cleaning">Plumbing System Cleaning</option>
+        <option value="Septic Tank Cleaning">Septic Tank Cleaning</option>
+        <option value="Sewer Cleaning">Sewer Cleaning</option>
+    </select>
+</div>
+<div id="Remodeling" class="conditional-dropdown col-md-6">
+    <label for="RemodelingOptions" class="form-label">Remodeling Service Options</label>
+    <select name="RemodelingOptions" id="RemodelingOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Basement Remodeling">Basement Remodeling</option>
+        <option value="Bathroom Remodeling">Bathroom Remodeling</option>
+        <option value="Complete Home Remodeling">Complete Home Remodeling</option>
+        <option value="Garage Remodeling">Garage Remodeling</option>
+        <option value="Handicap Renovations">Handicap Renovations</option>
+        <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+        <option value="Room Remodeling">Room Remodeling</option>
+    </select>
+</div>
+<div id="Roofing" class="conditional-dropdown col-md-6">
+    <label for="RoofingOptions" class="form-label">Roofing Service Options</label>
+    <select name="RoofingOptions" id="RoofingOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Commercial Roofing">Commercial Roofing</option>
+        <option value="Concrete Roof Installation">Concrete Roof Installation</option>
+        <option value="Install Asphalt Shingle Roofing">Install Asphalt Shingle Roofing</option>
+        <option value="Install Flat, Foam, or Single Ply Roofing">Install Flat, Foam, or Single Ply Roofing</option>
+        <option value="Install Gutters">Install Gutters</option>
+        <option value="Install Metal Roofing">Install Metal Roofing</option>
+        <option value="Install Natural Slate Roofing">Install Natural Slate Roofing</option>
+        <option value="Install Traditional Tile Roofing">Install Traditional Tile Roofing</option>
+        <option value="Install Wood or Composite Roofing">Install Wood or Composite Roofing</option>
+        <option value="Roof Inspection">Roof Inspection</option>
+        <option value="Roofing Repair">Roofing Repair</option>
+        <option value="Roof Maintenance/Cleaning">Roof Maintenance/Cleaning</option>
+        <option value="Roof Removal">Roof Removal</option>
+        <option value="Roof Snow Removal">Roof Snow Removal</option>
+        <option value="Shake Roof Installation">Shake Roof Installation</option>
+        <option value="Waterproofing">Waterproofing</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+<div id="Siding" class="conditional-dropdown col-md-6">
+    <label for="SidingOptions" class="form-label">Siding Service Options</label>
+    <select name="SidingOptions" id="SidingOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Install Brick or Stone Siding">Install Brick or Stone Siding</option>
+        <option value="Install Metal Siding">Install Metal Siding</option>
+        <option value="Install Stucco Siding">Install Stucco Siding</option>
+        <option value="Install Vinyl Siding">Install Vinyl Siding</option>
+        <option value="Install Wood or Fiber-Cement Siding">Install Wood or Fiber-Cement Siding</option>
+        <option value="Repair">Repair</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+<div id="Solar Energy" class="conditional-dropdown">
+<div class="col-md-6">
+    <label for="SolarEnergyOptions" class="form-label">Solar Energy Service Options</label>
+    <select name="SolarEnergyOptions" id="SolarEnergyOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Solar Electrical">Solar Electrical</option>
+        <option value="Solar Thermal">Solar Thermal</option>
+        <option value="Solar Panel Install">Solar Panel Install</option>
+        <option value="Solar Panels">Solar Panels</option>
+        <option value="Solar System Repair">Solar System Repair</option>
+        <option value="Home Energy Audit">Home Energy Audit</option>
+    </select>
+</div>
+<div class="col-md-6">
+    <label for="RoofShadeOptions" class="form-label">Roof Shade Options</label>
+    <select name="RoofShadeOptions" id="RoofShadeOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Full sun">Full sun</option>
+        <option value="Partially shaded">Partially shaded</option>
+        <option value="Shaded">Shaded</option>
+        <option value="Not sure">Not sure</option>
+    </select>
+</div>
+</div>
+<div id="Sunrooms" class="conditional-dropdown col-md-6">
+
+
+    <label for="SunroomsOptions" class="form-label">Sunrooms Service Options</label>
+    <select name="SunroomsOptions" id="SunroomsOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Sunrooms">Sunrooms</option>
+        <option value="Other">Other</option>
+    </select>
+
+</div>
+
+<div id="Windows" class="conditional-dropdown">
+<div class="col-md-6">
+    <label for="WindowsOptions" class="form-label">Windows Service Options</label>
+    <select name="WindowsOptions" id="WindowsOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="Install Multiple Windows">Install Multiple Windows</option>
+        <option value="Install One Window">Install One Window</option>
+        <option value="Install Storm Windows">Install Storm Windows</option>
+        <option value="Install/Repair Glass">Install/Repair Glass</option>
+        <option value="Window Cleaning">Window Cleaning</option>
+        <option value="Window Repair">Window Repair</option>
+        <option value="Window Tinting (Home)">Window Tinting (Home)</option>
+        <option value="Window Guards">Window Guards</option>
+    </select>
+</div>
+<div class="col-md-6">
+    <label for="WindowsCountOptions" class="form-label">Windows Count</label>
+    <select name="WindowsCountOptions" id="WindowsCountOptions" class="form-select">
+        <option value="">-- Select Option --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3-5">3-5</option>
+        <option value="6-9">6-9</option>
+        <option value="10+">10+</option>
+    </select>
+</div>
+</div>
+
+
+           
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+<div id="alertContainer"></div>
+    </div>
+
+   <script src="https://js.formifyweb.com/Bluecross_linktrust_pingpost_home.js"></script>
+</body>
+</html>
