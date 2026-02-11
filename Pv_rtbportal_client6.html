@@ -144,6 +144,20 @@
       padding-top: 20px;
       border-top: 1px solid #e9ecef;
     }
+    .lead-id {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .debug-info {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body>
@@ -193,6 +207,7 @@
         </div>
       </form>
       <div id="bathroomAlertContainer" class="mt-3"></div>
+      <div id="bathroomDebug" class="debug-info d-none"></div>
     </div>
 
     <!-- Roofing Form Container -->
@@ -225,6 +240,7 @@
         </div>
       </form>
       <div id="roofingAlertContainer" class="mt-3"></div>
+      <div id="roofingDebug" class="debug-info d-none"></div>
     </div>
 
     <!-- Windows Form Container -->
@@ -257,6 +273,7 @@
         </div>
       </form>
       <div id="windowsAlertContainer" class="mt-3"></div>
+      <div id="windowsDebug" class="debug-info d-none"></div>
     </div>
   </div>
 
@@ -322,15 +339,22 @@
     }
 
     // Function to show alert
-    function showAlert(containerId, message, type) {
+    function showAlert(containerId, message, type, responseData = null) {
       const alertDiv = document.createElement('div');
       alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+      
+      let alertMessage = message;
+      if (responseData) {
+        alertMessage += '<br><small>Response: ' + JSON.stringify(responseData) + '</small>';
+      }
+      
       alertDiv.innerHTML = `
-        ${message}
+        ${alertMessage}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       `;
+      
       document.getElementById(containerId).innerHTML = '';
       document.getElementById(containerId).appendChild(alertDiv);
       
@@ -343,6 +367,13 @@
       }, 5000);
     }
 
+    // Function to show debug info
+    function showDebug(debugId, data) {
+      const debugDiv = document.getElementById(debugId);
+      debugDiv.classList.remove('d-none');
+      debugDiv.innerHTML = '<strong>Debug Info:</strong><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+    }
+
     // Function to validate phone number (CID)
     function validateCID(cid) {
       return /^\d{10}$/.test(cid);
@@ -353,8 +384,98 @@
       return /^\d{5}$/.test(zip);
     }
 
+    // Updated API Tester Function with better error handling
+    function api_tester(phoneNumber, formType) {
+      try {
+        // Convert phone number to base64 properly
+        const encodedPhone = btoa(unescape(encodeURIComponent(phoneNumber + '_' + formType + '_' + Date.now())));
+        fetch('https://api.formifyweb.com/api_test.php?test_id=' + encodedPhone, {
+          method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => console.log('API Test Response:', data))
+        .catch(error => console.log('API Test completed (no response needed)'));
+      } catch (error) {
+        console.log('API Test error:', error);
+      }
+    }
+
+    // Function to submit lead via proxy
+    async function submitLeadViaProxy(endpoint, cid, zip, formType, alertContainer, debugId, submitBtnId, originalText) {
+      // Construct the original URL
+      const originalUrl = `${endpoint}?CID=${cid}&zipcode=${zip}&source=Provoice_RTB_Portal&timestamp=${encodeURIComponent(new Date().toISOString())}`;
+      
+      // Use the proxy
+      const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
+      
+      console.log('Original URL:', originalUrl);
+      console.log('Proxy URL:', proxyUrl);
+      
+      showDebug(debugId, {
+        originalUrl: originalUrl,
+        proxyUrl: proxyUrl,
+        cid: cid,
+        zip: zip,
+        formType: formType,
+        timestamp: new Date().toISOString()
+      });
+
+      try {
+        const response = await fetch(proxyUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        let responseData = null;
+        let responseText = await response.text();
+        
+        console.log('Raw response:', responseText);
+
+        // Try to parse as JSON
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (e) {
+          responseData = { raw: responseText };
+        }
+
+        // Check if we got a lead ID in the response
+        let leadId = null;
+        if (responseData) {
+          // Common patterns for lead ID in Ringba responses
+          if (responseData.id) leadId = responseData.id;
+          else if (responseData.lead_id) leadId = responseData.lead_id;
+          else if (responseData.leadId) leadId = responseData.leadId;
+          else if (responseData.CallSid) leadId = responseData.CallSid;
+          else if (responseData.call_id) leadId = responseData.call_id;
+        }
+
+        if (response.ok) {
+          let successMessage = `${formType} form submitted successfully!`;
+          if (leadId) {
+            successMessage += ` <span class="lead-id">Lead ID: ${leadId}</span>`;
+          }
+          showAlert(alertContainer, successMessage, 'success', responseData);
+        } else {
+          showAlert(alertContainer, `Error submitting ${formType} form (Status: ${response.status})`, 'danger', responseData);
+        }
+
+        return { success: response.ok, data: responseData, leadId: leadId };
+      } catch (error) {
+        console.error('Fetch error:', error);
+        showAlert(alertContainer, `Error submitting ${formType} form: ${error.message}`, 'danger');
+        return { success: false, error: error.message };
+      } finally {
+        hideLoading(submitBtnId, originalText);
+      }
+    }
+
     // Bathroom Form Submission
-    document.getElementById('bathroomLeadForm').addEventListener('submit', function(event) {
+    document.getElementById('bathroomLeadForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       const originalText = 'Submit Bathroom Form';
       
@@ -374,32 +495,30 @@
       
       showLoading('bathroomSubmitBtn');
       
-      // Construct RTB URL for bathroom
-      const bathroomUrl = `https://rtb.ringba.com/v1/production/31bb998e3c9d439fa00aef70572c3fd2.json?CID=${cid}&zipcode=${zip}`;
-      
       // API tester call
-      api_tester(cid);
+      api_tester(cid, 'bathroom');
       
-      // Make the RTB call
-      fetch(bathroomUrl, {
-        method: 'GET',
-        mode: 'no-cors'
-      })
-      .then(() => {
-        showAlert('bathroomAlertContainer', 'Bathroom form submitted successfully!', 'success');
-        document.getElementById('bathroomLeadForm').reset();
-      })
-      .catch(() => {
-        showAlert('bathroomAlertContainer', 'Bathroom form submitted (request sent)', 'success');
-        document.getElementById('bathroomLeadForm').reset();
-      })
-      .finally(() => {
-        hideLoading('bathroomSubmitBtn', originalText);
-      });
+      // Bathroom endpoint
+      const bathroomEndpoint = 'https://rtb.ringba.com/v1/production/31bb998e3c9d439fa00aef70572c3fd2.json';
+      
+      // Submit via proxy
+      await submitLeadViaProxy(
+        bathroomEndpoint,
+        cid,
+        zip,
+        'Bathroom',
+        'bathroomAlertContainer',
+        'bathroomDebug',
+        'bathroomSubmitBtn',
+        originalText
+      );
+      
+      // Reset form on success (optional - remove if you want to keep data)
+      // document.getElementById('bathroomLeadForm').reset();
     });
 
     // Roofing Form Submission
-    document.getElementById('roofingLeadForm').addEventListener('submit', function(event) {
+    document.getElementById('roofingLeadForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       const originalText = 'Submit Roofing Form';
       
@@ -419,32 +538,30 @@
       
       showLoading('roofingSubmitBtn');
       
-      // Construct RTB URL for roofing
-      const roofingUrl = `https://rtb.ringba.com/v1/production/8f9568f50f0d4c16852cc551080536a5.json?CID=${cid}&zipcode=${zip}`;
-      
       // API tester call
-      api_tester(cid);
+      api_tester(cid, 'roofing');
       
-      // Make the RTB call
-      fetch(roofingUrl, {
-        method: 'GET',
-        mode: 'no-cors'
-      })
-      .then(() => {
-        showAlert('roofingAlertContainer', 'Roofing form submitted successfully!', 'success');
-        document.getElementById('roofingLeadForm').reset();
-      })
-      .catch(() => {
-        showAlert('roofingAlertContainer', 'Roofing form submitted (request sent)', 'success');
-        document.getElementById('roofingLeadForm').reset();
-      })
-      .finally(() => {
-        hideLoading('roofingSubmitBtn', originalText);
-      });
+      // Roofing endpoint
+      const roofingEndpoint = 'https://rtb.ringba.com/v1/production/8f9568f50f0d4c16852cc551080536a5.json';
+      
+      // Submit via proxy
+      await submitLeadViaProxy(
+        roofingEndpoint,
+        cid,
+        zip,
+        'Roofing',
+        'roofingAlertContainer',
+        'roofingDebug',
+        'roofingSubmitBtn',
+        originalText
+      );
+      
+      // Reset form on success (optional)
+      // document.getElementById('roofingLeadForm').reset();
     });
 
     // Windows Form Submission
-    document.getElementById('windowsLeadForm').addEventListener('submit', function(event) {
+    document.getElementById('windowsLeadForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       const originalText = 'Submit Windows Form';
       
@@ -464,42 +581,28 @@
       
       showLoading('windowsSubmitBtn');
       
-      // Construct RTB URL for windows
-      const windowsUrl = `https://rtb.ringba.com/v1/production/dcbbd3b33a8e4a159ffaf2fe35092f5d.json?CID=${cid}&zipcode=${zip}`;
-      
       // API tester call
-      api_tester(cid);
+      api_tester(cid, 'windows');
       
-      // Make the RTB call
-      fetch(windowsUrl, {
-        method: 'GET',
-        mode: 'no-cors'
-      })
-      .then(() => {
-        showAlert('windowsAlertContainer', 'Windows form submitted successfully!', 'success');
-        document.getElementById('windowsLeadForm').reset();
-      })
-      .catch(() => {
-        showAlert('windowsAlertContainer', 'Windows form submitted (request sent)', 'success');
-        document.getElementById('windowsLeadForm').reset();
-      })
-      .finally(() => {
-        hideLoading('windowsSubmitBtn', originalText);
-      });
+      // Windows endpoint
+      const windowsEndpoint = 'https://rtb.ringba.com/v1/production/dcbbd3b33a8e4a159ffaf2fe35092f5d.json';
+      
+      // Submit via proxy
+      await submitLeadViaProxy(
+        windowsEndpoint,
+        cid,
+        zip,
+        'Windows',
+        'windowsAlertContainer',
+        'windowsDebug',
+        'windowsSubmitBtn',
+        originalText
+      );
+      
+      // Reset form on success (optional)
+      // document.getElementById('windowsLeadForm').reset();
     });
 
-    // API Tester Function
-    function api_tester(randomString) {
-      try {
-        fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
-          method: 'GET',
-          mode: 'no-cors'
-        });
-      } catch (error) {
-        // Silent error handling
-      }
-    }
-    
     // CID (Phone number) validation
     document.querySelectorAll('input[id*="cid"]').forEach(input => {
       input.addEventListener('input', function() {
@@ -517,6 +620,13 @@
         if (this.value.length > 5) {
           this.value = this.value.substring(0, 5);
         }
+      });
+    });
+
+    // Add click handler to show debug info
+    document.querySelectorAll('.alert .close').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.alert').remove();
       });
     });
   </script>
