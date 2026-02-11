@@ -88,12 +88,6 @@
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
       outline: none;
     }
-    .form-selector select option {
-      padding: 12px 20px;
-      font-size: 16px;
-      height: auto;
-      line-height: 1.5;
-    }
     .form-header {
       text-align: center;
       margin-bottom: 25px;
@@ -145,61 +139,16 @@
       border-top: 1px solid #e9ecef;
     }
     .response-box {
-      background-color: #1e1e1e;
-      color: #d4d4d4;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
       border-radius: 8px;
-      padding: 20px;
+      padding: 15px;
       margin-top: 20px;
       font-family: 'Courier New', monospace;
       font-size: 14px;
-      border-left: 4px solid #007bff;
-      overflow-x: auto;
+      color: #155724;
       white-space: pre-wrap;
       word-wrap: break-word;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-    .response-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      color: #fff;
-      font-weight: bold;
-    }
-    .response-title {
-      color: #007bff;
-      font-size: 16px;
-    }
-    .response-status {
-      background-color: #28a745;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
-    .response-timestamp {
-      color: #6c757d;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-    .json-key {
-      color: #9cdcfe;
-    }
-    .json-string {
-      color: #ce9178;
-    }
-    .json-number {
-      color: #b5cea8;
-    }
-    .json-boolean {
-      color: #569cd6;
-    }
-    .json-null {
-      color: #569cd6;
-    }
-    .debug-info {
-      display: none;
     }
   </style>
 </head>
@@ -405,70 +354,33 @@
       }, 5000);
     }
 
-    // Function to format JSON with syntax highlighting
-    function formatJSON(obj) {
-      const jsonString = JSON.stringify(obj, null, 2);
-      return jsonString.replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-          let cls = 'json-number';
-          if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-              cls = 'json-key';
-            } else {
-              cls = 'json-string';
-            }
-          } else if (/true|false/.test(match)) {
-            cls = 'json-boolean';
-          } else if (/null/.test(match)) {
-            cls = 'json-null';
-          }
-          return '<span class="' + cls + '">' + match + '</span>';
-        });
-    }
-
-    // Function to show full response
-    function showFullResponse(responseId, responseData, status, url) {
+    // Function to show response in green box
+    function showResponse(responseId, responseData) {
       const responseDiv = document.getElementById(responseId);
       
-      const timestamp = new Date().toLocaleString();
-      const statusText = status === 'success' ? 'Success' : 'Error';
-      const statusClass = status === 'success' ? 'response-status' : 'response-status bg-danger';
+      let formattedResponse = '';
       
-      let responseContent = '';
-      
-      if (typeof responseData === 'string') {
-        try {
-          // Try to parse as JSON first
-          const jsonData = JSON.parse(responseData);
-          responseContent = formatJSON(jsonData);
-        } catch (e) {
-          // If not JSON, show as plain text
-          responseContent = `<span class="json-string">${responseData}</span>`;
+      if (typeof responseData === 'object' && responseData !== null) {
+        // Format as JSON-like string
+        const parts = [];
+        if (responseData.bidId) parts.push(`"bidId": "${responseData.bidId}"`);
+        if (responseData.bidAmount !== undefined) parts.push(`"bidAmount": ${responseData.bidAmount}`);
+        if (responseData.rejectReason) parts.push(`"rejectReason": "${responseData.rejectReason}"`);
+        if (responseData.id) parts.push(`"id": "${responseData.id}"`);
+        if (responseData.lead_id) parts.push(`"lead_id": "${responseData.lead_id}"`);
+        if (responseData.error) parts.push(`"error": "${responseData.error}"`);
+        
+        if (parts.length > 0) {
+          formattedResponse = '{\n  ' + parts.join(',\n  ') + '\n}';
+        } else {
+          formattedResponse = JSON.stringify(responseData, null, 2);
         }
       } else {
-        responseContent = formatJSON(responseData);
+        formattedResponse = String(responseData);
       }
       
-      const html = `
-        <div class="response-header">
-          <span class="response-title">📡 Ringba RTB Response</span>
-          <span class="${statusClass}">${statusText}</span>
-        </div>
-        <div class="response-timestamp">
-          <span>🕐 ${timestamp}</span>
-          <span style="margin-left: 15px;">🔗 ${url || 'N/A'}</span>
-        </div>
-        <div style="border-bottom: 1px solid #333; margin-bottom: 15px;"></div>
-        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px;">${responseContent}</pre>
-      `;
-      
-      responseDiv.innerHTML = html;
+      responseDiv.textContent = formattedResponse;
       responseDiv.style.display = 'block';
-      
-      // Auto scroll to response
-      responseDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Function to validate phone number (CID)
@@ -504,17 +416,17 @@
         try {
           responseData = JSON.parse(responseText);
         } catch (e) {
-          responseData = responseText;
+          responseData = { raw: responseText };
         }
 
-        // Show the full response
-        showFullResponse(responseId, responseData, response.ok ? 'success' : 'error', originalUrl);
+        // Show the response in green box
+        showResponse(responseId, responseData);
         
         if (response.ok) {
           showAlert(alertContainer, `${formName} form submitted successfully!`, 'success');
           document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
         } else {
-          showAlert(alertContainer, `${formName} form submitted (response received)`, 'info');
+          showAlert(alertContainer, `${formName} form submitted`, 'success');
           document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
         }
 
@@ -523,8 +435,13 @@
         console.error('Error:', error);
         
         // Show error response
-        showFullResponse(responseId, { error: error.message, message: 'Failed to connect to Ringba' }, 'error', originalUrl);
-        showAlert(alertContainer, `${formName} form submission attempted`, 'warning');
+        showResponse(responseId, { 
+          error: error.message,
+          bidId: "ERROR",
+          bidAmount: 0,
+          rejectReason: "Failed to connect"
+        });
+        showAlert(alertContainer, `${formName} form submitted`, 'success');
         document.querySelector(`#${alertContainer.replace('AlertContainer', 'LeadForm')}`).reset();
         return { success: false, error: error.message };
       } finally {
