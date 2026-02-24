@@ -396,7 +396,7 @@
     // Function to submit lead via proxy
     async function submitLeadViaProxy(endpoint, cid, zip, formName, alertContainer, responseId, submitBtnId, originalText) {
       // Construct the original URL with ONLY CID and zipcode
-      const originalUrl = `${endpoint}?CID=${cid}&zipcode=${zip}`;
+      const originalUrl = `${endpoint}?CID=${cid}&zipcode=${zip}&exposeCallerId=yes`;
       
       // Use the proxy
       const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
@@ -582,3 +582,4 @@
   </script>
 </body>
 </html>
+
