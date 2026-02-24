@@ -356,32 +356,20 @@
 
     // Function to show response in green box
     function showResponse(responseId, responseData) {
-      const responseDiv = document.getElementById(responseId);
-      
-      let formattedResponse = '';
-      
-      if (typeof responseData === 'object' && responseData !== null) {
-        // Format as JSON-like string
-        const parts = [];
-        if (responseData.bidId) parts.push(`"bidId": "${responseData.bidId}"`);
-        if (responseData.bidAmount !== undefined) parts.push(`"bidAmount": ${responseData.bidAmount}`);
-        if (responseData.rejectReason) parts.push(`"rejectReason": "${responseData.rejectReason}"`);
-        if (responseData.id) parts.push(`"id": "${responseData.id}"`);
-        if (responseData.lead_id) parts.push(`"lead_id": "${responseData.lead_id}"`);
-        if (responseData.error) parts.push(`"error": "${responseData.error}"`);
-        
-        if (parts.length > 0) {
-          formattedResponse = '{\n  ' + parts.join(',\n  ') + '\n}';
-        } else {
-          formattedResponse = JSON.stringify(responseData, null, 2);
-        }
-      } else {
-        formattedResponse = String(responseData);
-      }
-      
-      responseDiv.textContent = formattedResponse;
-      responseDiv.style.display = 'block';
-    }
+  const responseDiv = document.getElementById(responseId);
+  
+  let formattedResponse = '';
+  
+  if (typeof responseData === 'object' && responseData !== null) {
+    // Show the complete JSON response with proper formatting
+    formattedResponse = JSON.stringify(responseData, null, 2);
+  } else {
+    formattedResponse = String(responseData);
+  }
+  
+  responseDiv.textContent = formattedResponse;
+  responseDiv.style.display = 'block';
+}
 
     // Function to validate phone number (CID)
     function validateCID(cid) {
@@ -582,5 +570,6 @@
   </script>
 </body>
 </html>
+
 
 
