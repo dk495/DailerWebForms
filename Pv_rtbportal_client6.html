@@ -359,10 +359,14 @@
   const responseDiv = document.getElementById(responseId);
   
   let formattedResponse = '';
-  
+
   if (typeof responseData === 'object' && responseData !== null) {
-    // Show the complete JSON response with proper formatting
-    formattedResponse = JSON.stringify(responseData, null, 2);
+    
+    // 🔥 REMOVE bidAmount field
+    const filteredResponse = { ...responseData };
+    delete filteredResponse.bidAmount;
+
+    formattedResponse = JSON.stringify(filteredResponse, null, 2);
   } else {
     formattedResponse = String(responseData);
   }
@@ -570,6 +574,7 @@
   </script>
 </body>
 </html>
+
 
 
 
