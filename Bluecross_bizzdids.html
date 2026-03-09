@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizz DIDs · service buffer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #e9f1f7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 650px;
+            width: 100%;
+            background: #ffffffdd;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 48px;
+            box-shadow: 0 30px 50px -20px #1e3f5f66;
+            padding: 34px 32px;
+            border: 1px solid #ffffffcc;
+        }
+        h2 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #153e54;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sub {
+            color: #2a607c;
+            margin-bottom: 28px;
+            font-size: 1rem;
+            font-weight: 400;
+            border-left: 4px solid #1782b5;
+            padding-left: 18px;
+            background: #e2f0f9;
+            border-radius: 0 30px 30px 0;
+            line-height: 1.5;
+            width: fit-content;
+            padding-right: 24px;
+        }
+        .dropdown-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #145e81;
+            margin-bottom: 8px;
+            display: block;
+        }
+        select {
+            width: 100%;
+            padding: 18px 22px;
+            font-size: 1.25rem;
+            background: white;
+            border: 2px solid #b9d6e9;
+            border-radius: 44px;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="%231782b5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 24px center;
+            background-size: 24px;
+            color: #0b3f57;
+            font-weight: 500;
+            box-shadow: 0 6px 12px -8px #16445f33;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        select:hover {
+            border-color: #5199c2;
+        }
+        select:focus {
+            outline: none;
+            border-color: #0f6b96;
+            box-shadow: 0 0 0 4px #6eb1d180;
+        }
+        .info-panel {
+            margin-top: 32px;
+            background: #f2f9ff;
+            border-radius: 36px;
+            padding: 28px 26px;
+            border: 1px solid #cde1ef;
+            box-shadow: inset 0 1px 5px #ffffff, 0 12px 24px -20px #143f59;
+        }
+        .did-area {
+            margin-bottom: 26px;
+            border-bottom: 2px dashed #aac2d6;
+            padding-bottom: 20px;
+        }
+        .did-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #2b6c91;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .did-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(140deg, #0a3b54, #195d7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+        .buffer-area {
+            margin-top: 8px;
+        }
+        .buffer-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #22658a;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .buffer-text {
+            background: #dcebf6;
+            border-radius: 60px;
+            padding: 16px 24px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #003349;
+            display: inline-block;
+            border-left: 8px solid #1573a5;
+            box-shadow: 0 2px 6px #bed6ea;
+            word-break: break-word;
+            max-width: 100%;
+        }
+        .buffer-text span.prefix {
+            font-weight: 400;
+            color: #1a6288;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .placeholder-message {
+            color: #326e91;
+            font-size: 1.1rem;
+            padding: 10px 0;
+            background: #e3f0f9;
+            border-radius: 40px;
+            text-align: center;
+        }
+        .footer-hint {
+            margin-top: 22px;
+            color: #3b6885;
+            font-size: 0.85rem;
+            border-top: 1px solid #c6ddec;
+            padding-top: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>📞 Bizz DIDs</h2>
+    <div class="sub">select a service → number + pure buffer</div>
+
+    <label class="dropdown-label" for="svcSelect">▼ choose category</label>
+    <select id="svcSelect">
+        <option value="" disabled selected>— select —</option>
+        <option value="Bathroom">Bathroom</option>
+        <option value="Electrician">Electrician</option>
+        <option value="Garage Door">Garage Door</option>
+        <option value="HVAC">HVAC</option>
+        <option value="Plumbing">Plumbing</option>
+        <option value="Roofing">Roofing</option>
+        <option value="Siding">Siding</option>
+        <option value="Windows">Windows</option>
+    </select>
+
+    <div class="info-panel" id="outputPanel">
+        <div class="placeholder-message">⬆️ pick a service from above</div>
+    </div>
+    <div class="footer-hint">
+        ⏱️ buffer shows duration & description · exactly as provided, without prices
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- PHONE NUMBERS (exact from prompt) -----
+        const didNumbers = {
+            "Bathroom": "888-762-9476",
+            "Electrician": "844-630-0045",
+            "Garage Door": "877-327-1730",
+            "HVAC": "833-688-1955",
+            "Plumbing": "855-471-0239",
+            "Roofing": "855-397-0506",
+            "Siding": "877-846-0457",
+            "Windows": "833-715-6464"
+        };
+
+        // ----- BUFFER strings (with prices stripped, only time + description + transfers) -----
+        // Based on the second data block, we remove $.. part but keep everything after the dash.
+        // The raw data:
+        // "$45/180s - Window Installation - Transfers" → "180s - Window Installation - Transfers"
+        // "$45/180s - Bathroom Remodeling - Transfers" → "180s - Bathroom Remodeling - Transfers"
+        // "$45/180s - Roofing - Transfers" → "180s - Roofing - Transfers"
+        // "$35/180s - Siding - Transfers" → "180s - Siding - Transfers"
+        // "$25-45/120-210s - Plumbing - Transfers" → "120-210s - Plumbing - Transfers"
+        // "$25-45/120-210s - HVAC - Transfers" → "120-210s - HVAC - Transfers"
+        // "$25-45/120-210s - Electrician - Transfers" → "120-210s - Electrician - Transfers"
+        // "$25-45/120-210s - Garage Door - Transfers" → "120-210s - Garage Door - Transfers"
+        const bufferClean = {
+            "Bathroom": "180s - Bathroom Remodeling - Transfers",
+            "Electrician": "120-210s - Electrician - Transfers",
+            "Garage Door": "120-210s - Garage Door - Transfers",
+            "HVAC": "120-210s - HVAC - Transfers",
+            "Plumbing": "120-210s - Plumbing - Transfers",
+            "Roofing": "180s - Roofing - Transfers",
+            "Siding": "180s - Siding - Transfers",
+            "Windows": "180s - Window Installation - Transfers"
+        };
+
+        const selectElem = document.getElementById('svcSelect');
+        const panel = document.getElementById('outputPanel');
+
+        function updateDisplay(serviceKey) {
+            if (!serviceKey) {
+                panel.innerHTML = `<div class="placeholder-message">⬆️ pick a service from above</div>`;
+                return;
+            }
+
+            const phone = didNumbers[serviceKey];
+            const buffer = bufferClean[serviceKey];
+
+            if (!phone || !buffer) {
+                panel.innerHTML = `<div class="placeholder-message">⚠️ missing data for ${serviceKey}</div>`;
+                return;
+            }
+
+            // construct clean layout: DID + buffer (no $)
+            const html = `
+                <div class="did-area">
+                    <div class="did-label">📞 DID number</div>
+                    <div class="did-number">${phone}</div>
+                </div>
+                <div class="buffer-area">
+                    <div class="buffer-label">⏳ duration & description </div>
+                    <div class="buffer-text"><span class="prefix">⏱️</span> ${buffer}</div>
+                </div>
+            `;
+            panel.innerHTML = html;
+        }
+
+        selectElem.addEventListener('change', (e) => {
+            updateDisplay(e.target.value);
+        });
+
+        // Optional: If you want to start with a default selection like 'Bathroom' pre-filled,
+        // uncomment the lines below. But prompt says "only 1 dropdown available", so we start blank.
+        // (keep it blank as preferred)
+        // setTimeout(() => {
+        //     selectElem.value = "Bathroom";
+        //     updateDisplay("Bathroom");
+        // }, 20);
+    })();
+</script>
+
+<!-- verify mapping:
+     Bathroom → 888-762-9476  + "180s - Bathroom Remodeling - Transfers"
+     Electrician → 844-630-0045 + "120-210s - Electrician - Transfers"
+     Garage Door → 877-327-1730 + "120-210s - Garage Door - Transfers"
+     HVAC → 833-688-1955 + "120-210s - HVAC - Transfers"
+     Plumbing → 855-471-0239 + "120-210s - Plumbing - Transfers"
+     Roofing → 855-397-0506 + "180s - Roofing - Transfers"
+     Siding → 877-846-0457 + "180s - Siding - Transfers"
+     Windows → 833-715-6464 + "180s - Window Installation - Transfers"
+-->
+</body>
+</html>
