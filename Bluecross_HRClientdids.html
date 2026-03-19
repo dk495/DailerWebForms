@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluecross_HR · campaign details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: #e2eef8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .form-card {
+            max-width: 720px;
+            width: 100%;
+            background: #ffffffee;
+            backdrop-filter: blur(6px);
+            border-radius: 48px;
+            box-shadow: 0 30px 50px -20px #12384e80;
+            padding: 34px 32px;
+            border: 1px solid #ffffffcc;
+        }
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #053c54;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .sub-header {
+            color: #1b6385;
+            margin-bottom: 28px;
+            font-size: 1rem;
+            border-left: 5px solid #1a81b5;
+            padding-left: 18px;
+            background: #d9ecf9;
+            border-radius: 0 30px 30px 0;
+            width: fit-content;
+            padding-right: 28px;
+            line-height: 1.5;
+        }
+        .dropdown-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #0c5479;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        select {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.25rem;
+            background: white;
+            border: 2px solid #b0d2ea;
+            border-radius: 60px;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="%231a81b5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 26px center;
+            background-size: 26px;
+            color: #06384f;
+            font-weight: 500;
+            box-shadow: 0 8px 16px -12px #175d81;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        select:hover {
+            border-color: #3987b4;
+        }
+        select:focus {
+            outline: none;
+            border-color: #10628b;
+            box-shadow: 0 0 0 4px #94c7e9;
+        }
+        .details-panel {
+            margin-top: 34px;
+            background: #f2faff;
+            border-radius: 40px;
+            padding: 28px 28px;
+            border: 1px solid #cbe0f0;
+            box-shadow: inset 0 2px 6px #ffffff, 0 18px 28px -22px #0f415b;
+        }
+        .did-badge {
+            background: #dbe9f3;
+            border-radius: 100px;
+            padding: 8px 22px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #0c4f73;
+            display: inline-block;
+            margin-bottom: 22px;
+            letter-spacing: 0.3px;
+            border: 1px solid #b6d5ec;
+        }
+        .row-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 28px;
+            border-bottom: 2px dashed #bfd9ef;
+            padding-bottom: 22px;
+        }
+        .col {
+            flex: 1 1 200px;
+        }
+        .label-sm {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #2f789b;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .value-md {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #01273b;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+        .value-green {
+            background: #daf0e4;
+            color: #006b46;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: inline-block;
+            border-left: 5px solid #00875e;
+        }
+        .geo-list, .services-list, .extra-zip-list {
+            background: #e5f0f9;
+            border-radius: 28px;
+            padding: 18px 24px;
+            margin-top: 14px;
+        }
+        .geo-list ul, .services-list ul, .extra-zip-list ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+        }
+        .geo-list li, .services-list li, .extra-zip-list li {
+            background: #ffffffb5;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #134d6b;
+            border: 1px solid #c3ddec;
+            font-size: 0.95rem;
+        }
+        .title-section {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b4f72;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .title-section i {
+            font-size: 1.3rem;
+        }
+        .compact-block {
+            margin-top: 10px;
+        }
+        .placeholder-msg {
+            color: #357599;
+            font-size: 1.2rem;
+            padding: 24px;
+            text-align: center;
+            background: #e3f0fa;
+            border-radius: 40px;
+        }
+        .footer-note {
+            margin-top: 24px;
+            color: #3a6e8d;
+            font-size: 0.85rem;
+            border-top: 1px solid #c4d9ec;
+            padding-top: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="form-card">
+    <h2>📋 Bluecross HR Client DIDS</h2>
+    <div class="sub-header">home remodeling · pest · mold inspection</div>
+
+    <label class="dropdown-label" for="hrSelect">▼ choose campaign</label>
+    <select id="hrSelect">
+        <option value="" disabled selected>— select a service —</option>
+        <option value="homeRemodel">🏠 Home Remodeling </option>
+        <option value="pestControl">🐜 Pest Control (Bluecross)</option>
+        <option value="moldInspection">🦠 Mold Inspection (TS Bluecross)</option>
+    </select>
+
+    <div class="details-panel" id="hrPanel">
+        <div class="placeholder-msg">👆 pick a campaign from the list</div>
+    </div>
+    <div class="footer-note">
+        * All details per data — DIDs, buffer, payout, geo + services
+    </div>
+</div>
+
+<script>
+    (function() {
+        const panel = document.getElementById('hrPanel');
+        const select = document.getElementById('hrSelect');
+
+        // ------------- Bluecross_HR data packs -------------
+        const data = {
+            homeRemodel: {
+                title: '🏠 Home Remodeling',
+                did: '+1 877-805-7395',
+                buffer: '120 seconds',
+                payout: '$50 per qualified call',
+                geo: ['All of Los Angeles, CA', 'All of Seattle, WA'],
+                services: [
+                    'Additions & Home Remodels',
+                    'Bathroom Remodeling',
+                    'Kitchen Remodeling',
+                    'Cabinet Installation / Replacement',
+                    'Deck Construction',
+                    'Foundation Repair / Work'
+                ],
+                // extra block (like the "after that" region but we combine elegantly)
+                extraNote: null
+            },
+            pestControl: {
+                title: '🐜 Pest Control (Bluecross)',
+                did: '+1 844-670-3998',
+                buffer: '—',   // not explicitly given, but we keep clean
+                payout: '—',
+                geo: ['Kentucky → 42104 (100 mile)', 'California → 92530 (100 mile)', 'Texas → Dallas / Fort Worth'],
+                services: [],  // will fill with ZIP block under coverage
+                extraZips: ['Missouri ZIPs: 63301, 63303, 63304, 63368, 63376, 63366, 63385, 63367, 63346, 63348, 63362, 63379, 63390, 63005, 63017']
+            },
+            moldInspection: {
+                title: '🦠 Mold Inspection (TS Bluecross)',
+                did: '+1 844-742-3266',
+                buffer: '—',
+                payout: '—',
+                geo: ['Kentucky → 42104 (100 mile)', 'California → 92530 (100 mile)', 'Texas → Dallas / Fort Worth'],
+                services: [],
+                extraZips: ['Missouri ZIPs: 63301, 63303, 63304, 63368, 63376, 63366, 63385, 63367, 63346, 63348, 63362, 63379, 63390, 63005, 63017']
+            }
+        };
+
+        // helper to render rich HTML based on selected key
+        function renderSelection(selectedKey) {
+            if (!selectedKey) {
+                panel.innerHTML = `<div class="placeholder-msg">👆 pick a campaign from the list</div>`;
+                return;
+            }
+
+            const d = data[selectedKey];
+            if (!d) return;
+
+            // common top: DID badge always visible
+            let html = `<div class="did-badge">📞 DID ${d.did}</div>`;
+
+            // row with buffer & payout (if exist, otherwise placeholder)
+            html += `<div class="row-detail">`;
+            html += `<div class="col"><div class="label-sm">⏱️ buffer time</div><div class="value-md">${d.buffer}</div></div>`;
+            html += `<div class="col"><div class="label-sm">💰 payout / rate</div><div class="value-green">${d.payout}</div></div>`;
+            html += `</div>`;
+
+            // 📍 Geo Targeting
+            if (d.geo && d.geo.length) {
+                html += `<div class="title-section"><span>📍</span> Geo Targeting</div>`;
+                html += `<div class="geo-list"><ul>`;
+                d.geo.forEach(item => { html += `<li>${item}</li>`; });
+                html += `</ul></div>`;
+            }
+
+            // 🏠 Services Covered (only for homeRemodel, others may show extra zip block)
+            if (d.services && d.services.length) {
+                html += `<div class="title-section" style="margin-top:24px;"><span>🏠</span> Services Covered</div>`;
+                html += `<div class="services-list"><ul>`;
+                d.services.forEach(s => { html += `<li>${s}</li>`; });
+                html += `</ul></div>`;
+            }
+
+            // Extra ZIP block (for pest / mold – the missouri long list, plus any additional geo)
+            if (d.extraZips && d.extraZips.length) {
+                html += `<div class="title-section" style="margin-top:24px;"><span>📌</span> Extended coverage</div>`;
+                html += `<div class="extra-zip-list"><ul>`;
+                d.extraZips.forEach(z => {
+                    // split the long Missouri line into separate items for readability?
+                    if (z.startsWith('Missouri ZIPs:')) {
+                        // present as one block but we can break into chips – nicer
+                        const zipPart = z.replace('Missouri ZIPs:', '').trim();
+                        const zips = zipPart.split(',').map(z => z.trim());
+                        html += `<li style="background:transparent; padding:0; border:none; width:100%; margin-bottom:6px;"><strong>Missouri ZIPs:</strong></li>`;
+                        zips.forEach(zip => { html += `<li>${zip}</li>`; });
+                    } else {
+                        html += `<li>${z}</li>`;
+                    }
+                });
+                html += `</ul></div>`;
+            }
+
+            // for pest/mold we also want to show the "Coverage" lines exactly as described (Kentucky, California, Texas)
+            // they are already inside d.geo. But also we need to present the large Missouri block cleanly.
+            // If selected pest or mold, there's a big MO zip list. We'll also note "Missouri" separately if needed
+            if (selectedKey === 'pestControl' || selectedKey === 'moldInspection') {
+                // the block above already printed geo (includes Kentucky, Cali, Texas)
+                // we also might want to explicitly show the long Missouri list under "Coverage".
+                // Already in extraZips, but we can also restate the header.
+                // Already printed by extra-zip-list, good.
+            }
+
+            // for homeRemodel, there is no extraZips, so skip.
+            // But the prompt also had a line "after that • +1 844-670-3998 → Pest Control (Bluecross)
+            // and third one +1 844-742-3266 → Mold Inspection (TS Bluecross)" – we cover with DIDs above.
+            // Also the big "Coverage" block after that belongs to both pest and mold – Kentucky, California, Texas, and missouri zip list.
+            // we added it to both pest and mold exactly as requested.
+
+            panel.innerHTML = html;
+        }
+
+        select.addEventListener('change', (e) => {
+            renderSelection(e.target.value);
+        });
+
+        // optional pre-select nothing – keep clean.
+    })();
+</script>
+</body>
+</html>
