@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>Fynex TD Ping/Post</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="text-center">Fynex TD Ping/Post(Auto)</h2>
+  <form id="leadForm">
+    
+    <div class="row">
+      <!-- Phone -->
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="caller_id">Phone (ex: 7123456789)</label>
+          <input type="text" class="form-control" id="caller_id" placeholder="Phone" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button INSIDE the form -->
+    <div class="text-center mt-4">
+      <button type="button" class="btn btn-primary" id="submitBtn" onclick="pingAPI()">Ping/Post</button>
+    </div>
+
+    <!-- Response div INSIDE the form -->
+    <div id="alertContainer"></div>
+    <div class="alert alert-info mt-3" role="alert" id="apiResponse"></div>
+    
+  </form> <!-- Only ONE closing form tag here -->
+</div>
+
+<!-- Remove the stray closing form tag and extra divs that were here -->
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://js.formifyweb.com/fynex_autotdpingpost_1apr.js"></script>
+
+<script>
+  // Function to handle the contextmenu event
+  function disableRightClick(event) {
+    event.preventDefault();
+  }
+  document.addEventListener('contextmenu', disableRightClick);
+</script>
+
+</body>
+</html>
