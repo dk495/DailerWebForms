@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Provoice API Posting Portal | GC</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 (clean icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter + DM Sans for modern professional look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f7fc;
+      background-image: linear-gradient(145deg, #f9fbfd 0%, #eef2f8 100%);
+      font-family: 'Inter', 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* subtle light decorative pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .portal-container {
+      max-width: 1300px;
+      width: 100%;
+      z-index: 2;
+      position: relative;
+    }
+
+    /* header area - light & crisp */
+    .portal-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge-gc {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffffcc;
+      backdrop-filter: blur(4px);
+      border: 1px solid #dfe6ef;
+      padding: 0.45rem 1.3rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #1e3a5f;
+      margin-bottom: 1.4rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .badge-gc i {
+      font-size: 0.9rem;
+      color: #2c7da0;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1f4870 0%, #1b5a7a 40%, #2c7da0 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subhead {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #4a627a;
+      max-width: 550px;
+      margin: 0.8rem auto 0;
+      border-top: 1px solid #cfdfed;
+      padding-top: 1rem;
+      display: inline-block;
+      background: rgba(255,255,240,0.4);
+      border-radius: 60px;
+      padding: 0.5rem 1.4rem;
+    }
+
+    /* professional card grid - light theme */
+    .services-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 0.75rem;
+    }
+
+    /* card styling: light, subtle shadows, elevated on hover */
+    .portal-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 2rem 1.8rem;
+      width: 100%;
+      max-width: 320px;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      border: 1px solid #e2edf7;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* each card gets a subtle top accent border & light gradient tint */
+    .portal-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #cbdde9, #ffffff);
+      opacity: 0.7;
+      transition: height 0.2s;
+    }
+
+    /* windows specific hover border glow */
+    .portal-card.windows {
+      border-top: 1px solid #ffffff;
+    }
+    .portal-card.windows:hover {
+      border-color: #b9d9f5;
+      box-shadow: 0 20px 30px -12px rgba(44, 123, 160, 0.18);
+      transform: translateY(-6px);
+    }
+    .portal-card.windows::after {
+      background: linear-gradient(90deg, #3b82f6, #93c5fd);
+    }
+
+    /* siding card */
+    .portal-card.siding:hover {
+      border-color: #f3c7e2;
+      box-shadow: 0 20px 30px -12px rgba(236, 72, 153, 0.12);
+      transform: translateY(-6px);
+    }
+    .portal-card.siding::after {
+      background: linear-gradient(90deg, #ec4899, #f9a8d4);
+    }
+
+    /* roofing card */
+    .portal-card.roofing:hover {
+      border-color: #fee2b5;
+      box-shadow: 0 20px 30px -12px rgba(245, 158, 11, 0.15);
+      transform: translateY(-6px);
+    }
+    .portal-card.roofing::after {
+      background: linear-gradient(90deg, #f59e0b, #fcd34d);
+    }
+
+    .portal-card:hover {
+      background: #ffffff;
+      border-color: #cfe3f5;
+    }
+
+    /* icon container - light but vibrant */
+    .card-icon {
+      width: 85px;
+      height: 85px;
+      background: #f0f6fe;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.4rem;
+      font-size: 2.7rem;
+      transition: all 0.25s ease;
+      border: 1px solid #e2edf7;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .portal-card:hover .card-icon {
+      transform: scale(1.02);
+      background: #e6f0fa;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .windows .card-icon i {
+      color: #2c7da0;
+    }
+    .siding .card-icon i {
+      color: #be185d;
+    }
+    .roofing .card-icon i {
+      color: #c2410c;
+    }
+
+    .portal-card h3 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.5rem;
+      color: #1f2f44;
+    }
+
+    .post-badge {
+      display: inline-block;
+      background: #eef3fc;
+      padding: 0.45rem 1.1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1f5e8c;
+      border: 1px solid #d4e2f0;
+      margin-top: 0.9rem;
+      transition: 0.2s;
+      font-family: 'DM Sans', monospace;
+    }
+
+    .portal-card:hover .post-badge {
+      background: #e2edfc;
+      border-color: #b9d2f0;
+      color: #0a4b6e;
+    }
+
+    .post-badge i {
+      font-size: 0.8rem;
+      margin-right: 6px;
+      color: #2c7da0;
+    }
+
+    .card-footnote {
+      font-size: 0.72rem;
+      color: #5e7f9e;
+      margin-top: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 3.8rem;
+      font-size: 0.85rem;
+      color: #5c6f87;
+      letter-spacing: 0.2px;
+      border-top: 1px solid #cfdfed;
+      padding-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      background: transparent;
+    }
+
+    .footer-note span i {
+      margin-right: 6px;
+      font-size: 0.8rem;
+      color: #5482a3;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .portal-card {
+        max-width: 290px;
+        padding: 1.5rem 1rem;
+      }
+      .card-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+      }
+      .portal-card h3 {
+        font-size: 1.7rem;
+      }
+      .badge-gc {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* focus accessibility */
+    .portal-card:focus-visible {
+      outline: 3px solid #2c7da0;
+      outline-offset: 3px;
+      transform: scale(1.01);
+      background: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+  <div class="portal-header">
+    <div class="badge-gc">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <span>GC Integration · API Posting Suite</span>
+      <i class="fas fa-shield-alt"></i>
+    </div>
+    <h1>
+      <i class="fas fa-chalkboard-user me-2" style="background: linear-gradient(135deg, #2c7da0, #1f4870); background-clip: text; -webkit-background-clip: text; color: transparent;"></i>
+      Provoice Api Posting Portal <span style="background: linear-gradient(135deg, #3b82f6, #1e5a7a); background-clip: text; -webkit-background-clip: text; color: transparent;">(GC)</span>
+    </h1>
+    <div class="subhead">
+      <i class="fas fa-pen-ruler me-1"></i> Direct submission to General Contractor · Fast & Secure
+    </div>
+  </div>
+
+  <!-- three cards: Windows, Siding, Roofing - light professional theme -->
+  <div class="services-grid">
+    <!-- Windows Card -->
+    <div class="portal-card windows" 
+         onclick="window.location.href='http://forms.formifyweb.com/pv_windows_tdpost_GC'" 
+         role="button" 
+         tabindex="0" 
+         onkeydown="if(event.key === 'Enter' || event.key === ' ') this.click();"
+         aria-label="Post to GC: Windows form">
+      <div class="card-icon">
+        <i class="fas fa-window-maximize"></i>
+      </div>
+      <h3>Windows</h3>
+      <div class="post-badge">
+        <i class="fas fa-paper-plane"></i> Post to GC · Windows
+      </div>
+      <div class="card-footnote">
+        <i class="fas fa-arrow-right-to-bracket"></i> <span>GC API endpoint</span>
+      </div>
+    </div>
+
+    <!-- Siding Card -->
+    <div class="portal-card siding" 
+         onclick="window.location.href='http://forms.formifyweb.com/pv_siding_tdpost_GC'" 
+         role="button" 
+         tabindex="0"
+         onkeydown="if(event.key === 'Enter' || event.key === ' ') this.click();"
+         aria-label="Post to GC: Siding form">
+      <div class="card-icon">
+        <i class="fas fa-draw-polygon"></i>
+      </div>
+      <h3>Siding</h3>
+      <div class="post-badge">
+        <i class="fas fa-paper-plane"></i> Post to GC · Siding
+      </div>
+      <div class="card-footnote">
+        <i class="fas fa-arrow-right-to-bracket"></i> <span>Instant submission</span>
+      </div>
+    </div>
+
+    <!-- Roofing Card -->
+    <div class="portal-card roofing" 
+         onclick="window.location.href='http://forms.formifyweb.com/pv_roofing_tdpost_GC'" 
+         role="button" 
+         tabindex="0"
+         onkeydown="if(event.key === 'Enter' || event.key === ' ') this.click();"
+         aria-label="Post to GC: Roofing form">
+      <div class="card-icon">
+        <i class="fas fa-home"></i>
+      </div>
+      <h3>Roofing</h3>
+      <div class="post-badge">
+        <i class="fas fa-paper-plane"></i> Post to GC · Roofing
+      </div>
+      <div class="card-footnote">
+        <i class="fas fa-check-circle"></i> <span>GC ready posting</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- clean footer info -->
+  <div class="footer-note">
+    <span><i class="fas fa-link"></i> Dedicated GC forms</span>
+    <span><i class="fas fa-lock"></i> Secure data transfer</span>
+    <span><i class="fas fa-bolt"></i> Real-time posting</span>
+    <span><i class="fas fa-building"></i> Provoice Contractor Suite</span>
+  </div>
+</div>
+
+<!-- micro interaction: subtle scale feedback & console log for clarity -->
+<script>
+  (function() {
+    // Additional smooth tap feedback for light theme
+    const cards = document.querySelectorAll('.portal-card');
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        // only micro feedback, doesn't interfere with navigation
+        const originalBoxShadow = this.style.boxShadow;
+        this.style.transform = 'scale(0.98)';
+        this.style.transition = 'transform 0.1s ease';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 120);
+      });
+      // ensure full keyboard support (already handled by onkeydown, but add extra)
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+    console.log("Provoice GC Portal (Light Theme) | Windows, Siding, Roofing endpoints ready");
+  })();
+</script>
+</body>
+</html>
