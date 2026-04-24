@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>Fynex RTB Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+    .spinner {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Fynex RTB Search</h2>
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="caller_id">Phone Number</label>
+            <input type="tel" class="form-control" id="caller_id" placeholder="Enter phone number" required>
+          </div>
+        </div>
+        </div>
+<div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="PostalCode">Postal Code</label>
+            <input type="text" class="form-control" id="PostalCode" placeholder="Enter postal code" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="spinner" class="spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <div id="alertContainer"></div>
+    <div id="resultsContainer"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  
+  <script>
+    document.getElementById('leadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      document.getElementById('spinner').style.display = 'block';
+      document.getElementById('alertContainer').innerHTML = '';
+      document.getElementById('resultsContainer').innerHTML = '';
+
+      const phoneNumber = document.getElementById('caller_id').value;
+      const postalCode = document.getElementById('PostalCode').value;
+      const apiKey = 'sp9q7fvjns5abbhh7dy2b6d9';
+
+      // Build Soleo RTB URL
+      let soleoUrl = `https://api.soleo.com/expresscall/?APIKey=${apiKey}&PostalCode=${postalCode}&ANI=${phoneNumber}`;
+
+      console.log('Request URL:', soleoUrl);
+
+      const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(soleoUrl);
+
+      fetch(proxyUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(responseData => {
+        document.getElementById('spinner').style.display = 'none';
+
+        const successAlert = `
+          <div class="alert alert-success" role="alert">
+            Success: ${JSON.stringify(responseData)}
+          </div>`;
+        document.getElementById('alertContainer').innerHTML = successAlert;
+        
+        document.getElementById('leadForm').reset();
+      })
+      .catch(error => {
+        document.getElementById('spinner').style.display = 'none';
+        const errorAlert = `
+          <div class="alert alert-danger" role="alert">
+            Error: ${error.message}
+          </div>`;
+        document.getElementById('alertContainer').innerHTML = errorAlert;
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
