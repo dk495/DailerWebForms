@@ -36,6 +36,18 @@
       text-align: center;
       margin-top: 20px;
     }
+    .results-card {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 
@@ -47,22 +59,24 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="caller_id">Phone Number</label>
-            <input type="tel" class="form-control" id="caller_id" placeholder="Enter phone number" required>
+            <input type="tel" class="form-control" id="caller_id" placeholder="Enter phone number (e.g., 5858675309)" required>
+            <small class="form-text text-muted">Enter 10-digit phone number without country code</small>
           </div>
         </div>
-        </div>
-<div class="row">
-        <div class="col-md-6">
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <div class="form-group">
             <label for="PostalCode">Postal Code</label>
-            <input type="text" class="form-control" id="PostalCode" placeholder="Enter postal code" required>
+            <input type="text" class="form-control" id="PostalCode" placeholder="Enter postal code (e.g., 14450)" required>
+            <small class="form-text text-muted">Enter 5-digit or 9-digit ZIP code</small>
           </div>
         </div>
       </div>
 
       <div class="row justify-content-center">
         <div class="col-md-12 text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Search Sponsored Listings</button>
         </div>
       </div>
     </form>
@@ -71,6 +85,7 @@
       <div class="spinner-border text-primary" role="status">
         <span class="sr-only">Loading...</span>
       </div>
+      <p class="mt-2">Searching sponsored business listings...</p>
     </div>
 
     <div id="alertContainer"></div>
@@ -85,49 +100,180 @@
     document.getElementById('leadForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
+      // Clear previous results
       document.getElementById('spinner').style.display = 'block';
       document.getElementById('alertContainer').innerHTML = '';
       document.getElementById('resultsContainer').innerHTML = '';
 
-      const phoneNumber = document.getElementById('caller_id').value;
+      // Get form values
+      let phoneNumber = document.getElementById('caller_id').value;
       const postalCode = document.getElementById('PostalCode').value;
       const apiKey = 'w6w8pmx6dxyqbrn8hqeoyobx';
 
+      // Validate phone number (must be 10 digits)
+      phoneNumber = phoneNumber.replace(/\D/g, '');
+      if (phoneNumber.length !== 10) {
+        document.getElementById('spinner').style.display = 'none';
+        const errorAlert = `
+          <div class="alert alert-danger" role="alert">
+            <strong>Validation Error:</strong> Phone number must be exactly 10 digits. Example: 5858675309
+          </div>`;
+        document.getElementById('alertContainer').innerHTML = errorAlert;
+        return;
+      }
+
+      // Validate postal code
+      if (!postalCode || postalCode.trim() === '') {
+        document.getElementById('spinner').style.display = 'none';
+        const errorAlert = `
+          <div class="alert alert-danger" role="alert">
+            <strong>Validation Error:</strong> Postal code is required.
+          </div>`;
+        document.getElementById('alertContainer').innerHTML = errorAlert;
+        return;
+      }
+
       // Build Soleo RTB URL
-      let soleoUrl = `https://api.soleo.com/expresscall/?APIKey=${apiKey}&PostalCode=${postalCode}&ANI=${phoneNumber}`;
+      let soleoUrl = `https://api.soleo.com/expresscall/?APIKey=${apiKey}&PostalCode=${encodeURIComponent(postalCode)}&ANI=${phoneNumber}`;
 
       console.log('Request URL:', soleoUrl);
 
-      const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(soleoUrl);
+      // Use multiple proxy options for redundancy
+      const proxyUrls = [
+        'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(soleoUrl),
+        'https://cors-anywhere.herokuapp.com/' + soleoUrl,
+        soleoUrl // Direct (may fail due to CORS but worth trying)
+      ];
 
-      fetch(proxyUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
+      // Try first proxy that works
+      function tryProxy(index) {
+        if (index >= proxyUrls.length) {
+          throw new Error('All proxy attempts failed');
         }
-      })
-      .then(response => response.json())
+        
+        const proxyUrl = proxyUrls[index];
+        console.log(`Trying proxy ${index + 1}:`, proxyUrl);
+        
+        return fetch(proxyUrl, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.warn(`Proxy ${index + 1} failed:`, error);
+          if (index + 1 < proxyUrls.length) {
+            return tryProxy(index + 1);
+          }
+          throw error;
+        });
+      }
+
+      tryProxy(0)
       .then(responseData => {
         document.getElementById('spinner').style.display = 'none';
-
-        const successAlert = `
-          <div class="alert alert-success" role="alert">
-            Success: ${JSON.stringify(responseData)}
-          </div>`;
-        document.getElementById('alertContainer').innerHTML = successAlert;
         
+        // Display formatted results
+        displayResults(responseData, phoneNumber, postalCode);
+        
+        // Clear form
         document.getElementById('leadForm').reset();
       })
       .catch(error => {
         document.getElementById('spinner').style.display = 'none';
         const errorAlert = `
           <div class="alert alert-danger" role="alert">
-            Error: ${error.message}
+            <strong>Error:</strong> ${error.message}<br><br>
+            <small>Possible solutions:<br>
+            - Check your internet connection<br>
+            - Try using a VPN if CORS is blocked<br>
+            - Contact support to whitelist your domain<br>
+            - Use a backend proxy server instead</small>
           </div>`;
         document.getElementById('alertContainer').innerHTML = errorAlert;
         console.error('Error:', error);
       });
     });
+
+    function displayResults(data, phoneNumber, postalCode) {
+      const resultsContainer = document.getElementById('resultsContainer');
+      
+      // Check if we have business results
+      if (data.businesses && data.businesses.length > 0) {
+        let resultsHtml = `
+          <div class="results-card">
+            <h5>Search Results</h5>
+            <p><strong>Phone Number (ANI):</strong> ${phoneNumber}</p>
+            <p><strong>Postal Code:</strong> ${postalCode}</p>
+            <p><strong>Total Sponsored Results:</strong> ${data.summary?.resultsCount?.sponsored || 0}</p>
+            <p><strong>Valid Until:</strong> ${data.summary?.validUntil || 'N/A'}</p>
+            <hr>
+            <h6>Business Listings:</h6>
+        `;
+        
+        data.businesses.forEach((business, index) => {
+          resultsHtml += `
+            <div class="card mb-3">
+              <div class="card-body">
+                <h6 class="card-title">${index + 1}. ${business.name || 'N/A'}</h6>
+                <p class="card-text">
+                  <strong>Category:</strong> ${business.categoryName || business.categoryID || 'N/A'}<br>
+                  <strong>Type:</strong> <span class="badge badge-success">${business.type || 'Sponsored'}</span><br>
+                  <strong>Display Phone:</strong> ${business.displayPhoneNumber || 'N/A'}<br>
+                  <strong>Completion Phone:</strong> ${business.completionPhoneNumber || 'N/A'}<br>
+                  <strong>Verified:</strong> ${business.verified || 'No'}<br>
+                  <strong>Distance:</strong> ${business.distance?.miles || 'N/A'} miles
+                </p>
+                ${business.monetizationCriteria ? `
+                  <div class="alert alert-info small mb-0">
+                    <strong>Monetization:</strong><br>
+                    Action: ${business.monetizationCriteria.action || 'N/A'}<br>
+                    Value: $${business.monetizationCriteria.value || '0'}<br>
+                    Valid Until: ${business.monetizationCriteria.validUntil || 'N/A'}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        });
+        
+        resultsHtml += `</div>`;
+        resultsContainer.innerHTML = resultsHtml;
+        
+        // Also show raw JSON for debugging
+        const rawJsonAlert = `
+          <div class="alert alert-secondary mt-3" role="alert">
+            <strong>Raw API Response:</strong>
+            <pre class="mb-0 mt-2">${JSON.stringify(data, null, 2)}</pre>
+          </div>`;
+        resultsContainer.innerHTML += rawJsonAlert;
+        
+      } else {
+        // No businesses found
+        resultsContainer.innerHTML = `
+          <div class="results-card">
+            <h5>Search Results</h5>
+            <p><strong>Phone Number (ANI):</strong> ${phoneNumber}</p>
+            <p><strong>Postal Code:</strong> ${postalCode}</p>
+            <div class="alert alert-warning">
+              <strong>No sponsored listings found</strong> for the provided criteria.
+            </div>
+            <details>
+              <summary>View Raw Response</summary>
+              <pre class="mt-2">${JSON.stringify(data, null, 2)}</pre>
+            </details>
+          </div>
+        `;
+      }
+    }
   </script>
 </body>
 </html>
