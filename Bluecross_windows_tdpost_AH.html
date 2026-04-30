@@ -38,28 +38,34 @@
     <h2 class="text-center">Bluecross TD POSTING Windows(AH)</h2>
     <form id="leadForm">
 <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="first_name">First Name</label>
                         <input type="text" class="form-control" id="first_name" name="first_name" placeholder="example: john" "required>
                     </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-4">
                     <div class="form-group">
                         <label for="last_name">Last Name</label>
                         <input type="text" class="form-control" id="last_name" name="last_name" placeholder="example: smith" required>
                     </div>
 </div>
-
-</div>
-<div class="row">
 <div class="col-md-4">
     <div class="form-group">
       <label for="phone_home">Phone ex: 2108573827</label>
       <input type="text" class="form-control" id="caller_id" placeholder="10 digits US number" required>
     </div>
 </div>
-  <div class="col-md-4">
+</div>
+<div class="row">
+<div class="col-md-6">
+          <div class="form-group">
+            <label for="zip">Zipcode</label>
+            <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
+          </div>
+        </div>
+  
+  <div class="col-md-6">
       <div class="form-group">
         <label for="state">State</label>
         <select class="form-control" id="state" required>
@@ -118,15 +124,25 @@
 </select>
       </div>
     </div>
-  <div class="col-md-4">
+  
+
+</div>
+<div class="row">
+  <div class="col-md-6">
           <div class="form-group">
             <label for="City">City</label>
             <input type="text" class="form-control" id="city" placeholder="Enter City here" required>
           </div>
         </div>
+<div class="col-md-6">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+      </div>
+    </div>
 
-</div>
-     
+
+</div>     
 <div class="row">
 <div class="col-md-12">
 <div class="form-group">
@@ -135,14 +151,6 @@
    </div>
   </div>  
  </div>
-<div class="row">
-<div class="col-md-4">
-  <div class="form-group">
-    <label for="IP_Address">IP Address</label>
-    <input type="text" class="form-control" id="ip_address" placeholder="" required>
-  </div>
-</div>
-</div>
 
 
   <div class="row">
@@ -160,7 +168,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://js.formifyweb.com/Bluecross_windows_tdpost_AH.js?ver-1"></script>
+  <script src="https://js.formifyweb.com/Bluecross_windows_tdpost_AH.js?ver-2"></script>
 
   <!-- Custom script for form submission and notification -->
    <script>
