@@ -312,7 +312,7 @@
         }
         
         .proxy-badge {
-            background: rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.2);
             border-radius: 20px;
             padding: 3px 10px;
             font-size: 0.7rem;
@@ -451,7 +451,7 @@
                 return;
             }
             const wrapper = document.createElement('div');
-            wrapper.style.width = '100%;
+            wrapper.style.width = '100%';  // FIXED: missing closing quote was here
             if (contentObj && typeof contentObj === 'object') {
                 wrapper.innerHTML = formatJSONPretty(contentObj);
             } else {
@@ -516,7 +516,6 @@
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        // Some proxies may need origin; we don't override, but preserve basic headers
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                     signal: controller.signal
@@ -524,27 +523,24 @@
                 
                 clearTimeout(timeoutId);
                 
-                // The proxy might return JSON or text. Attempt to parse JSON intelligently.
-                let responseData;
-                const contentType = response.headers.get('content-type');
-                
                 // Get raw text first to handle cases where proxy returns non-JSON but has json body 
                 const rawText = await response.text();
-                let parsedSuccess = false;
+                let responseData;
                 
                 // Try to parse as JSON regardless of content-type (some proxies return text/plain but actual JSON)
                 try {
                     if (rawText && (rawText.trim().startsWith('{') || rawText.trim().startsWith('['))) {
                         responseData = JSON.parse(rawText);
-                        parsedSuccess = true;
                     } else {
                         // fallback: attempt parse anyway but might throw
                         responseData = JSON.parse(rawText);
-                        parsedSuccess = true;
                     }
                 } catch (e) {
-                    // Not json; store as raw
-                    responseData = { rawResponse: rawText, note: "Non-JSON or invalid response from proxy/endpoint" };
+                    // Not json; store as raw with helpful note
+                    responseData = { 
+                        rawResponse: rawText.length > 500 ? rawText.substring(0, 500) + '...' : rawText, 
+                        note: "Non-JSON or invalid response from proxy/endpoint. The server did not return valid JSON."
+                    };
                 }
                 
                 if (!response.ok) {
@@ -590,10 +586,9 @@
         // Set focus on input for better UX
         phoneInput.focus();
         
-        // Optional: prepopulate a test number for quick demo (remove if needed, but keeps placeholder)
-        // Not prepopulated to respect privacy, but placeholder guides users.
-        // Provide small console hint if needed
-        console.log("Proxy integration active: " + PROXY_URL);
+        // Optional: add example quick-test helper (no auto-population, but console hint)
+        console.log("✅ Proxy integration active: " + PROXY_URL);
+        console.log("💡 Enter a 10 or 11 digit US phone number and click Search");
     })();
 </script>
 </body>
