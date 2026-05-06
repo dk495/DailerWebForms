@@ -1,0 +1,603 @@
+Here is the HTML code that integrates the specified proxy URL into your suppression and availability check tool.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Suppression & Availability Check | Retreaver Publisher</title>
+    <!-- Google Fonts & simple reset for modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e9eff7 0%, #dce5f0 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* glassmorphism + elegant card */
+        .check-card {
+            max-width: 880px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        /* header area with DID badge */
+        .hero-section {
+            background: linear-gradient(135deg, #0a1f3e 0%, #0c2b55 100%);
+            padding: 1.8rem 2rem 1.5rem 2rem;
+            color: white;
+        }
+
+        .title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .title h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #FFF, #c0e0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .did-badge {
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: monospace;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .did-badge i {
+            margin-right: 6px;
+            font-size: 0.85rem;
+        }
+
+        .sub-line {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sub-line i {
+            font-size: 0.8rem;
+        }
+
+        /* form area */
+        .form-container {
+            padding: 2rem 2rem 1rem 2rem;
+        }
+
+        .search-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e2f44;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-label i {
+            color: #2c6e9e;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            background: #f8fafd;
+            border-radius: 80px;
+            padding: 4px;
+            border: 1px solid #e2edf7;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .input-group:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+            background: white;
+        }
+
+        .search-icon {
+            padding-left: 18px;
+            color: #5d7a9c;
+            font-size: 1.2rem;
+        }
+
+        #phoneNumber {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            padding: 14px 8px 14px 0;
+            font-weight: 500;
+            font-family: 'Inter', monospace;
+            outline: none;
+            color: #0a2540;
+        }
+
+        #phoneNumber::placeholder {
+            color: #aac2dc;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .search-btn {
+            background: linear-gradient(98deg, #0f3b5f, #1b4c7c);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-btn i {
+            font-size: 1rem;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(98deg, #0b3150, #12426b);
+            transform: scale(0.97);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* helper message */
+        .hint {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #5c6f87;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .hint i {
+            font-size: 0.7rem;
+        }
+
+        /* response section */
+        .response-section {
+            margin: 0 2rem 2rem 2rem;
+            background: #f1f5f9;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid #e0edf5;
+            transition: all 0.2s;
+        }
+
+        .response-header {
+            padding: 0.9rem 1.5rem;
+            background: #e9f0f6;
+            border-bottom: 1px solid #d4e2ed;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1e4663;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        .response-header i {
+            font-size: 1rem;
+        }
+
+        .response-content {
+            padding: 1.4rem 1.5rem;
+            background: #ffffffea;
+            min-height: 180px;
+            font-family: 'SF Mono', 'Fira Code', 'Inter', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #1e2a3a;
+            border-radius: 0 0 28px 28px;
+            transition: background 0.1s;
+        }
+
+        .response-content.loading-bg {
+            background: #fefce8;
+        }
+
+        .empty-response {
+            color: #8fa0b5;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .error-text {
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        pre {
+            font-family: inherit;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+
+        /* responsive touches */
+        @media (max-width: 620px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+            .response-section {
+                margin: 0 1.5rem 1.5rem 1.5rem;
+            }
+            .input-group {
+                border-radius: 60px;
+            }
+            .search-btn {
+                padding: 10px 22px;
+            }
+            .title h1 {
+                font-size: 1.4rem;
+            }
+            .hero-section {
+                padding: 1.2rem 1.5rem;
+            }
+        }
+
+        /* json key highlighting */
+        .json-key {
+            color: #0f6e8c;
+            font-weight: 600;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 1rem 2rem 1.5rem;
+            color: #718096;
+            border-top: 1px solid #eef3fc;
+            background: #ffffffc9;
+        }
+        
+        .proxy-badge {
+            background: rgba(0,0,0,0.05);
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="check-card">
+    <div class="hero-section">
+        <div class="title">
+            <h1><i class="fas fa-shield-alt" style="margin-right: 8px;"></i> Suppression & Availability Check</h1>
+            <div class="did-badge">
+                <i class="fas fa-phone-alt"></i> DID: 8554493154
+            </div>
+        </div>
+        <div class="sub-line">
+            <i class="fas fa-exchange-alt"></i> 
+            <span>Check Status via Retreaver publisher Endpoint</span>
+            <span class="proxy-badge"><i class="fas fa-globe"></i> Proxy Enabled</span>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div class="search-label">
+            <i class="fas fa-search-location"></i> 
+            <span>US phone number (10 or 11 digits)</span>
+        </div>
+        <div class="input-group">
+            <div class="search-icon"><i class="fas fa-mobile-alt"></i></div>
+            <input type="tel" id="phoneNumber" placeholder="e.g., 2125551234 or 12125551234" autocomplete="off" value="">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-paper-plane"></i> Search</button>
+        </div>
+        <div class="hint">
+            <span><i class="fas fa-info-circle"></i> Format: 10-digit or 11-digit starting with 1 (USA).</span>
+            <span><i class="fas fa-key"></i> Global publisher token pre-configured</span>
+            <span><i class="fas fa-cloud-upload-alt"></i> Routing via secure proxy</span>
+        </div>
+    </div>
+
+    <div class="response-section">
+        <div class="response-header">
+            <i class="fas fa-code-branch"></i> 
+            <span>API Response</span>
+            <span style="font-size:0.7rem; font-weight:normal; margin-left:auto;"><i class="far fa-clock"></i> real-time</span>
+        </div>
+        <div id="responseArea" class="response-content">
+            <div class="empty-response">
+                <i class="fas fa-cloud-download-alt" style="font-size: 1.2rem;"></i> 
+                <span>Response will appear here after checking...</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <i class="fas fa-lock"></i> Secure endpoint · Publisher suppression & availability · Proxy: api.formifyweb.com
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // ================= CONFIGURATION =================
+        // PROXY ENDPOINT (as required)
+        const PROXY_URL = "https://api.formifyweb.com/proxify.php?url=";
+        
+        // TARGET ORIGINAL API ENDPOINT (without query params)
+        const TARGET_BASE_URL = "https://dialer-gw.usisi.cc/api/v1/retreaver/leads/publisher-suppression-and-availability";
+        
+        // Static parameters
+        const DID_VALUE = "8554493154";
+        const GLOBAL_TOKEN = "aZ9Lk3NqB7YpXr2WvMfJ0tCuEhGsDdRo5TwUaHzKmVcBiQxLYe1NRj6ogZsXPwlMBq7dVAiFyn4H3TEp9JClm0KUxtWGbvSa8YZ5OhqcnrM2LgEjxIfwdvPRQTyo7C1uX";
+        
+        // DOM elements
+        const phoneInput = document.getElementById('phoneNumber');
+        const searchButton = document.getElementById('searchBtn');
+        const responseArea = document.getElementById('responseArea');
+
+        // Helper: clean and validate USA number (10 or 11 digits, must start with 1 if 11-digit)
+        function validateAndCleanPhone(rawValue) {
+            let cleaned = rawValue.replace(/\D/g, '');
+            if (cleaned.length === 10) {
+                return { valid: true, phone: cleaned, message: null };
+            } 
+            else if (cleaned.length === 11 && cleaned[0] === '1') {
+                return { valid: true, phone: cleaned, message: null };
+            }
+            else if (cleaned.length === 11 && cleaned[0] !== '1') {
+                return { valid: false, phone: null, message: '❌ 11-digit number must start with 1 (USA country code).' };
+            }
+            else if (cleaned.length === 0) {
+                return { valid: false, phone: null, message: 'Please enter a phone number.' };
+            }
+            else {
+                return { valid: false, phone: null, message: `Invalid length: ${cleaned.length} digits. Please provide 10 or 11 digit US number.` };
+            }
+        }
+
+        // format JSON with simple syntax highlighting
+        function formatJSONPretty(obj) {
+            try {
+                let pretty = JSON.stringify(obj, null, 2);
+                let escaped = pretty.replace(/[&<>]/g, function(m) {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
+                });
+                escaped = escaped.replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:');
+                return `<pre>${escaped}</pre>`;
+            } catch(e) {
+                return `<pre>${String(obj)}</pre>`;
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function displayResponse(contentObj, isError = false) {
+            responseArea.innerHTML = '';
+            if (isError) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-text';
+                let errorMessage = typeof contentObj === 'string' ? contentObj : (contentObj?.message || contentObj?.error || JSON.stringify(contentObj));
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i> ${escapeHtml(errorMessage)}`;
+                responseArea.appendChild(errorDiv);
+                return;
+            }
+            const wrapper = document.createElement('div');
+            wrapper.style.width = '100%;
+            if (contentObj && typeof contentObj === 'object') {
+                wrapper.innerHTML = formatJSONPretty(contentObj);
+            } else {
+                wrapper.innerHTML = `<pre>${escapeHtml(JSON.stringify(contentObj, null, 2))}</pre>`;
+            }
+            responseArea.appendChild(wrapper);
+        }
+
+        function showLoadingState() {
+            responseArea.innerHTML = '';
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'empty-response';
+            loaderDiv.style.justifyContent = 'center';
+            loaderDiv.style.gap = '12px';
+            loaderDiv.innerHTML = `<i class="fas fa-circle-notch fa-spin fa-fw" style="font-size: 1.4rem;"></i> <span>Sending request via proxy to Retreaver endpoint ...</span>`;
+            responseArea.appendChild(loaderDiv);
+            responseArea.classList.add('loading-bg');
+        }
+
+        function resetLoadingStyle() {
+            responseArea.classList.remove('loading-bg');
+        }
+
+        // ------------------- PROXY-BASED FETCH -------------------
+        // Builds the final proxied URL: proxy.php?url=ENCODED_FULL_TARGET_URL
+        // The full target URL includes all query parameters (did, phone, global_publisher_token)
+        async function performCheck() {
+            const rawPhone = phoneInput.value.trim();
+            if (rawPhone === "") {
+                displayResponse({ error: "Phone number is required", hint: "Please enter a 10 or 11 digit USA number." }, true);
+                return;
+            }
+
+            const validation = validateAndCleanPhone(rawPhone);
+            if (!validation.valid) {
+                displayResponse({ error: validation.message }, true);
+                return;
+            }
+
+            const phoneForQuery = validation.phone; // cleaned digits (10 or 11)
+            
+            // Construct the FULL original API URL with query parameters
+            const targetUrl = new URL(TARGET_BASE_URL);
+            targetUrl.searchParams.append('did', DID_VALUE);
+            targetUrl.searchParams.append('phone', phoneForQuery);
+            targetUrl.searchParams.append('global_publisher_token', GLOBAL_TOKEN);
+            
+            const originalUrlString = targetUrl.toString();  // e.g., https://dialer-gw...?did=...&phone=...
+            
+            // NOW apply proxy: PROXY_URL + encodeURIComponent(originalUrlString)
+            const proxiedFullUrl = PROXY_URL + encodeURIComponent(originalUrlString);
+            
+            // Show loading state
+            showLoadingState();
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 seconds timeout to accommodate proxy + backend
+                
+                // Execute fetch via proxy endpoint (GET request)
+                const response = await fetch(proxiedFullUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        // Some proxies may need origin; we don't override, but preserve basic headers
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                // The proxy might return JSON or text. Attempt to parse JSON intelligently.
+                let responseData;
+                const contentType = response.headers.get('content-type');
+                
+                // Get raw text first to handle cases where proxy returns non-JSON but has json body 
+                const rawText = await response.text();
+                let parsedSuccess = false;
+                
+                // Try to parse as JSON regardless of content-type (some proxies return text/plain but actual JSON)
+                try {
+                    if (rawText && (rawText.trim().startsWith('{') || rawText.trim().startsWith('['))) {
+                        responseData = JSON.parse(rawText);
+                        parsedSuccess = true;
+                    } else {
+                        // fallback: attempt parse anyway but might throw
+                        responseData = JSON.parse(rawText);
+                        parsedSuccess = true;
+                    }
+                } catch (e) {
+                    // Not json; store as raw
+                    responseData = { rawResponse: rawText, note: "Non-JSON or invalid response from proxy/endpoint" };
+                }
+                
+                if (!response.ok) {
+                    // Build error object with status info and any parsed data
+                    let errorObj = {
+                        statusCode: response.status,
+                        statusText: response.statusText,
+                        ...(typeof responseData === 'object' ? responseData : { details: responseData })
+                    };
+                    displayResponse(errorObj, true);
+                } else {
+                    // Success case
+                    displayResponse(responseData, false);
+                }
+                resetLoadingStyle();
+            } catch (error) {
+                resetLoadingStyle();
+                let friendlyError = "";
+                if (error.name === 'AbortError') {
+                    friendlyError = "Request timeout (35s). Proxy or endpoint may be slow/unreachable.";
+                } else if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+                    friendlyError = "Network error: Could not connect to proxy service. Please check your internet or proxy availability (CORS/proxy).";
+                } else {
+                    friendlyError = error.message || "Unexpected error occurred while calling via proxy.";
+                }
+                displayResponse({ error: friendlyError, details: error.toString() }, true);
+            }
+        }
+
+        // Event Listeners
+        searchButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            performCheck();
+        });
+        
+        phoneInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performCheck();
+            }
+        });
+        
+        // Set focus on input for better UX
+        phoneInput.focus();
+        
+        // Optional: prepopulate a test number for quick demo (remove if needed, but keeps placeholder)
+        // Not prepopulated to respect privacy, but placeholder guides users.
+        // Provide small console hint if needed
+        console.log("Proxy integration active: " + PROXY_URL);
+    })();
+</script>
+</body>
+</html>
+```
