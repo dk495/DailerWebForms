@@ -248,47 +248,15 @@
       cursor: not-allowed;
     }
 
-    /* alert modern design - matches your JS output */
-    .alert-modern {
+    /* alert styling - matches your JS output */
+    .alert {
       border-radius: 60px;
       border: none;
       padding: 12px 20px;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 12px;
       margin-top: 20px;
       font-size: 0.9rem;
-      backdrop-filter: blur(4px);
       animation: fadeSlideUp 0.3s ease;
-    }
-
-    .alert-modern i {
-      font-size: 1.3rem;
-    }
-
-    .alert-success {
-      background: #dff9e6;
-      color: #1e6f3f;
-      border-left: 5px solid #2ecc71;
-    }
-
-    .alert-danger {
-      background: #ffe9e9;
-      color: #c0392b;
-      border-left: 5px solid #e74c3c;
-    }
-
-    .alert-warning {
-      background: #fff3e0;
-      color: #b45f1b;
-      border-left: 5px solid #f39c12;
-    }
-
-    .alert-info {
-      background: #e3f2fd;
-      color: #1565c0;
-      border-left: 5px solid #2196f3;
     }
 
     @keyframes fadeSlideUp {
@@ -414,112 +382,45 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- YOUR ORIGINAL JS FILE WITH COMPLETE FUNCTIONALITY -->
+<!-- YOUR EXTERNAL JS FILE - Keep this as is -->
+<script src="https://js.formifyweb.com/Transcon_ringbartb_14may.js"></script>
+
+<!-- Simple input formatting (non-intrusive, works alongside your JS) -->
 <script>
-  // This is your exact original JS code (preserved with all functionality)
-  document.getElementById('leadForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    document.getElementById('submitBtn').disabled = true;
-    
-    // Add loading class for visual feedback
-    document.getElementById('submitBtn').classList.add('loading');
-    
-    // Your API URL
-    const formData = new FormData();
-
-    api_tester(document.getElementById('caller_id').value);
-    formData.append('CID', '+1' + document.getElementById('caller_id').value);
-    formData.append('zipcode', document.getElementById('zip').value);
-
-    const originalUrl = 'https://rtb.ringba.com/v1/production/e5e1027378dd40b785911fea34d1b49d.json?exposeCallerId=yes&' + new URLSearchParams(formData).toString();
-    const apiUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
-
-    fetch(apiUrl, {
-      method: 'GET'
-    })
-    .then(response => {
-      if (response.status === 200 || response.status === 201) {
-        response.json().then(responseBody => {
-          // Remove 'retreaver_payout' key from response body
-          delete responseBody.retreaver_payout;
-
-          const successAlert = `
-            <div class="alert alert-success" role="alert">
-              ${response.status} : Form submitted successfully! Response Body: ${JSON.stringify(responseBody)}
-            </div>`;
-          document.getElementById('alertContainer').innerHTML = '';
-          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', successAlert);
-        });
-        // Clear form fields
-        document.getElementById('leadForm').reset();
-        document.getElementById('submitBtn').disabled = false;
-        document.getElementById('submitBtn').classList.remove('loading');
-      } else if (response.status === 422) {
-        response.json().then(data => {
-          const errorAlert = `
-            <div class="alert alert-danger" role="alert">
-              Error. Response Body: ${JSON.stringify(data)}
-            </div>`;
-          document.getElementById('alertContainer').innerHTML = '';
-          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
-          document.getElementById('submitBtn').disabled = false;
-          document.getElementById('submitBtn').classList.remove('loading');
-        });
-      } else {
-        response.text().then(responseBody => {
-          const errorAlert = `
-            <div class="alert alert-danger" role="alert">
-              Form submission failed. Please try again. Response Body: ${responseBody}
-            </div>`;
-          document.getElementById('alertContainer').innerHTML = '';
-          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
-          document.getElementById('submitBtn').disabled = false;
-          document.getElementById('submitBtn').classList.remove('loading');
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      const errorAlert = `
-        <div class="alert alert-danger" role="alert">
-          Network Error: ${error.message}
-        </div>`;
-      document.getElementById('alertContainer').innerHTML = '';
-      document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
-      document.getElementById('submitBtn').disabled = false;
-      document.getElementById('submitBtn').classList.remove('loading');
-    });
-  });
-
-  function api_tester(randomString) {
-    try {
-      fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
-        method: 'GET',
-        mode: 'no-cors'
-      });
-    } catch (error) {
-      console.error('Error in api_tester:', error);
-    }
-  }
-
-  // Input validation helpers (non-intrusive visual feedback)
+  // Just for visual formatting - doesn't interfere with your form submission
   const phoneInput = document.getElementById('caller_id');
   const zipInput = document.getElementById('zip');
 
+  // Allow only digits for phone
   phoneInput.addEventListener('input', function(e) {
-    let val = e.target.value.replace(/\D/g, '').slice(0, 10);
-    e.target.value = val;
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
   });
 
+  // Allow only digits for zip
   zipInput.addEventListener('input', function(e) {
-    let val = e.target.value.replace(/\D/g, '').slice(0, 5);
-    e.target.value = val;
+    this.value = this.value.replace(/\D/g, '').slice(0, 5);
   });
 
-  // Disable right-click as per original requirement
-  document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
+  // Visual loading effect on button when form is submitting
+  const form = document.getElementById('leadForm');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  form.addEventListener('submit', function() {
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
   });
+
+  // Monitor alert container to remove loading state when response comes
+  const alertContainer = document.getElementById('alertContainer');
+  const observer = new MutationObserver(function() {
+    if (alertContainer.innerHTML.trim() !== '') {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+  
+  observer.observe(alertContainer, { childList: true, subtree: true });
 </script>
+
 </body>
 </html>
