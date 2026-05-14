@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Transcon Post Form RTB | Elegant Submission</title>
+  <!-- Bootstrap 5 + Font Awesome + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* Floating animated particles effect */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 20% 40%, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: float 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(-50px);
+      }
+    }
+
+    /* Glassmorphic card container */
+    .form-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Header area with gradient accent */
+    .form-header {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      padding: 2rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: shimmer 20s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(40px, 40px);
+      }
+    }
+
+    .form-header h2 {
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.5px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-header h2 i {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .form-header p {
+      margin: 0.5rem 0 0;
+      opacity: 0.9;
+      font-weight: 400;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* main form body */
+    .form-body {
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+
+    /* Modern input groups with icons */
+    .input-group-custom {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .input-group-custom .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8e9aaf;
+      font-size: 1.2rem;
+      z-index: 2;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .input-group-custom input:focus + .input-icon {
+      color: #2a5298;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .input-group-custom input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: 2px solid #e2e8f0;
+      border-radius: 60px;
+      background: #ffffff;
+      transition: all 0.25s ease;
+      font-family: 'Inter', monospace;
+      letter-spacing: 0.3px;
+    }
+
+    .input-group-custom input:focus {
+      outline: none;
+      border-color: #2a5298;
+      box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.15);
+    }
+
+    .input-group-custom input::placeholder {
+      color: #b9c2d4;
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    .input-group-custom label {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #1e2a3e;
+      letter-spacing: 0.3px;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-group-custom label i {
+      margin-right: 6px;
+      color: #2a5298;
+    }
+
+    /* primary button */
+    .btn-submit {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      border: none;
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 60px;
+      width: 100%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s;
+      box-shadow: 0 8px 18px rgba(0, 32, 64, 0.2);
+      margin-top: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-submit:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #162d52 0%, #1e3e6e 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px -8px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    /* alert modern design */
+    .alert-modern {
+      border-radius: 60px;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      backdrop-filter: blur(4px);
+      animation: fadeSlideUp 0.3s ease;
+    }
+
+    .alert-modern i {
+      font-size: 1.3rem;
+    }
+
+    .alert-success {
+      background: #dff9e6;
+      color: #1e6f3f;
+      border-left: 5px solid #2ecc71;
+    }
+
+    .alert-danger {
+      background: #ffe9e9;
+      color: #c0392b;
+      border-left: 5px solid #e74c3c;
+    }
+
+    .alert-warning {
+      background: #fff3e0;
+      color: #b45f1b;
+      border-left: 5px solid #f39c12;
+    }
+
+    .alert-info {
+      background: #e3f2fd;
+      color: #1565c0;
+      border-left: 5px solid #2196f3;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* loader animation */
+    .spinner-btn {
+      display: none;
+      width: 1.3rem;
+      height: 1.3rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+    }
+
+    .btn-submit.loading .spinner-btn {
+      display: inline-block;
+    }
+
+    .btn-submit.loading .btn-text {
+      margin-right: 6px;
+    }
+
+    .btn-submit.loading {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* responsive touches */
+    @media (max-width: 500px) {
+      .form-body {
+        padding: 1.5rem;
+      }
+      .form-header h2 {
+        font-size: 1.4rem;
+      }
+      .input-group-custom input {
+        padding: 12px 16px 12px 44px;
+      }
+    }
+
+    /* subtle helper */
+    .small-hint {
+      font-size: 0.7rem;
+      color: #6c7a91;
+      margin-top: 6px;
+      margin-left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #6c7a91;
+    }
+
+    hr {
+      margin: 1rem 0 0.5rem;
+      opacity: 0.2;
+    }
+
+    /* field validation styles */
+    .input-group-custom input.valid {
+      border-color: #2ecc71;
+      background-color: #f6fff8;
+    }
+
+    .input-group-custom input.invalid {
+      border-color: #e74c3c;
+      background-color: #fff6f5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-card">
+  <div class="form-header">
+    <h2>
+      <i class="fas fa-paper-plane"></i> 
+      API Post Form (RTB)
+    </h2>
+    <p>Real-time bidding integration • Secure submission endpoint</p>
+  </div>
+  <div class="form-body">
+    <form id="leadForm" novalidate>
+      <!-- Phone field with modern icon -->
+      <div class="input-group-custom">
+        <label for="caller_id"><i class="fas fa-phone-alt"></i> Phone number</label>
+        <i class="fas fa-mobile-alt input-icon"></i>
+        <input type="tel" id="caller_id" name="caller_id" placeholder="7103847563" required>
+        <div class="small-hint">
+          <i class="fas fa-info-circle"></i> Enter 10-digit mobile number (digits only)
+        </div>
+      </div>
+
+      <!-- Zip code field with icon -->
+      <div class="input-group-custom">
+        <label for="zip"><i class="fas fa-map-pin"></i> Zip code</label>
+        <i class="fas fa-location-dot input-icon"></i>
+        <input type="text" id="zip" name="zip" placeholder="5 digit zipcode" maxlength="5" required>
+        <div class="small-hint">
+          <i class="fas fa-home"></i> 5-digit US zip code (e.g., 90210)
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text"><i class="fas fa-cloud-upload-alt"></i> Submit Lead</span>
+        <span class="spinner-btn"></span>
+      </button>
+    </form>
+    <div id="alertContainer"></div>
+    <hr>
+    <footer>
+      <i class="fas fa-shield-alt"></i> Encrypted transmission • Powered by Transcon RTB
+    </footer>
+  </div>
+</div>
+
+<!-- jQuery (required for external script) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ORIGINAL JS FILE WITH ALL API KEYS - PRESERVED -->
+<script src="https://js.formifyweb.com/Transcon_ringbartb_14may.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  (function() {
+    // This script enhances the design WITHOUT breaking the external JS functionality
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const alertContainer = document.getElementById('alertContainer');
+    const phoneInput = document.getElementById('caller_id');
+    const zipInput = document.getElementById('zip');
+
+    // Helper function to show alert (doesn't interfere with external JS)
+    function showAlert(message, type = 'danger') {
+      if (!alertContainer) return;
+      alertContainer.innerHTML = '';
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert-modern alert-${type}`;
+      let icon = 'fa-circle-exclamation';
+      if (type === 'success') icon = 'fa-circle-check';
+      if (type === 'warning') icon = 'fa-triangle-exclamation';
+      if (type === 'info') icon = 'fa-circle-info';
+      alertDiv.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+      alertContainer.appendChild(alertDiv);
+      setTimeout(() => {
+        if (alertDiv.parentNode) alertDiv.style.opacity = '0';
+        setTimeout(() => {
+          if (alertDiv.parentNode) alertDiv.remove();
+        }, 300);
+      }, 5000);
+    }
+
+    function clearAlerts() {
+      if (alertContainer) alertContainer.innerHTML = '';
+    }
+
+    // Validation functions
+    function validatePhone(value) {
+      const digits = value.replace(/\D/g, '');
+      return digits.length === 10 && /^\d{10}$/.test(digits);
+    }
+
+    function validateZip(value) {
+      const digits = value.replace(/\D/g, '');
+      return digits.length === 5 && /^\d{5}$/.test(digits);
+    }
+
+    function setFieldStatus(field, isValid) {
+      if (isValid) {
+        field.classList.add('valid');
+        field.classList.remove('invalid');
+      } else if (field.value.trim() !== "") {
+        field.classList.add('invalid');
+        field.classList.remove('valid');
+      } else {
+        field.classList.remove('valid', 'invalid');
+      }
+    }
+
+    // Input restrictions and live validation
+    phoneInput.addEventListener('input', function(e) {
+      let val = e.target.value.replace(/\D/g, '').slice(0, 10);
+      e.target.value = val;
+      const isValid = validatePhone(val);
+      setFieldStatus(phoneInput, isValid);
+    });
+
+    zipInput.addEventListener('input', function(e) {
+      let val = e.target.value.replace(/\D/g, '').slice(0, 5);
+      e.target.value = val;
+      const isValid = validateZip(val);
+      setFieldStatus(zipInput, isValid);
+    });
+
+    // Blur validation
+    phoneInput.addEventListener('blur', function() {
+      const isValid = validatePhone(phoneInput.value);
+      setFieldStatus(phoneInput, isValid);
+    });
+
+    zipInput.addEventListener('blur', function() {
+      const isValid = validateZip(zipInput.value);
+      setFieldStatus(zipInput, isValid);
+    });
+
+    // Prevent non-numeric input
+    phoneInput.addEventListener('keypress', function(e) {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+    
+    zipInput.addEventListener('keypress', function(e) {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    // Handle form submission with validation - let external JS do the actual API call
+    form.addEventListener('submit', function(event) {
+      let phoneVal = phoneInput.value.trim();
+      let zipVal = zipInput.value.trim();
+      
+      let isValid = true;
+      let errorMessages = [];
+      
+      if (!phoneVal) {
+        errorMessages.push("📱 Phone number is required");
+        isValid = false;
+        setFieldStatus(phoneInput, false);
+      } else if (!validatePhone(phoneVal)) {
+        errorMessages.push("📞 Phone must be exactly 10 digits");
+        isValid = false;
+        setFieldStatus(phoneInput, false);
+      } else {
+        setFieldStatus(phoneInput, true);
+      }
+      
+      if (!zipVal) {
+        errorMessages.push("📍 Zip code is required");
+        isValid = false;
+        setFieldStatus(zipInput, false);
+      } else if (!validateZip(zipVal)) {
+        errorMessages.push("🏷️ Zip code must be exactly 5 digits");
+        isValid = false;
+        setFieldStatus(zipInput, false);
+      } else {
+        setFieldStatus(zipInput, true);
+      }
+      
+      if (!isValid) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        clearAlerts();
+        showAlert(errorMessages.join(' • '), 'warning');
+        return false;
+      }
+      
+      // Show loading state - external JS will handle the actual submission
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      
+      // Safety timeout to reset button if external JS doesn't trigger response
+      setTimeout(() => {
+        if (submitBtn.disabled) {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      }, 15000);
+      
+      // Let the external JS continue with the submission
+      return true;
+    });
+
+    // Monitor for alert container changes from external JS
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList' && alertContainer && alertContainer.children.length > 0) {
+          // External JS added an alert, reset button state
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      });
+    });
+    
+    if (alertContainer) {
+      observer.observe(alertContainer, { childList: true, subtree: true });
+    }
+    
+    // Disable right-click as per original requirement
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
+    
+    // Initial placeholder styling
+    console.log('Transcon RTB Form Ready — External JS with API keys loaded from js.formifyweb.com');
+  })();
+</script>
+</body>
+</html>
