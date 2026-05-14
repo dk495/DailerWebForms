@@ -248,15 +248,36 @@
       cursor: not-allowed;
     }
 
-    /* alert styling - matches your JS output */
+    /* alert styling - stays inside the card */
+    #alertContainer {
+      margin-top: 20px;
+      width: 100%;
+    }
+
     .alert {
       border-radius: 60px;
       border: none;
       padding: 12px 20px;
       font-weight: 500;
-      margin-top: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       font-size: 0.9rem;
       animation: fadeSlideUp 0.3s ease;
+      word-wrap: break-word;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .alert-success {
+      background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+      color: #0d4715;
+      border-left: 5px solid #2ecc71;
+    }
+
+    .alert-danger {
+      background: linear-gradient(135deg, #fda4a4 0%, #f87171 100%);
+      color: #7a1f1a;
+      border-left: 5px solid #e74c3c;
     }
 
     @keyframes fadeSlideUp {
@@ -368,7 +389,10 @@
         <span class="spinner-btn"></span>
       </button>
     </form>
+    
+    <!-- Alert container INSIDE the form body - response will appear here -->
     <div id="alertContainer"></div>
+    
     <hr>
     <footer>
       <i class="fas fa-shield-alt"></i> Encrypted transmission • Powered by Transcon RTB
@@ -390,6 +414,9 @@
   // Just for visual formatting - doesn't interfere with your form submission
   const phoneInput = document.getElementById('caller_id');
   const zipInput = document.getElementById('zip');
+  const form = document.getElementById('leadForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const alertContainer = document.getElementById('alertContainer');
 
   // Allow only digits for phone
   phoneInput.addEventListener('input', function(e) {
@@ -402,21 +429,22 @@
   });
 
   // Visual loading effect on button when form is submitting
-  const form = document.getElementById('leadForm');
-  const submitBtn = document.getElementById('submitBtn');
-  
   form.addEventListener('submit', function() {
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
   });
 
   // Monitor alert container to remove loading state when response comes
-  const alertContainer = document.getElementById('alertContainer');
-  const observer = new MutationObserver(function() {
-    if (alertContainer.innerHTML.trim() !== '') {
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-    }
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'childList' && alertContainer.children.length > 0) {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
+        // Auto-scroll to alert for better UX
+        alertContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
   });
   
   observer.observe(alertContainer, { childList: true, subtree: true });
