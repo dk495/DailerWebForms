@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Fynex RTB Portal | Dynamic Campaigns</title>
+  <!-- Bootstrap 4 + Font Awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #e9eff7 0%, #dce3ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 2rem 0;
+    }
+    .portal-card {
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    .card-header-custom {
+      background: #0a2540;
+      padding: 1.3rem 2rem;
+      color: white;
+      border-bottom: 3px solid #00d4aa;
+    }
+    .card-header-custom h2 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.8rem;
+      letter-spacing: -0.3px;
+    }
+    .card-header-custom p {
+      margin: 0;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    .form-section {
+      padding: 2rem 2rem 2rem 2rem;
+    }
+    .campaign-dropdown-wrapper {
+      background: #f1f5f9;
+      border-radius: 28px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.8rem;
+      border: 1px solid #e2e8f0;
+    }
+    .campaign-label {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* FIXED: Dropdown fully visible - no text cutting */
+    .campaign-select {
+  border: 1px solid #cbd5e1;
+  height: 48px;
+  padding: 0 12px;
+  font-weight: 500;
+  background: white;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 48px;
+  border-radius: 6px; /* normal corners */
+}
+    /* Ensure dropdown options show full text */
+    .campaign-select option {
+      font-size: 1rem;
+      padding: 12px 8px;
+      white-space: normal;
+      word-break: normal;
+      overflow: visible;
+      display: block;
+    }
+    /* For better visibility on mobile */
+    @media (max-width: 576px) {
+      .campaign-select {
+        font-size: 0.9rem;
+      }
+      .campaign-select option {
+        font-size: 0.9rem;
+        white-space: normal;
+      }
+    }
+    .required-star:after {
+      content: "*";
+      color: #e53e3e;
+      margin-left: 4px;
+    }
+    .form-control {
+      border-radius: 6px !important;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid #cbd5e6;
+      transition: 0.2s;
+    }
+    .form-control:focus {
+      border-color: #00d4aa;
+      box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.2);
+    }
+    .btn-submit {
+      background: #0a2540;
+      border: none;
+      border-radius: 60px;
+      padding: 0.8rem 1.8rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+      transition: 0.2s;
+      width: 100%;
+      box-shadow: 0 6px 14px rgba(10, 37, 64, 0.25);
+    }
+    .btn-submit:hover {
+      background: #1e3a5f;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    }
+    .alert-custom {
+      border-radius: 50px;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #475569;
+    }
+    .hidden-form {
+      display: none;
+    }
+    .visible-form {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .form-section { padding: 1.5rem; }
+      .card-header-custom h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9 col-12">
+      <div class="portal-card">
+        <div class="card-header-custom">
+          <h2><i class="fas fa-phone-alt mr-2"></i> Fynex RTB Portal</h2>
+          <p>Windows • Roofing • Bathroom campaigns | Real-time bidding</p>
+        </div>
+        <div class="form-section">
+          <!-- CAMPAIGN SELECTOR DROPDOWN (3 options - FULLY VISIBLE TEXT) -->
+          <div class="campaign-dropdown-wrapper">
+            <div class="campaign-label"><i class="fas fa-bullhorn"></i> Select Campaign</div>
+            <select id="campaignSelect" class="form-control campaign-select">
+              <option value="" disabled selected>— Choose a campaign —</option>
+              <option value="windows">🏠 2487 | Windows | RTB</option>
+              <option value="roofing">🛠️ 2435 | Roofing | RTB</option>
+              <option value="bathroom">🚿 2087 | Bathroom | RTB</option>
+            </select>
+          </div>
+          
+          <!-- MAIN FORM: ONLY Phone Number + Zipcode - hidden until campaign selected -->
+          <div id="dynamicFormContainer" class="hidden-form">
+            <form id="rtbLeadForm">
+              <!-- exposeCallerId=yes required (mandatory) -->
+              <input type="hidden" name="exposeCallerId" value="yes">
+              
+              <!-- CID on E164 format (required) -->
+              <div class="form-group">
+                <label class="required-star"><i class="fas fa-phone"></i> Caller ID (CID) - E164 Format</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="border-radius: 60px 0 0 60px;">+1</span>
+                  </div>
+                  <input type="tel" class="form-control" id="callerNumber" placeholder="5551234567" value="" style="border-radius: 0 60px 60px 0;">
+                </div>
+                <small class="form-text text-muted">Enter 10-digit number</small>
+              </div>
+
+              <!-- ZIPCODE field (required, will be passed twice in API payload) -->
+              <div class="form-group">
+                <label class="required-star"><i class="fas fa-map-pin"></i> Zipcode</label>
+                <input type="text" class="form-control" id="zipField" placeholder="e.g., 90210 or 10001" maxlength="10" required>
+                <small class="form-text text-muted">5-digit zip code (required).</small>
+              </div>
+              
+              <button type="submit" class="btn btn-submit btn-primary"><i class="fas fa-paper-plane mr-2"></i> Submit RTB Call</button>
+            </form>
+            <div id="alertContainer"></div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery + Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Keeping your existing formify client script reference -->
+<script src="https://js.formifyweb.com/Client_ret14may.js"></script>
+
+<script>
+  // --------------------------------------------------------------
+  // CAMPAIGN DATABASE (based on three API specs)
+  // --------------------------------------------------------------
+  const CAMPAIGNS = {
+    windows: {
+      name: "2487 | Windows | RTB",
+      apiKey: "56d2351c-939c-4398-ace7-80fcf1ac2f75",
+      publisherId: "92c6ec0c"
+    },
+    roofing: {
+      name: "2435 | Roofing | RTB",
+      apiKey: "3fad77fe-c9ca-4db7-a1ef-d8fa1095c7ef",
+      publisherId: "ecd0a533"
+    },
+    bathroom: {
+      name: "2087 | Bathroom | RTB",
+      apiKey: "12be4a3c-d9fd-4d39-b7c5-7dc1be468e54",
+      publisherId: "00100732"
+    }
+  };
+
+  let currentCampaign = null;
+
+  // Get DOM elements
+  const campaignSelect = document.getElementById('campaignSelect');
+  const formContainer = document.getElementById('dynamicFormContainer');
+
+  // Show/hide form based on campaign selection
+  campaignSelect.addEventListener('change', function(e) {
+    const selectedValue = e.target.value;
+    if (selectedValue && selectedValue !== "") {
+      currentCampaign = selectedValue;
+      formContainer.classList.remove('hidden-form');
+      formContainer.classList.add('visible-form');
+      // Clear any previous alerts when switching campaigns
+      const alertContainer = document.getElementById('alertContainer');
+      if (alertContainer) alertContainer.innerHTML = '';
+      // Reset form fields when switching campaigns (clean state)
+      const callerInput = document.getElementById('callerNumber');
+      const zipInput = document.getElementById('zipField');
+      if (callerInput) callerInput.value = '';
+      if (zipInput) zipInput.value = '';
+    } else {
+      // No campaign selected, hide form
+      formContainer.classList.remove('visible-form');
+      formContainer.classList.add('hidden-form');
+      currentCampaign = null;
+    }
+  });
+
+  // Helper: format phone to E164 (+1XXXXXXXXXX) required CID
+  function formatE164(rawPhone) {
+    let cleaned = rawPhone.replace(/\D/g, '');
+    if (cleaned.length === 10) {
+      return '1' + cleaned;
+    } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
+      return cleaned;
+    } else if (cleaned.length > 11) {
+      let last10 = cleaned.slice(-10);
+      return '1' + last10;
+    } else {
+      return '1' + cleaned;
+    }
+  }
+
+  // show alert helper
+  function showAlert(type, message, timeout = 5000) {
+    const alertContainer = document.getElementById('alertContainer');
+    if (!alertContainer) return;
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-custom mt-3`;
+    alertDiv.role = 'alert';
+    const icon = type === 'success' ? 'fa-check-circle' : (type === 'danger' ? 'fa-exclamation-triangle' : 'fa-info-circle');
+    alertDiv.innerHTML = `<i class="fas ${icon} mr-2"></i> ${message}`;
+    alertContainer.innerHTML = '';
+    alertContainer.appendChild(alertDiv);
+    if (timeout > 0) {
+      setTimeout(() => {
+        if (alertDiv.parentNode) alertDiv.remove();
+      }, timeout);
+    }
+  }
+
+  // API Tester function (preserving original requirement)
+  function api_tester(randomString) {
+    try {
+      fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
+        method: 'GET',
+        mode: 'no-cors'
+      });
+    } catch (error) {
+      console.error('api_tester silent error:', error);
+    }
+  }
+
+  // Main form submission (only if form exists)
+  const form = document.getElementById('rtbLeadForm');
+  if (form) {
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const alertContainer = document.getElementById('alertContainer');
+      if (alertContainer) alertContainer.innerHTML = '';
+
+      // Ensure a campaign is selected
+      if (!currentCampaign) {
+        showAlert('danger', 'Please select a campaign first.');
+        return;
+      }
+
+      // Get phone + zip
+      let rawPhone = document.getElementById('callerNumber').value.trim();
+      const zipValue = document.getElementById('zipField').value.trim();
+
+      if (!rawPhone) {
+        showAlert('danger', 'Phone number is required (CID E164 format).');
+        return;
+      }
+      if (!zipValue) {
+        showAlert('danger', 'Zipcode is required (mandatory field).');
+        return;
+      }
+      if (zipValue.length < 3) {
+        showAlert('danger', 'Please enter a valid zipcode (minimum 3 characters).');
+        return;
+      }
+
+      // Format to E164
+      let e164Phone = formatE164(rawPhone);
+      if (!e164Phone.match(/^1\d{10}$/)) {
+        showAlert('danger', 'Invalid phone number. Please enter a valid 10-digit US number (e.g., 5551234567).');
+        return;
+      }
+
+      // get campaign configuration
+      const camp = CAMPAIGNS[currentCampaign];
+      if (!camp) {
+        showAlert('danger', 'Campaign configuration error.');
+        return;
+      }
+
+      // Build the RTB URL with proper parameters
+      // Format: rtb.retreaver.com/rtbs.json?key=XXX&publisher_id=YYY&caller_number=[E164]&zipcode=[zip]&exposeCallerId=yes
+      // zipcode needs to be passed 2 times.
+      const baseUrl = 'https://rtb.retreaver.com/rtbs.json';
+      const params = new URLSearchParams();
+      params.append('key', camp.apiKey);
+      params.append('publisher_id', camp.publisherId);
+      params.append('caller_number', e164Phone);
+      // First zipcode parameter
+      params.append('zipcode', zipValue);
+      // Second zipcode parameter (required twice per spec)
+      params.append('zipcode', zipValue);
+      params.append('exposeCallerId', 'yes');
+
+      const fullUrl = `${baseUrl}?${params.toString()}`;
+      
+      // Use the proxify endpoint (keeping existing logic)
+      const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(fullUrl);
+      
+      // call api_tester with original phone value (as per original js snippet)
+      api_tester(rawPhone);
+      
+      // Show loading indicator
+      const loadingAlert = document.createElement('div');
+      loadingAlert.className = 'alert alert-info alert-custom mt-3';
+      loadingAlert.id = 'loadingAlert';
+      loadingAlert.innerHTML = '<i class="fas fa-spinner fa-pulse mr-2"></i> Submitting to RTB, please wait...';
+      if (alertContainer) alertContainer.appendChild(loadingAlert);
+      
+      fetch(proxyUrl, { method: 'POST' })
+        .then(response => response.text())
+        .then(responseBody => {
+          // remove loading alert
+          const loadElem = document.getElementById('loadingAlert');
+          if (loadElem) loadElem.remove();
+          
+          let responseData;
+          try {
+            responseData = JSON.parse(responseBody);
+          } catch (err) {
+            throw new Error('Invalid JSON from RTB endpoint: ' + responseBody.substring(0, 150));
+          }
+          
+          // Check for rejectReason (failure)
+          if (responseData.rejectReason) {
+            let errorMsg = `Failure: ${responseData.rejectReason}`;
+            if (responseData.rejectDescription) errorMsg += ` - ${responseData.rejectDescription}`;
+            showAlert('danger', `❌ ${errorMsg}`, 8000);
+          } else {
+            // Success: remove bidAmount if exists as per original spec
+            if (responseData.bidAmount !== undefined) {
+              delete responseData.bidAmount;
+            }
+            const successMsg = `✅ Call routed successfully! Response: ${JSON.stringify(responseData)}`;
+            showAlert('success', successMsg, 8000);
+            // Reset form fields
+            document.getElementById('callerNumber').value = '';
+            document.getElementById('zipField').value = '';
+          }
+        })
+        .catch(error => {
+          const loadElem = document.getElementById('loadingAlert');
+          if (loadElem) loadElem.remove();
+          console.error('Fetch error:', error);
+          showAlert('danger', `Error: ${error.message || 'Network or proxy issue'}. Please check connection.`, 7000);
+        });
+    });
+  }
+  
+  // additional contextmenu prevention (keeping original functionality)
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
+  
+  console.log("Fynex RTB Portal ready — Dropdown fully visible, form appears only after selection.");
+</script>
+</body>
+</html>
