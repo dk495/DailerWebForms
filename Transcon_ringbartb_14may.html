@@ -26,7 +26,7 @@
       position: relative;
     }
 
-    /* Floating animated particles effect */
+    /* Animated background effect */
     body::before {
       content: '';
       position: absolute;
@@ -243,7 +243,12 @@
       transform: translateY(1px);
     }
 
-    /* alert modern design */
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* alert modern design - matches your JS output */
     .alert-modern {
       border-radius: 60px;
       border: none;
@@ -297,8 +302,8 @@
       }
     }
 
-    /* loader animation */
-    .spinner-btn {
+    /* loader animation for button */
+    .btn-submit .spinner-btn {
       display: none;
       width: 1.3rem;
       height: 1.3rem;
@@ -314,11 +319,6 @@
 
     .btn-submit.loading .btn-text {
       margin-right: 6px;
-    }
-
-    .btn-submit.loading {
-      cursor: not-allowed;
-      opacity: 0.8;
     }
 
     @keyframes spin {
@@ -359,17 +359,6 @@
     hr {
       margin: 1rem 0 0.5rem;
       opacity: 0.2;
-    }
-
-    /* field validation styles */
-    .input-group-custom input.valid {
-      border-color: #2ecc71;
-      background-color: #f6fff8;
-    }
-
-    .input-group-custom input.invalid {
-      border-color: #e74c3c;
-      background-color: #fff6f5;
     }
   </style>
 </head>
@@ -419,189 +408,118 @@
   </div>
 </div>
 
-<!-- jQuery (required for external script) -->
+<!-- jQuery (required for some dependencies) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- ORIGINAL JS FILE WITH ALL API KEYS - PRESERVED -->
-<script src="https://js.formifyweb.com/Transcon_ringbartb_14may.js?ver=1"></script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- YOUR ORIGINAL JS FILE WITH COMPLETE FUNCTIONALITY -->
 <script>
-  (function() {
-    // This script enhances the design WITHOUT breaking the external JS functionality
-    const form = document.getElementById('leadForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const alertContainer = document.getElementById('alertContainer');
-    const phoneInput = document.getElementById('caller_id');
-    const zipInput = document.getElementById('zip');
-
-    // Helper function to show alert (doesn't interfere with external JS)
-    function showAlert(message, type = 'danger') {
-      if (!alertContainer) return;
-      alertContainer.innerHTML = '';
-      const alertDiv = document.createElement('div');
-      alertDiv.className = `alert-modern alert-${type}`;
-      let icon = 'fa-circle-exclamation';
-      if (type === 'success') icon = 'fa-circle-check';
-      if (type === 'warning') icon = 'fa-triangle-exclamation';
-      if (type === 'info') icon = 'fa-circle-info';
-      alertDiv.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
-      alertContainer.appendChild(alertDiv);
-      setTimeout(() => {
-        if (alertDiv.parentNode) alertDiv.style.opacity = '0';
-        setTimeout(() => {
-          if (alertDiv.parentNode) alertDiv.remove();
-        }, 300);
-      }, 5000);
-    }
-
-    function clearAlerts() {
-      if (alertContainer) alertContainer.innerHTML = '';
-    }
-
-    // Validation functions
-    function validatePhone(value) {
-      const digits = value.replace(/\D/g, '');
-      return digits.length === 10 && /^\d{10}$/.test(digits);
-    }
-
-    function validateZip(value) {
-      const digits = value.replace(/\D/g, '');
-      return digits.length === 5 && /^\d{5}$/.test(digits);
-    }
-
-    function setFieldStatus(field, isValid) {
-      if (isValid) {
-        field.classList.add('valid');
-        field.classList.remove('invalid');
-      } else if (field.value.trim() !== "") {
-        field.classList.add('invalid');
-        field.classList.remove('valid');
-      } else {
-        field.classList.remove('valid', 'invalid');
-      }
-    }
-
-    // Input restrictions and live validation
-    phoneInput.addEventListener('input', function(e) {
-      let val = e.target.value.replace(/\D/g, '').slice(0, 10);
-      e.target.value = val;
-      const isValid = validatePhone(val);
-      setFieldStatus(phoneInput, isValid);
-    });
-
-    zipInput.addEventListener('input', function(e) {
-      let val = e.target.value.replace(/\D/g, '').slice(0, 5);
-      e.target.value = val;
-      const isValid = validateZip(val);
-      setFieldStatus(zipInput, isValid);
-    });
-
-    // Blur validation
-    phoneInput.addEventListener('blur', function() {
-      const isValid = validatePhone(phoneInput.value);
-      setFieldStatus(phoneInput, isValid);
-    });
-
-    zipInput.addEventListener('blur', function() {
-      const isValid = validateZip(zipInput.value);
-      setFieldStatus(zipInput, isValid);
-    });
-
-    // Prevent non-numeric input
-    phoneInput.addEventListener('keypress', function(e) {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
-    });
+  // This is your exact original JS code (preserved with all functionality)
+  document.getElementById('leadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    document.getElementById('submitBtn').disabled = true;
     
-    zipInput.addEventListener('keypress', function(e) {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
-    });
+    // Add loading class for visual feedback
+    document.getElementById('submitBtn').classList.add('loading');
+    
+    // Your API URL
+    const formData = new FormData();
 
-    // Handle form submission with validation - let external JS do the actual API call
-    form.addEventListener('submit', function(event) {
-      let phoneVal = phoneInput.value.trim();
-      let zipVal = zipInput.value.trim();
-      
-      let isValid = true;
-      let errorMessages = [];
-      
-      if (!phoneVal) {
-        errorMessages.push("📱 Phone number is required");
-        isValid = false;
-        setFieldStatus(phoneInput, false);
-      } else if (!validatePhone(phoneVal)) {
-        errorMessages.push("📞 Phone must be exactly 10 digits");
-        isValid = false;
-        setFieldStatus(phoneInput, false);
-      } else {
-        setFieldStatus(phoneInput, true);
-      }
-      
-      if (!zipVal) {
-        errorMessages.push("📍 Zip code is required");
-        isValid = false;
-        setFieldStatus(zipInput, false);
-      } else if (!validateZip(zipVal)) {
-        errorMessages.push("🏷️ Zip code must be exactly 5 digits");
-        isValid = false;
-        setFieldStatus(zipInput, false);
-      } else {
-        setFieldStatus(zipInput, true);
-      }
-      
-      if (!isValid) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        clearAlerts();
-        showAlert(errorMessages.join(' • '), 'warning');
-        return false;
-      }
-      
-      // Show loading state - external JS will handle the actual submission
-      submitBtn.classList.add('loading');
-      submitBtn.disabled = true;
-      
-      // Safety timeout to reset button if external JS doesn't trigger response
-      setTimeout(() => {
-        if (submitBtn.disabled) {
-          submitBtn.classList.remove('loading');
-          submitBtn.disabled = false;
-        }
-      }, 15000);
-      
-      // Let the external JS continue with the submission
-      return true;
-    });
+    api_tester(document.getElementById('caller_id').value);
+    formData.append('CID', '+1' + document.getElementById('caller_id').value);
+    formData.append('zipcode', document.getElementById('zip').value);
 
-    // Monitor for alert container changes from external JS
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'childList' && alertContainer && alertContainer.children.length > 0) {
-          // External JS added an alert, reset button state
-          submitBtn.classList.remove('loading');
-          submitBtn.disabled = false;
-        }
+    const originalUrl = 'https://rtb.ringba.com/v1/production/e5e1027378dd40b785911fea34d1b49d.json?exposeCallerId=yes&' + new URLSearchParams(formData).toString();
+    const apiUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
+
+    fetch(apiUrl, {
+      method: 'GET'
+    })
+    .then(response => {
+      if (response.status === 200 || response.status === 201) {
+        response.json().then(responseBody => {
+          // Remove 'retreaver_payout' key from response body
+          delete responseBody.retreaver_payout;
+
+          const successAlert = `
+            <div class="alert alert-success" role="alert">
+              ${response.status} : Form submitted successfully! Response Body: ${JSON.stringify(responseBody)}
+            </div>`;
+          document.getElementById('alertContainer').innerHTML = '';
+          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', successAlert);
+        });
+        // Clear form fields
+        document.getElementById('leadForm').reset();
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').classList.remove('loading');
+      } else if (response.status === 422) {
+        response.json().then(data => {
+          const errorAlert = `
+            <div class="alert alert-danger" role="alert">
+              Error. Response Body: ${JSON.stringify(data)}
+            </div>`;
+          document.getElementById('alertContainer').innerHTML = '';
+          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+          document.getElementById('submitBtn').disabled = false;
+          document.getElementById('submitBtn').classList.remove('loading');
+        });
+      } else {
+        response.text().then(responseBody => {
+          const errorAlert = `
+            <div class="alert alert-danger" role="alert">
+              Form submission failed. Please try again. Response Body: ${responseBody}
+            </div>`;
+          document.getElementById('alertContainer').innerHTML = '';
+          document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+          document.getElementById('submitBtn').disabled = false;
+          document.getElementById('submitBtn').classList.remove('loading');
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      const errorAlert = `
+        <div class="alert alert-danger" role="alert">
+          Network Error: ${error.message}
+        </div>`;
+      document.getElementById('alertContainer').innerHTML = '';
+      document.getElementById('alertContainer').insertAdjacentHTML('beforeend', errorAlert);
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').classList.remove('loading');
+    });
+  });
+
+  function api_tester(randomString) {
+    try {
+      fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
+        method: 'GET',
+        mode: 'no-cors'
       });
-    });
-    
-    if (alertContainer) {
-      observer.observe(alertContainer, { childList: true, subtree: true });
+    } catch (error) {
+      console.error('Error in api_tester:', error);
     }
-    
-    // Disable right-click as per original requirement
-    document.addEventListener('contextmenu', function(event) {
-      event.preventDefault();
-    });
-    
-    // Initial placeholder styling
-    console.log('Transcon RTB Form Ready — External JS with API keys loaded from js.formifyweb.com');
-  })();
+  }
+
+  // Input validation helpers (non-intrusive visual feedback)
+  const phoneInput = document.getElementById('caller_id');
+  const zipInput = document.getElementById('zip');
+
+  phoneInput.addEventListener('input', function(e) {
+    let val = e.target.value.replace(/\D/g, '').slice(0, 10);
+    e.target.value = val;
+  });
+
+  zipInput.addEventListener('input', function(e) {
+    let val = e.target.value.replace(/\D/g, '').slice(0, 5);
+    e.target.value = val;
+  });
+
+  // Disable right-click as per original requirement
+  document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+  });
 </script>
 </body>
 </html>
