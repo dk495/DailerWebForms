@@ -70,12 +70,7 @@
             display: inline-block;
         }
 
-        /* 3x3 grid: 3 columns, as many rows as needed. We will have exactly 6 buttons but to make 3x3 visually we add 3 dummy / empty invisible? No - but we want structured rows:
-           row1: Windows Warm, Roofing Warm, Bathroom Warm
-           row2: Windows Cold, Roofing Cold, Bathroom Cold
-           That is perfect 3x2 = 6 items. But user said "3 by 3 column and on top row 1st is windows Warm and then second row first is windows cold" 
-           This means 3 columns, 2 rows (or 3 rows if more items). However ideal 3x3 implies 9 items but we only have 6 services. To keep clean grid, we use display grid with 3 columns, and items will fill row1 then row2 exactly (first row: windows warm, roofing warm, bathroom warm; second row: windows cold, roofing cold, bathroom cold). That matches exactly the request and looks professional with 2 rows (and optionally we could keep a neutral third row empty? not needed). However to be '3x3' we can keep 3 rows but we don't have extra buttons. Better to keep 3 columns and 2 rows = 3x2, but we can add a subtle placeholder message? No, because we want functional, no clutter. The layout will be symmetric. I'll design the grid as 3 columns, and items automatically fill 2 rows. This follows the placed order: first three warm items, then three cold items. So the user wants first row first = Windows Warm, second row first = Windows Cold – that's exactly what we do. I will also add a tiny informational divider making it visually clear. 
-        */
+        /* 3x3 grid layout */
         .button-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -114,7 +109,7 @@
             filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.1));
         }
 
-        /* distinct themes for Warm (gold/amber/terracotta) & Cold (blue/icy) */
+        /* distinct themes for Warm & Cold */
         .btn-warm-general {
             background: linear-gradient(145deg, #ffffff, #fff6ed);
             border-bottom: 6px solid #e67e22;
@@ -127,8 +122,6 @@
         }
         .btn-cold-general i { color: #1c5eb0; }
 
-        /* Windows specific nuances keep but reuse same base for consistency, but we differentiate via icons & subtle gradient */
-        /* To keep design consistent, but each button can have individual hover effects. We'll combine with existing utility classes but also specific category colors? Actually we will use separate classes but keep all warm/cold consistent. However for Roofing Warm/Bathroom Warm, we use same warm scheme, for Cold same cold scheme. Additional highlight: brand border micro adjustment */
         .btn-roofing-warm, .btn-bathroom-warm {
             background: linear-gradient(145deg, #ffffff, #fff7ef);
             border-bottom: 6px solid #f39c12;
@@ -138,7 +131,6 @@
             border-bottom: 6px solid #3498db;
         }
 
-        /* ensure icons get appropriate warm/cold color */
         .btn-roofing-warm i, .btn-bathroom-warm i {
             color: #d4751b;
         }
@@ -176,6 +168,88 @@
             color: #2b4d72;
         }
 
+        /* Nationwide Cold Transfers Section */
+        .nationwide-section {
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            border-top: 2px dashed rgba(44, 123, 229, 0.3);
+        }
+
+        .nationwide-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0c2e4a;
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nationwide-title i {
+            color: #2c7be5;
+            font-size: 2rem;
+            background: rgba(44, 123, 229, 0.12);
+            padding: 0.6rem;
+            border-radius: 1rem;
+        }
+
+        .nationwide-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nationwide-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 1.5rem;
+            padding: 1.5rem 2rem;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            min-width: 240px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nationwide-btn i {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .nationwide-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .nationwide-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Individual button colors */
+        .btn-bathroom-nation {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .btn-windows-nation {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-roofing-nation {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
         /* info footer & quick links */
         .info-note {
             margin-top: 2.8rem;
@@ -210,7 +284,6 @@
             color: #0c4468;
         }
 
-        /* row indicator subtle? optional */
         .section-divider {
             display: flex;
             align-items: center;
@@ -229,7 +302,7 @@
             font-size: 0.8rem;
         }
 
-        /* responsive for tablet: 2 columns on smaller than 900px? But 3x3 ideal stays until 800px then becomes 2 columns to preserve readability */
+        /* responsive */
         @media (max-width: 880px) {
             .button-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -237,6 +310,14 @@
             }
             h1 {
                 font-size: 2.4rem;
+            }
+            .nationwide-buttons {
+                gap: 1.2rem;
+            }
+            .nationwide-btn {
+                min-width: 200px;
+                padding: 1.2rem 1.5rem;
+                font-size: 1.1rem;
             }
         }
 
@@ -272,9 +353,21 @@
             .subhead {
                 margin-left: 1rem;
             }
+            .nationwide-section {
+                margin-top: 2.5rem;
+            }
+            .nationwide-title {
+                font-size: 1.5rem;
+            }
+            .nationwide-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nationwide-btn {
+                width: 100%;
+            }
         }
         
-        /* extra ambient background */
         body::after {
             content: '';
             position: fixed;
@@ -306,49 +399,40 @@
 
     <!-- 3x3 Grid layout (3 columns) 
          Row 1: Windows Warm | Roofing Warm | Bathroom Warm
-         Row 2: Windows Cold | Roofing Cold | Bathroom Cold
-         That gives perfect structure: top row starts with Windows Warm, second row starts with Windows Cold.
-         Exactly as requested: "on top row 1st is windows Warm and then second row first is windows cold"
-    -->
+         Row 2: Windows Cold | Roofing Cold | Bathroom Cold -->
     <div class="button-grid">
         <!-- Row 1 - warm services -->
-        <!-- 1. Windows Warm (first position top row) -->
         <a href="http://forms.formifyweb.com/wbclient_windows.html" class="portal-btn btn-warm-general" target="_self" rel="noopener">
             <i class="fas fa-sun"></i>
             <span class="btn-label">Windows Warm</span>
             <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN FORM</span>
         </a>
 
-        <!-- 2. Roofing Warm (new link) -->
         <a href="https://forms.formifyweb.com/wbclient_roofingwarm.html" class="portal-btn btn-roofing-warm" target="_self" rel="noopener">
             <i class="fas fa-fire"></i>
             <span class="btn-label">Roofing Warm</span>
             <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN FORM</span>
         </a>
 
-        <!-- 3. Bathroom Warm (new link) -->
         <a href="https://forms.formifyweb.com/wbclient_bathroomwarm.html" class="portal-btn btn-bathroom-warm" target="_self" rel="noopener">
             <i class="fas fa-hot-tub"></i>
             <span class="btn-label">Bathroom Warm</span>
             <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN FORM</span>
         </a>
 
-        <!-- Row 2 - cold services (second row, Windows Cold first) -->
-        <!-- 4. Windows Cold (first of second row) -->
+        <!-- Row 2 - cold services -->
         <a href="https://forms.formifyweb.com/Bluecross_wt_pingpost18feb" class="portal-btn btn-cold-general" target="_self" rel="noopener">
             <i class="fas fa-snowflake"></i>
             <span class="btn-label">Windows Cold</span>
             <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN FORM</span>
         </a>
 
-        <!-- 5. Roofing Cold (original roofing link) -->
         <a href="http://forms.formifyweb.com/wbclient_roofing.html" class="portal-btn btn-roofing-cold" target="_self" rel="noopener">
             <i class="fas fa-home"></i>
             <span class="btn-label">Roofing Cold</span>
             <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN FORM</span>
         </a>
 
-        <!-- 6. Bathroom Cold (original bathroom link) -->
         <a href="http://forms.formifyweb.com/wbclient_bathroom.html" class="portal-btn btn-bathroom-cold" target="_self" rel="noopener">
             <i class="fas fa-toilet"></i>
             <span class="btn-label">Bathroom Cold</span>
@@ -356,7 +440,6 @@
         </a>
     </div>
 
-    <!-- visual aid showing row structure and quick access menu -->
     <div class="section-divider">
         <span class="shape-badge"><i class="fas fa-arrow-up" style="margin-right: 0.3rem;"></i> WARM ROW</span>
         <i class="fas fa-sun" style="color: #e67e22;"></i>
@@ -365,7 +448,42 @@
         <span class="shape-badge"><i class="fas fa-arrow-down"></i> COLD ROW</span>
     </div>
 
-    <!-- updated info footer with all warm/cold links -->
+    <!-- NEW SECTION: Nationwide Cold Transfers -->
+    <div class="nationwide-section">
+        <div class="nationwide-title">
+            <i class="fas fa-globe-americas"></i>
+            Nationwide Cold Transfers
+            <i class="fas fa-truck"></i>
+        </div>
+        <div class="nationwide-buttons">
+            <a href="http://forms.formifyweb.com/wbclient_nationwidebathroom" 
+               class="nationwide-btn btn-bathroom-nation" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <i class="fas fa-bath"></i>
+                Nationwide Bathroom
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="http://forms.formifyweb.com/wbclient_nationwidewindow" 
+               class="nationwide-btn btn-windows-nation" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <i class="fas fa-window-maximize"></i>
+                Nationwide Windows
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="http://forms.formifyweb.com/wbclient_nationwideroofing" 
+               class="nationwide-btn btn-roofing-nation" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <i class="fas fa-home"></i>
+                Nationwide Roofing
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- info footer with all warm/cold links -->
     <div class="info-note">
         <i class="fas fa-link"></i>
         <span><i class="fas fa-temperature-high"></i> Warm: </span>
@@ -384,6 +502,5 @@
     </div>
 </div>
 
-<!-- No extra JavaScript required, pure semantic portal -->
 </body>
 </html>
