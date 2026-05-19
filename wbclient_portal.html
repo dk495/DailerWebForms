@@ -20,146 +20,143 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
         }
 
-        /* main portal card */
+        /* main portal card - more compact */
         .portal-card {
-            max-width: 1300px;
+            max-width: 1100px;
             width: 100%;
             background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 3rem;
-            box-shadow: 0 35px 60px -20px rgba(8, 30, 55, 0.45), 0 8px 22px rgba(0, 0, 0, 0.06);
-            padding: 2.5rem 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -15px rgba(8, 30, 55, 0.4);
+            padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.7);
-            transition: all 0.2s;
         }
 
-        /* header area */
+        /* header area - compact */
         h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             color: #0c2e4a;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
-            border-left: 9px solid #2c7be5;
-            padding-left: 1.5rem;
+            border-left: 6px solid #2c7be5;
+            padding-left: 1rem;
         }
 
         h1 i {
             color: #2c7be5;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             background: rgba(44, 123, 229, 0.12);
-            padding: 0.5rem;
-            border-radius: 1.2rem;
+            padding: 0.3rem;
+            border-radius: 1rem;
         }
 
         .subhead {
-            font-size: 1rem;
+            font-size: 0.85rem;
             color: #1e4870;
-            margin: 0 0 1.8rem 2rem;
+            margin: 0 0 1rem 1.2rem;
             font-weight: 470;
             border-bottom: 1px solid rgba(60, 110, 155, 0.3);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
             display: inline-block;
         }
 
-        /* Grid layouts */
+        /* Grid layouts - tighter gaps */
         .button-grid, .nationwide-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 0.8rem;
+            margin: 1rem 0;
         }
 
-        /* UNIFIED BUTTON STYLES - Smaller compact square buttons */
+        /* UNIFIED BUTTON STYLES - Very compact */
         .portal-btn, .nationwide-btn {
             background: white;
             border: none;
-            border-radius: 1.2rem;
+            border-radius: 0.8rem;
             text-decoration: none;
             color: #13294e;
             font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 8px 20px -8px rgba(0, 32, 64, 0.15);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-size: 0.85rem;
+            box-shadow: 0 3px 10px -5px rgba(0, 32, 64, 0.12);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.85);
+            gap: 0.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.85);
             cursor: pointer;
             text-align: center;
-            backdrop-filter: blur(2px);
-            /* Square size - smaller */
+            /* Square compact size */
             aspect-ratio: 1 / 1;
             width: 100%;
-            padding: 1rem;
+            padding: 0.6rem;
         }
 
         .portal-btn i, .nationwide-btn i {
-            font-size: 2.2rem;
-            margin-bottom: 0.1rem;
-            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1));
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
         }
 
         .btn-label {
             display: block;
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 650;
             letter-spacing: -0.2px;
         }
 
         .small-hint {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             opacity: 0.7;
             font-weight: 470;
-            margin-top: 0.1rem;
+            margin-top: 0.05rem;
             background: rgba(0, 0, 0, 0.03);
-            padding: 0.15rem 0.6rem;
-            border-radius: 20px;
+            padding: 0.1rem 0.4rem;
+            border-radius: 12px;
             color: #2b4d72;
         }
 
-        /* Hover effects */
+        /* Hover effects - subtle */
         .portal-btn:hover, .nationwide-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -12px rgba(8, 40, 66, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px -10px rgba(8, 40, 66, 0.25);
             border-color: rgba(255, 255, 255, 1);
         }
 
         .portal-btn:active, .nationwide-btn:active {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -10px #0e2d46;
+            transform: translateY(-1px);
         }
 
         /* Warm button themes */
         .btn-warm-general {
             background: linear-gradient(145deg, #ffffff, #fff6ed);
-            border-bottom: 4px solid #e67e22;
+            border-bottom: 3px solid #e67e22;
         }
         .btn-warm-general i { color: #c45c0a; }
 
         .btn-cold-general {
             background: linear-gradient(145deg, #ffffff, #eef3ff);
-            border-bottom: 4px solid #2c7be5;
+            border-bottom: 3px solid #2c7be5;
         }
         .btn-cold-general i { color: #1c5eb0; }
 
         .btn-roofing-warm, .btn-bathroom-warm {
             background: linear-gradient(145deg, #ffffff, #fff7ef);
-            border-bottom: 4px solid #f39c12;
+            border-bottom: 3px solid #f39c12;
         }
         .btn-roofing-cold, .btn-bathroom-cold {
             background: linear-gradient(145deg, #ffffff, #eef6fc);
-            border-bottom: 4px solid #3498db;
+            border-bottom: 3px solid #3498db;
         }
 
         .btn-roofing-warm i, .btn-bathroom-warm i {
@@ -173,83 +170,83 @@
         .btn-bathroom-nation {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
-            border-bottom: 4px solid #0d6b5c;
+            border-bottom: 3px solid #0d6b5c;
         }
         .btn-bathroom-nation i { color: white; }
 
         .btn-windows-nation {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            border-bottom: 4px solid #2b7abf;
+            border-bottom: 3px solid #2b7abf;
         }
         .btn-windows-nation i { color: white; }
 
         .btn-roofing-nation {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            border-bottom: 4px solid #c43d52;
+            border-bottom: 3px solid #c43d52;
         }
         .btn-roofing-nation i { color: white; }
 
-        /* Nationwide section */
+        /* Nationwide section - compact */
         .nationwide-section {
-            margin-top: 2rem;
-            padding: 1.5rem 0 0.5rem;
-            border-top: 2px dashed rgba(44, 123, 229, 0.3);
+            margin-top: 1rem;
+            padding: 0.8rem 0 0.2rem;
+            border-top: 1px dashed rgba(44, 123, 229, 0.3);
         }
 
         .nationwide-title {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #0c2e4a;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
         .nationwide-title i {
             color: #2c7be5;
-            font-size: 1.6rem;
+            font-size: 1.1rem;
             background: rgba(44, 123, 229, 0.12);
-            padding: 0.4rem;
-            border-radius: 0.8rem;
+            padding: 0.2rem;
+            border-radius: 0.5rem;
         }
 
-        /* Section divider */
+        /* Section divider - compact */
         .section-divider {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin: 0.5rem 0;
+            gap: 0.8rem;
+            margin: 0.3rem 0;
             color: #5c82a3;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 500;
             justify-content: center;
         }
 
         .shape-badge {
             background: rgba(44, 123, 229, 0.12);
-            padding: 0.15rem 1rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
+            padding: 0.1rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
         }
 
-        /* Info footer */
+        /* Info footer - compact */
         .info-note {
-            margin-top: 2rem;
+            margin-top: 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             color: #2c557a;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             background: rgba(255, 255, 255, 0.7);
-            padding: 0.7rem 1.5rem;
-            border-radius: 60px;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255,255,255,0.8);
             flex-wrap: wrap;
@@ -268,70 +265,61 @@
         }
 
         .info-note a:hover {
-            border-bottom: 2px solid #2273a4;
+            border-bottom: 1px solid #2273a4;
             color: #0c4468;
         }
 
-        /* Bottom text */
-        .bottom-note {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.7rem;
-            color: #427aa1;
-        }
-
         /* Responsive */
-        @media (max-width: 880px) {
-            .button-grid, .nationwide-buttons {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.2rem;
+        @media (max-width: 768px) {
+            body {
+                padding: 0.8rem;
             }
-            h1 {
-                font-size: 2rem;
+            .portal-card {
+                padding: 1rem;
+            }
+            .button-grid, .nationwide-buttons {
+                gap: 0.6rem;
             }
             .portal-btn i, .nationwide-btn i {
-                font-size: 1.8rem;
+                font-size: 1.3rem;
             }
             .btn-label {
-                font-size: 0.9rem;
+                font-size: 0.7rem;
             }
             .small-hint {
-                font-size: 0.6rem;
+                display: none;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .nationwide-title {
+                font-size: 1rem;
             }
         }
 
         @media (max-width: 580px) {
             .button-grid, .nationwide-buttons {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .portal-card {
-                padding: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
             }
             .portal-btn, .nationwide-btn {
+                aspect-ratio: auto;
+                min-height: 70px;
+                padding: 0.5rem;
                 flex-direction: row;
                 justify-content: flex-start;
-                aspect-ratio: auto;
-                min-height: 90px;
-                padding: 0.8rem 1rem;
-                gap: 0.8rem;
+                gap: 0.5rem;
             }
             .portal-btn i, .nationwide-btn i {
-                font-size: 1.8rem;
-                margin: 0;
+                font-size: 1.3rem;
             }
             .btn-label {
-                font-size: 1rem;
+                font-size: 0.75rem;
                 text-align: left;
             }
-            .small-hint {
-                display: none;
-            }
-            .nationwide-title {
-                font-size: 1.3rem;
-            }
-            .nationwide-title i {
-                font-size: 1.3rem;
+            .info-note {
+                font-size: 0.6rem;
+                gap: 0.5rem;
             }
         }
         
@@ -348,8 +336,8 @@
         }
         
         .portal-btn:focus-visible, .nationwide-btn:focus-visible {
-            outline: 3px solid #2d7ee9;
-            outline-offset: 3px;
+            outline: 2px solid #2d7ee9;
+            outline-offset: 2px;
         }
     </style>
 </head>
@@ -371,46 +359,46 @@
         <a href="http://forms.formifyweb.com/wbclient_windows.html" class="portal-btn btn-warm-general" target="_self" rel="noopener">
             <i class="fas fa-sun"></i>
             <span class="btn-label">Windows Warm</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
 
         <a href="https://forms.formifyweb.com/wbclient_roofingwarm.html" class="portal-btn btn-roofing-warm" target="_self" rel="noopener">
             <i class="fas fa-fire"></i>
             <span class="btn-label">Roofing Warm</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
 
         <a href="https://forms.formifyweb.com/wbclient_bathroomwarm.html" class="portal-btn btn-bathroom-warm" target="_self" rel="noopener">
             <i class="fas fa-hot-tub"></i>
             <span class="btn-label">Bathroom Warm</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
 
         <!-- Row 2 - Cold services -->
         <a href="https://forms.formifyweb.com/Bluecross_wt_pingpost18feb" class="portal-btn btn-cold-general" target="_self" rel="noopener">
             <i class="fas fa-snowflake"></i>
             <span class="btn-label">Windows Cold</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
 
         <a href="http://forms.formifyweb.com/wbclient_roofing.html" class="portal-btn btn-roofing-cold" target="_self" rel="noopener">
             <i class="fas fa-home"></i>
             <span class="btn-label">Roofing Cold</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
 
         <a href="http://forms.formifyweb.com/wbclient_bathroom.html" class="portal-btn btn-bathroom-cold" target="_self" rel="noopener">
             <i class="fas fa-toilet"></i>
             <span class="btn-label">Bathroom Cold</span>
-            <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+            <span class="small-hint">OPEN</span>
         </a>
     </div>
 
     <div class="section-divider">
         <span class="shape-badge"><i class="fas fa-arrow-up"></i> WARM</span>
-        <i class="fas fa-sun" style="color: #e67e22;"></i>
+        <i class="fas fa-sun" style="color: #e67e22; font-size: 0.7rem;"></i>
         <span style="opacity: 0.6;">|</span>
-        <i class="fas fa-snowflake" style="color: #2c7be5;"></i>
+        <i class="fas fa-snowflake" style="color: #2c7be5; font-size: 0.7rem;"></i>
         <span class="shape-badge">COLD <i class="fas fa-arrow-down"></i></span>
     </div>
 
@@ -428,7 +416,7 @@
                rel="noopener noreferrer">
                 <i class="fas fa-bath"></i>
                 <span class="btn-label">Nationwide Bathroom</span>
-                <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+                <span class="small-hint">OPEN</span>
             </a>
             <a href="http://forms.formifyweb.com/wbclient_nationwidewindow" 
                class="nationwide-btn btn-windows-nation" 
@@ -436,7 +424,7 @@
                rel="noopener noreferrer">
                 <i class="fas fa-window-maximize"></i>
                 <span class="btn-label">Nationwide Windows</span>
-                <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+                <span class="small-hint">OPEN</span>
             </a>
             <a href="http://forms.formifyweb.com/wbclient_nationwideroofing" 
                class="nationwide-btn btn-roofing-nation" 
@@ -444,7 +432,7 @@
                rel="noopener noreferrer">
                 <i class="fas fa-home"></i>
                 <span class="btn-label">Nationwide Roofing</span>
-                <span class="small-hint"><i class="far fa-arrow-alt-circle-right"></i> OPEN</span>
+                <span class="small-hint">OPEN</span>
             </a>
         </div>
     </div>
@@ -461,7 +449,6 @@
         <a href="http://forms.formifyweb.com/wbclient_roofing.html" target="_self">Roof</a>
         <a href="http://forms.formifyweb.com/wbclient_bathroom.html" target="_self">Bath</a>
     </div>
-    
     
 </div>
 
