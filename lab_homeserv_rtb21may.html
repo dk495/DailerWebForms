@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Service Ping</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #eef2f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 24px 16px;
+    }
+    .card {
+      max-width: 480px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .card-header {
+      background: #0a2e44;
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .card-header h2 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .card-header p {
+      color: #bcd0df;
+      font-size: 0.75rem;
+      margin: 4px 0 0;
+    }
+    .form-body {
+      padding: 24px 20px 28px;
+    }
+    .field {
+      margin-bottom: 18px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1a3e54;
+      margin-bottom: 6px;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      border: 1px solid #bacddb;
+      border-radius: 12px;
+      background: white;
+      font-family: inherit;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: #f39c12;
+      box-shadow: 0 0 0 2px rgba(243,156,18,0.2);
+    }
+    .small-note {
+      font-size: 0.7rem;
+      color: #6c7e8f;
+      margin-top: 4px;
+    }
+    .warning-box {
+      background: #fff3e0;
+      border-left: 4px solid #e67e22;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #b45b0a;
+      margin: 16px 0 12px;
+    }
+    button {
+      width: 100%;
+      background: #0f3b5c;
+      border: none;
+      border-radius: 40px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.15s;
+      margin-top: 8px;
+    }
+    button:hover {
+      background: #1c4e70;
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .alert-box {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+    }
+    .alert-success {
+      background: #e3f7ec;
+      border: 1px solid #b2dfc5;
+      color: #1e6f3f;
+    }
+    .alert-danger {
+      background: #ffe6e5;
+      border: 1px solid #fccac7;
+      color: #b33a34;
+    }
+    .alert-warning {
+      background: #fff0db;
+      border: 1px solid #ffe0b5;
+      color: #a86419;
+    }
+    hr {
+      margin: 10px 0;
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .badge-service {
+      background: #e9ecef;
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #8c9aa8;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <h2>🏠 Lab Home Service</h2>
+    <p>Dynamic Payout · Ping Tree</p>
+  </div>
+  <div class="form-body">
+    <!-- service dropdown - simple, clear options -->
+    <div class="field">
+      <label>🔧 Select service</label>
+      <select id="serviceSelect">
+        <option value="" disabled selected>— Choose a service —</option>
+        <option value="bath">Bath Remodeling</option>
+        <option value="hvac">HVAC</option>
+        <option value="warranty">Home Warranty</option>
+        <option value="water">Water Damage</option>
+        <option value="windows">Windows</option>
+      </select>
+    </div>
+
+    <!-- phone number -->
+    <div class="field">
+      <label>📞 Phone number</label>
+      <input type="tel" id="phone_home" placeholder="5551234567" autocomplete="off">
+      <div class="small-note">10-digit US number (digits only)</div>
+    </div>
+
+    <!-- zip code -->
+    <div class="field">
+      <label>📍 Zip code</label>
+      <input type="text" id="zip" placeholder="37076" autocomplete="off">
+    </div>
+
+    <!-- warning note as per requirement -->
+    <div class="warning-box">
+      ⚠️ <strong>If ping response is RED (Rejected) → DO NOT transfer the call.</strong>
+    </div>
+
+    <button id="submitBtn">📡 Ping </button>
+
+    <div id="alertContainer"></div>
+    <div class="footer">Accepted calls: dynamic payout + buffer duration</div>
+  </div>
+</div>
+
+<script>
+  // ------------------------------------------------------------------
+  // Exact Campaign IDs & Keys (provided)
+  // ------------------------------------------------------------------
+  const SERVICES = {
+    bath: {
+      name: "Bath Remodeling",
+      lp_campaign_id: "6862d0701769a",
+      lp_campaign_key: "JZ3jWqFQG6yHpwBMdbrK"
+    },
+    hvac: {
+      name: "HVAC",
+      lp_campaign_id: "6862d0774a9be",
+      lp_campaign_key: "92qDp3KHrYgc7ZJvMGxk"
+    },
+    warranty: {
+      name: "Home Warranty",
+      lp_campaign_id: "6862d0a4bca11",
+      lp_campaign_key: "PkZjyNqpMLwvzYCRJcbh"
+    },
+    water: {
+      name: "Water Damage",
+      lp_campaign_id: "6862d0aacbd47",
+      lp_campaign_key: "HbJW34FYZ6CDB9zdrgTy"
+    },
+    windows: {
+      name: "Windows",
+      lp_campaign_id: "6862d0d376748",
+      lp_campaign_key: "zGQwFy6J8dVrDb7RXnq3"
+    }
+  };
+
+  // Helper: clean phone to +1XXXXXXXXXX (E.164 format)
+  function formatCallerId(raw) {
+    let digits = raw.replace(/\D/g, '');
+    if (digits.length === 10) return '+1' + digits;
+    if (digits.length === 11 && digits.startsWith('1')) return '+' + digits;
+    if (digits.length > 10) {
+      let last10 = digits.slice(-10);
+      return '+1' + last10;
+    }
+    return null;
+  }
+
+  // Basic zip validation (5 digit or 5+4)
+  function isValidZip(zip) {
+    let z = zip.trim();
+    if (z.length === 0) return false;
+    return /^\d{5}(?:-\d{4})?$/.test(z) || /^\d{5,10}$/.test(z);
+  }
+
+  // api_tester as required by original spec
+  function api_tester(randomString) {
+    try {
+      fetch('https://api.formifyweb.com/api_test.php?test_id=' + btoa(randomString), {
+        method: 'GET',
+        mode: 'no-cors'
+      }).catch(() => {});
+    } catch (e) {
+      // silent fail, not critical
+    }
+  }
+
+  // Core ping using proxy endpoint (POST with URL-encoded params in query, via proxify)
+  async function sendPing(campaignId, campaignKey, callerId, zipCode, s1Value) {
+    // s1 is required: publisher internal ID (string). We generate unique + timestamp.
+    const s1 = s1Value || `pub_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    
+    const params = new URLSearchParams();
+    params.append('lp_campaign_id', campaignId);
+    params.append('lp_campaign_key', campaignKey);
+    params.append('caller_id', callerId);
+    params.append('zip_code', zipCode);
+    params.append('s1', s1);
+    // optional s2-s5 omitted (not mandatory)
+    
+    const baseUrl = 'https://bestcaseleads.leadspediatrack.com/call-preping.do';
+    const fullUrl = `${baseUrl}?${params.toString()}`;
+    const proxyUrl = `https://api.formifyweb.com/proxify.php?url=${encodeURIComponent(fullUrl)}`;
+    
+    const response = await fetch(proxyUrl, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }
+
+  // Display result in alert container
+  function showResult(data, serviceName) {
+    const container = document.getElementById('alertContainer');
+    if (!container) return;
+    
+    if (data && data.success === true) {
+      const payoutVal = data.payout !== undefined ? data.payout : '—';
+      const durationVal = data.duration !== undefined ? data.duration : '—';
+      const transferNum = data.number || 'N/A';
+      const pingId = data.ping_id || 'N/A';
+      container.innerHTML = `
+        <div class="alert-box alert-success">
+          <div><strong>✓ Accepted</strong> — ${escapeHtml(data.message || 'Ping Accepted')}</div>
+          <div class="badge-service" style="margin-top: 6px;">${escapeHtml(serviceName)}</div>
+          <hr>
+          <div><small>📌 Ping ID: ${escapeHtml(pingId)}</small></div>
+          <div><small>💰 Payout: $${payoutVal}</small></div>
+          <div><small>⏱️ Duration (buffer): ${durationVal} sec</small></div>
+          <div><small>📞 Transfer number: <strong>${escapeHtml(transferNum)}</strong></small></div>
+          <div><small>✅ Call must reach required duration to be billable</small></div>
+        </div>
+      `;
+    } else {
+      const errMsg = data?.message || 'No Match / Rejected';
+      const statusText = data?.status || 'Rejected';
+      const pingInfo = data?.ping_id ? `<div><small>Ping ID: ${escapeHtml(data.ping_id)}</small></div>` : '';
+      container.innerHTML = `
+        <div class="alert-box alert-danger">
+          <div><strong>⛔ ${escapeHtml(statusText)}</strong> — ${escapeHtml(errMsg)}</div>
+          <div class="badge-service" style="margin-top: 6px;">${escapeHtml(serviceName)}</div>
+          <hr>
+          ${pingInfo}
+          <div><small>🔴 DO NOT transfer the call. No billable opportunity.</small></div>
+        </div>
+      `;
+    }
+    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // ---------- Main form logic ----------
+  const submitBtn = document.getElementById('submitBtn');
+  const serviceSelect = document.getElementById('serviceSelect');
+  const phoneInput = document.getElementById('phone_home');
+  const zipInput = document.getElementById('zip');
+  const alertDiv = document.getElementById('alertContainer');
+  
+  let isProcessing = false;
+
+  async function handlePing() {
+    // Reset alert
+    if (alertDiv) alertDiv.innerHTML = '';
+    
+    // 1) Service validation
+    const selectedServiceCode = serviceSelect.value;
+    if (!selectedServiceCode) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">⚠️ Please select a service (Bath, HVAC, Home Warranty, Water Damage, or Windows).</div>`;
+      return;
+    }
+    const service = SERVICES[selectedServiceCode];
+    if (!service) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">Invalid service selection.</div>`;
+      return;
+    }
+    
+    // 2) Phone number
+    let rawPhone = phoneInput.value.trim();
+    if (!rawPhone) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">📱 Phone number is required.</div>`;
+      return;
+    }
+    const callerId = formatCallerId(rawPhone);
+    if (!callerId) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">Invalid phone number. Use 10 digits, e.g., 5551234567.</div>`;
+      return;
+    }
+    
+    // 3) Zip code
+    let zipValue = zipInput.value.trim();
+    if (!zipValue) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">📍 Zip code is required.</div>`;
+      return;
+    }
+    if (!isValidZip(zipValue)) {
+      alertDiv.innerHTML = `<div class="alert-box alert-warning">Please enter a valid zip code (5 digits, e.g., 37076).</div>`;
+      return;
+    }
+    
+    // generate s1 (publisher internal id, required)
+    const publisherS1 = `pub_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    
+    // disable button and show loading
+    isProcessing = true;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ Pinging...';
+    
+    try {
+      // call the ping API
+      const response = await sendPing(
+        service.lp_campaign_id,
+        service.lp_campaign_key,
+        callerId,
+        zipValue,
+        publisherS1
+      );
+      
+      // fire api_tester as required (uses phone raw string)
+      api_tester(rawPhone);
+      
+      // show result (success or fail)
+      showResult(response, service.name);
+      
+      // Clear phone + zip after ping (keep service selected for convenience)
+      phoneInput.value = '';
+      zipInput.value = '';
+      
+    } catch (err) {
+      console.error('Ping error:', err);
+      alertDiv.innerHTML = `<div class="alert-box alert-danger">❌ Ping request failed: ${escapeHtml(err.message || 'Network error')}. Check connection or proxy.</div>`;
+    } finally {
+      isProcessing = false;
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  }
+  
+  // attach event listeners
+  submitBtn.addEventListener('click', handlePing);
+  
+  // allow Enter key on phone or zip to submit
+  phoneInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!isProcessing) handlePing();
+    }
+  });
+  zipInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!isProcessing) handlePing();
+    }
+  });
+  
+  // small auto-format on phone blur: keep only digits, max 10
+  phoneInput.addEventListener('blur', function() {
+    let digits = this.value.replace(/\D/g, '');
+    if (digits.length > 10) digits = digits.slice(0, 10);
+    this.value = digits;
+  });
+  
+  // disable right-click context menu as per original requirement
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>
