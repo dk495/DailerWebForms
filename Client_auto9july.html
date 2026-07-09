@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Auto API Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+      max-width: 800px;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 10px 30px;
+      font-weight: bold;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    .alert {
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    .required-field::after {
+      content: " *";
+      color: red;
+    }
+    .form-group label {
+      font-weight: 600;
+    }
+    .loading-spinner {
+      display: none;
+      margin-left: 10px;
+    }
+    .timestamp-info {
+      background-color: #e9ecef;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-size: 14px;
+      color: #495057;
+      border: 1px solid #ced4da;
+    }
+    .timestamp-info strong {
+      color: #007bff;
+    }
+    .timestamp-display {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 16px;
+      color: #212529;
+    }
+    .live-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #28a745;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center">Client Auto API Form</h2>
+    
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="first_name" class="required-field">First Name</label>
+            <input type="text" class="form-control" id="first_name" placeholder="Enter first name" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="last_name" class="required-field">Last Name</label>
+            <input type="text" class="form-control" id="last_name" placeholder="Enter last name" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="caller_id" class="required-field">Phone Number</label>
+            <input type="tel" class="form-control" id="caller_id" placeholder="e.g., 7103847563" required>
+            <small class="form-text text-muted">Enter 10-digit phone number without country code</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="state" class="required-field">State</label>
+            <select class="form-control" id="state" required>
+              <option value="">Select State</option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="zip" class="required-field">Zip Code</label>
+            <input type="text" class="form-control" id="zip" placeholder="Enter 5-digit zip code" pattern="[0-9]{5}" maxlength="5" required>
+            <small class="form-text text-muted">Enter 5-digit zip code</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="caller_dob" class="required-field">Date of Birth</label>
+            <input type="date" class="form-control" id="caller_dob" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="jornaya_leadid">Jornaya Lead ID</label>
+            <input type="text" class="form-control" id="jornaya_leadid" placeholder="Enter Jornaya Lead ID (optional)">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Opt-in Timestamp</label>
+            <div class="timestamp-info">
+              <span class="live-indicator"></span>
+              <span class="timestamp-display" id="timestampDisplay">Loading...</span>
+            </div>
+            <small class="form-text text-muted">Live timestamp updates every second</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Submit Lead
+          <span class="spinner-border spinner-border-sm loading-spinner" id="loadingSpinner" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+    </form>
+
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://js.formifyweb.com/Client_auto9july.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script src="script.js"></script>
+
+  <script>
+    // Disable right-click
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
