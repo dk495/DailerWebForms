@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calls H API Form</title>
+  <title>Publisher API Form</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
@@ -45,14 +45,13 @@
 </head>
 <body>
   <div class="container">
-    <h2>Calls H Lead Submission Form</h2>
+    <h2>Lead Submission Form</h2>
     
     <form id="leadForm" novalidate>
       <!-- Hidden fields -->
       <input type="hidden" id="campaignKey" value="ssdi-filed">
       <input type="hidden" id="campaignCode" value="SSDI_FILED">
       <input type="hidden" id="subid2" value="">
-      <input type="hidden" id="specialRoute" value="">
 
       <div class="row">
         <div class="col-md-6">
@@ -232,10 +231,22 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="trustedFormCertUrl">Trusted Form Cert URL</label>
             <input type="text" class="form-control" id="trustedFormCertUrl" placeholder="https://example.com/trusted-form-cert">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="specialRoute">Special Route <span class="required-star">*</span></label>
+            <select class="form-control" id="specialRoute" required>
+              <option value="">Select</option>
+              <option value="standard">Standard</option>
+              <option value="expedited">Expedited</option>
+              <option value="priority">Priority</option>
+              <option value="regular">Regular</option>
+            </select>
           </div>
         </div>
       </div>
@@ -258,7 +269,6 @@
       const submitBtn = document.getElementById('submitBtn');
       const alertContainer = document.getElementById('alertContainer');
 
-      // Helper to get field value
       function getField(id) {
         return document.getElementById(id).value.trim();
       }
@@ -286,7 +296,6 @@
       form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Collect all required fields
         const firstName = getField('firstName');
         const lastName = getField('lastName');
         const phone = getField('phone');
@@ -300,8 +309,8 @@
         const workHistory = getField('workHistory');
         const medicalCondition = getField('medicalCondition');
         const trustedFormCertUrl = getField('trustedFormCertUrl');
+        const specialRoute = getField('specialRoute');
 
-        // Validation
         if (!firstName) { showAlert('Please enter first name.', 'danger'); return; }
         if (!lastName) { showAlert('Please enter last name.', 'danger'); return; }
         if (!phone || phone.length < 10 || !/^\d{10}$/.test(phone)) {
@@ -326,6 +335,7 @@
         if (!ageGroup) { showAlert('Please select age group.', 'danger'); return; }
         if (!workHistory) { showAlert('Please select work history.', 'danger'); return; }
         if (!medicalCondition) { showAlert('Please select medical condition.', 'danger'); return; }
+        if (!specialRoute) { showAlert('Please select special route.', 'danger'); return; }
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Processing...';
@@ -333,41 +343,48 @@
 
         api_tester(phone);
 
-        // Build tags object with all lead data
-        const tags = {
-          source: 'publisher-form',
-          integration: 'ssdi-filed',
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          ipAddress: ipAddress,
-          attorneyRepresentation: attorneyRep,
-          benefit_status: benefitStatus,
-          between_50_and_63: ageGroup,
-          work_history: workHistory,
-          medical_condition: medicalCondition,
-          campaignKey: getField('campaignKey'),
-          campaignCode: getField('campaignCode'),
-          address: getField('address'),
-          city: getField('city'),
-          trusted_form_cert_url: trustedFormCertUrl,
-          subid2: getField('subid2'),
-          special_route: getField('specialRoute')
+        // Build the request body for RingFuel API
+        const requestBody = {
+          apiKey: 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316',
+          campaignId: 'c60aaee7-4a24-4a73-b318-8ded54134e15',
+          callerNumber: '+1' + phone,
+          callerState: state,
+          callerZip: zip,
+          tags: {
+            source: 'publisher-form',
+            integration: 'ssdi-filed',
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            ipAddress: ipAddress,
+            attorneyRepresentation: attorneyRep,
+            benefit_status: benefitStatus,
+            between_50_and_63: ageGroup,
+            work_history: workHistory,
+            medical_condition: medicalCondition,
+            campaignKey: getField('campaignKey'),
+            campaignCode: getField('campaignCode'),
+            address: getField('address'),
+            city: getField('city'),
+            trusted_form_cert_url: trustedFormCertUrl,
+            subid2: getField('subid2'),
+            special_route: specialRoute
+          }
         };
 
-        // Build the request for RingFuel
+        // Use URL parameters with the proxy (GET method)
         const params = new URLSearchParams();
-        params.append('apiKey', 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316');
-        params.append('campaignId', 'c60aaee7-4a24-4a73-b318-8ded54134e15');
-        params.append('callerNumber', '+1' + phone);
-        params.append('callerState', state);
-        params.append('callerZip', zip);
-        params.append('tags', JSON.stringify(tags));
+        params.append('apiKey', requestBody.apiKey);
+        params.append('campaignId', requestBody.campaignId);
+        params.append('callerNumber', requestBody.callerNumber);
+        params.append('callerState', requestBody.callerState);
+        params.append('callerZip', requestBody.callerZip);
+        params.append('tags', JSON.stringify(requestBody.tags));
 
         const originalUrl = 'https://app.ringfuel.io/api/publisher/ping?' + params.toString();
-        const proxyUrl = 'https://api.formifyweb.com/proxifynew.php?url=' + encodeURIComponent(originalUrl);
+        const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
 
-        // Use GET method with the proxy
+        // Use GET method - this should work with the proxy
         fetch(proxyUrl, {
           method: 'GET',
           headers: {
@@ -428,8 +445,6 @@
               msg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + (rawText || 'OK') + '</pre>';
             }
             showAlert(msg, 'success');
-            
-            // Reset form
             form.reset();
           } 
           else {
