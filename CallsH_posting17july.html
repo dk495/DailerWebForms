@@ -15,7 +15,7 @@
       padding: 25px 30px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.08);
-      max-width: 720px;
+      max-width: 900px;
     }
     h2 {
       color: #2c3e50;
@@ -37,25 +37,73 @@
       margin-top: 15px;
       border-radius: 4px;
     }
+    .required-star {
+      color: red;
+      margin-left: 3px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Publisher API Form</h2>
+    <h2>Lead Submission Form</h2>
     
     <form id="leadForm" novalidate>
+      <!-- Hidden fields -->
+      <input type="hidden" id="campaignKey" value="ssdi-filed">
+      <input type="hidden" id="campaignCode" value="SSDI_FILED">
+      <input type="hidden" id="trustedFormCertUrl" value="">
+      <input type="hidden" id="subid2" value="">
+      <input type="hidden" id="specialRoute" value="">
+      <input type="hidden" id="ipAddress" value="">
+
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="caller_id">Phone Number</label>
-            <input type="tel" class="form-control" id="caller_id" placeholder="e.g. 3103847563" required>
+            <label for="firstName">First Name <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="firstName" placeholder="First name" required>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="state">State</label>
+            <label for="lastName">Last Name <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone">Phone Number <span class="required-star">*</span></label>
+            <input type="tel" class="form-control" id="phone" placeholder="e.g. 3103847563" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">Email Address <span class="required-star">*</span></label>
+            <input type="email" class="form-control" id="email" placeholder="email@example.com" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Street address">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="City">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="state">State <span class="required-star">*</span></label>
             <select class="form-control" id="state" required>
-              <option value="">Select State</option>
+              <option value="">Select</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
@@ -112,15 +160,74 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="form-group">
-            <label for="zip">Zip Code</label>
+            <label for="zip">Zip Code <span class="required-star">*</span></label>
             <input type="text" class="form-control" id="zip" placeholder="e.g. 90210" required>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="attorneyRep">Attorney Representation <span class="required-star">*</span></label>
+            <select class="form-control" id="attorneyRep" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="benefitStatus">Benefit Status <span class="required-star">*</span></label>
+            <select class="form-control" id="benefitStatus" required>
+              <option value="">Select</option>
+              <option value="approved">Approved</option>
+              <option value="denied">Denied</option>
+              <option value="pending">Pending</option>
+              <option value="not-applied">Not Applied</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="ageGroup">Between 50 and 63? <span class="required-star">*</span></label>
+            <select class="form-control" id="ageGroup" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
           </div>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="workHistory">Work History <span class="required-star">*</span></label>
+            <select class="form-control" id="workHistory" required>
+              <option value="">Select</option>
+              <option value="currently-working">Currently Working</option>
+              <option value="not-working">Not Working</option>
+              <option value="retired">Retired</option>
+              <option value="disabled">Disabled</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="medicalCondition">Medical Condition <span class="required-star">*</span></label>
+            <select class="form-control" id="medicalCondition" required>
+              <option value="">Select</option>
+              <option value="physical">Physical</option>
+              <option value="mental">Mental</option>
+              <option value="both">Both</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit Lead</button>
     </form>
 
     <div id="alertContainer"></div>
@@ -137,13 +244,11 @@
       const form = document.getElementById('leadForm');
       const submitBtn = document.getElementById('submitBtn');
       const alertContainer = document.getElementById('alertContainer');
-      const callerInput = document.getElementById('caller_id');
-      const stateSelect = document.getElementById('state');
-      const zipInput = document.getElementById('zip');
 
-      // API credentials
-      const API_KEY = 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316';
-      const CAMPAIGN_ID = 'c60aaee7-4a24-4a73-b318-8ded54134e15';
+      // Helper to get field value
+      function getField(id) {
+        return document.getElementById(id).value.trim();
+      }
 
       function showAlert(message, type = 'success') {
         alertContainer.innerHTML = '';
@@ -165,25 +270,56 @@
         }
       }
 
+      // Get IP address
+      function getIPAddress() {
+        fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('ipAddress').value = data.ip;
+          })
+          .catch(() => {
+            document.getElementById('ipAddress').value = '127.0.0.1';
+          });
+      }
+      getIPAddress();
+
       form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const phone = callerInput.value.trim();
-        const state = stateSelect.value;
-        const zip = zipInput.value.trim();
+        // Collect all required fields
+        const firstName = getField('firstName');
+        const lastName = getField('lastName');
+        const phone = getField('phone');
+        const email = getField('email');
+        const state = getField('state');
+        const zip = getField('zip');
+        const attorneyRep = getField('attorneyRep');
+        const benefitStatus = getField('benefitStatus');
+        const ageGroup = getField('ageGroup');
+        const workHistory = getField('workHistory');
+        const medicalCondition = getField('medicalCondition');
 
+        // Validation
+        if (!firstName) { showAlert('Please enter first name.', 'danger'); return; }
+        if (!lastName) { showAlert('Please enter last name.', 'danger'); return; }
         if (!phone || phone.length < 10 || !/^\d{10}$/.test(phone)) {
           showAlert('Please enter a valid 10-digit phone number.', 'danger');
           return;
         }
-        if (!state) {
-          showAlert('Please select a state.', 'danger');
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showAlert('Please enter a valid email address.', 'danger');
           return;
         }
+        if (!state) { showAlert('Please select a state.', 'danger'); return; }
         if (!zip || !/^\d{5}$/.test(zip)) {
           showAlert('Please enter a valid 5-digit zip code.', 'danger');
           return;
         }
+        if (!attorneyRep) { showAlert('Please select attorney representation.', 'danger'); return; }
+        if (!benefitStatus) { showAlert('Please select benefit status.', 'danger'); return; }
+        if (!ageGroup) { showAlert('Please select age group.', 'danger'); return; }
+        if (!workHistory) { showAlert('Please select work history.', 'danger'); return; }
+        if (!medicalCondition) { showAlert('Please select medical condition.', 'danger'); return; }
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Processing...';
@@ -191,23 +327,39 @@
 
         api_tester(phone);
 
-        const callerNumber = '+1' + phone;
-        
-        // Build the request body as per RingFuel API spec
+        // Build the request payload
         const requestBody = {
-          apiKey: API_KEY,
-          campaignId: CAMPAIGN_ID,
-          callerNumber: callerNumber,
-          callerState: state,
-          callerZip: zip,
+          campaignKey: getField('campaignKey'),
+          campaignCode: getField('campaignCode'),
+          firstName: firstName,
+          lastName: lastName,
+          phone: '+1' + phone,
+          email: email,
+          ipAddress: getField('ipAddress') || '127.0.0.1',
+          attorneyRepresentation: attorneyRep,
+          benefit_status: benefitStatus,
+          between_50_and_63: ageGroup,
+          work_history: workHistory,
+          medical_condition: medicalCondition,
+          trusted_form_cert_url: getField('trustedFormCertUrl'),
+          subid2: getField('subid2'),
+          special_route: getField('specialRoute'),
+          // Optional fields
+          address: getField('address'),
+          city: getField('city'),
+          state: state,
+          zip: zip,
+          // Additional fields for RingFuel API
+          apiKey: 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316',
+          campaignId: 'c60aaee7-4a24-4a73-b318-8ded54134e15',
           tags: {
             source: 'publisher-form',
             integration: 'ssdi-filed'
           }
         };
 
-        // Use the proxy - send the request as POST with proper body
-        const proxyUrl = 'https://api.formifyweb.com/proxify.php';
+        // Proxy URL
+        const proxyUrl = 'https://api.formifyweb.com/proxifynew.php';
 
         fetch(proxyUrl, {
           method: 'POST',
@@ -236,36 +388,32 @@
         })
         .then(({ status, body, rawText }) => {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
+          submitBtn.textContent = 'Submit Lead';
 
-          // Check for proxy or API errors
           if (body && body.error) {
             showAlert('Error: ' + body.error, 'danger');
             return;
           }
 
-          // The proxy might return the response in a 'response' field
           let apiResponse = body;
           if (body && body.response) {
             apiResponse = body.response;
           }
 
           if (status >= 200 && status < 300) {
-            let msg = '<strong>Success</strong><br>';
+            let msg = '<strong>Lead submitted successfully!</strong><br>';
             
             if (apiResponse && typeof apiResponse === 'object') {
               const available = apiResponse.available !== undefined ? apiResponse.available : 'N/A';
               const count = apiResponse.targets?.count ?? 'N/A';
               const dialNumber = apiResponse.dialNumber || 'N/A';
               const pingId = apiResponse.pingId || 'N/A';
-              const ttl = apiResponse.ttl || '300';
               
               msg += '<div style="margin-top:8px;">';
               msg += '<div><strong>Available:</strong> ' + available + '</div>';
               msg += '<div><strong>Targets:</strong> ' + count + '</div>';
               msg += '<div><strong>Dial Number:</strong> ' + dialNumber + '</div>';
               msg += '<div><strong>Ping ID:</strong> ' + pingId + '</div>';
-              msg += '<div><strong>TTL:</strong> ' + ttl + 's</div>';
               
               if (apiResponse.targets) {
                 const t = apiResponse.targets;
@@ -278,14 +426,16 @@
               msg += '</div>';
               
               if (available === true) {
-                msg = '<strong>Target Available!</strong><br><div style="font-size:18px; margin:8px 0; padding:10px; background:#d4edda; border-radius:4px; text-align:center;">Dial: ' + dialNumber + '</div>' + msg;
-              } else {
-                msg = '<strong>No targets currently available</strong><br>' + msg;
+                msg = '<strong>Target Available!</strong><br><div style="font-size:18px; margin:8px 0; padding:10px; background:#d4edda; border-radius:4px; text-align:center;">📞 Dial: ' + dialNumber + '</div>' + msg;
               }
             } else {
               msg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + (rawText || 'OK') + '</pre>';
             }
             showAlert(msg, 'success');
+            
+            // Reset form
+            form.reset();
+            getIPAddress(); // Refresh IP
           } 
           else {
             let errMsg = '<strong>Request failed (Status: ' + status + ')</strong><br>';
@@ -299,7 +449,7 @@
         })
         .catch(function(error) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
+          submitBtn.textContent = 'Submit Lead';
           console.error('Error:', error);
           showAlert('Network error: ' + (error.message || 'Please check your connection'), 'danger');
         });
