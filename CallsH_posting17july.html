@@ -54,7 +54,6 @@
       <input type="hidden" id="trustedFormCertUrl" value="">
       <input type="hidden" id="subid2" value="">
       <input type="hidden" id="specialRoute" value="">
-      <input type="hidden" id="ipAddress" value="">
 
       <div class="row">
         <div class="col-md-6">
@@ -168,6 +167,12 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
+            <label for="ipAddress">IP Address <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="ipAddress" placeholder="e.g. 192.168.1.1" required>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
             <label for="attorneyRep">Attorney Representation <span class="required-star">*</span></label>
             <select class="form-control" id="attorneyRep" required>
               <option value="">Select</option>
@@ -188,6 +193,9 @@
             </select>
           </div>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="ageGroup">Between 50 and 63? <span class="required-star">*</span></label>
@@ -198,10 +206,7 @@
             </select>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="workHistory">Work History <span class="required-star">*</span></label>
             <select class="form-control" id="workHistory" required>
@@ -270,19 +275,6 @@
         }
       }
 
-      // Get IP address
-      function getIPAddress() {
-        fetch('https://api.ipify.org?format=json')
-          .then(response => response.json())
-          .then(data => {
-            document.getElementById('ipAddress').value = data.ip;
-          })
-          .catch(() => {
-            document.getElementById('ipAddress').value = '127.0.0.1';
-          });
-      }
-      getIPAddress();
-
       form.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -293,6 +285,7 @@
         const email = getField('email');
         const state = getField('state');
         const zip = getField('zip');
+        const ipAddress = getField('ipAddress');
         const attorneyRep = getField('attorneyRep');
         const benefitStatus = getField('benefitStatus');
         const ageGroup = getField('ageGroup');
@@ -315,6 +308,10 @@
           showAlert('Please enter a valid 5-digit zip code.', 'danger');
           return;
         }
+        if (!ipAddress) {
+          showAlert('Please enter IP address.', 'danger');
+          return;
+        }
         if (!attorneyRep) { showAlert('Please select attorney representation.', 'danger'); return; }
         if (!benefitStatus) { showAlert('Please select benefit status.', 'danger'); return; }
         if (!ageGroup) { showAlert('Please select age group.', 'danger'); return; }
@@ -335,7 +332,7 @@
           lastName: lastName,
           phone: '+1' + phone,
           email: email,
-          ipAddress: getField('ipAddress') || '127.0.0.1',
+          ipAddress: ipAddress,
           attorneyRepresentation: attorneyRep,
           benefit_status: benefitStatus,
           between_50_and_63: ageGroup,
@@ -435,7 +432,6 @@
             
             // Reset form
             form.reset();
-            getIPAddress(); // Refresh IP
           } 
           else {
             let errMsg = '<strong>Request failed (Status: ' + status + ')</strong><br>';
