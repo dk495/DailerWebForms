@@ -51,7 +51,6 @@
       <!-- Hidden fields -->
       <input type="hidden" id="campaignKey" value="ssdi-filed">
       <input type="hidden" id="campaignCode" value="SSDI_FILED">
-      <input type="hidden" id="trustedFormCertUrl" value="">
       <input type="hidden" id="subid2" value="">
       <input type="hidden" id="specialRoute" value="">
 
@@ -232,6 +231,15 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="trustedFormCertUrl">Trusted Form Cert URL</label>
+            <input type="text" class="form-control" id="trustedFormCertUrl" placeholder="https://example.com/trusted-form-cert">
+          </div>
+        </div>
+      </div>
+
       <button type="submit" class="btn btn-primary" id="submitBtn">Submit Lead</button>
     </form>
 
@@ -291,6 +299,7 @@
         const ageGroup = getField('ageGroup');
         const workHistory = getField('workHistory');
         const medicalCondition = getField('medicalCondition');
+        const trustedFormCertUrl = getField('trustedFormCertUrl');
 
         // Validation
         if (!firstName) { showAlert('Please enter first name.', 'danger'); return; }
@@ -324,13 +333,12 @@
 
         api_tester(phone);
 
-        // Build the request payload
-        const requestBody = {
-          campaignKey: getField('campaignKey'),
-          campaignCode: getField('campaignCode'),
+        // Build tags object with all lead data
+        const tags = {
+          source: 'publisher-form',
+          integration: 'ssdi-filed',
           firstName: firstName,
           lastName: lastName,
-          phone: '+1' + phone,
           email: email,
           ipAddress: ipAddress,
           attorneyRepresentation: attorneyRep,
@@ -338,39 +346,33 @@
           between_50_and_63: ageGroup,
           work_history: workHistory,
           medical_condition: medicalCondition,
-          trusted_form_cert_url: getField('trustedFormCertUrl'),
-          subid2: getField('subid2'),
-          special_route: getField('specialRoute'),
-          // Optional fields
+          campaignKey: getField('campaignKey'),
+          campaignCode: getField('campaignCode'),
           address: getField('address'),
           city: getField('city'),
-          state: state,
-          zip: zip,
-          // Additional fields for RingFuel API
-          apiKey: 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316',
-          campaignId: 'c60aaee7-4a24-4a73-b318-8ded54134e15',
-          tags: {
-            source: 'publisher-form',
-            integration: 'ssdi-filed'
-          }
+          trusted_form_cert_url: trustedFormCertUrl,
+          subid2: getField('subid2'),
+          special_route: getField('specialRoute')
         };
 
-        // Proxy URL
-        const proxyUrl = 'https://api.formifyweb.com/proxify.php';
+        // Build the request for RingFuel
+        const params = new URLSearchParams();
+        params.append('apiKey', 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316');
+        params.append('campaignId', 'c60aaee7-4a24-4a73-b318-8ded54134e15');
+        params.append('callerNumber', '+1' + phone);
+        params.append('callerState', state);
+        params.append('callerZip', zip);
+        params.append('tags', JSON.stringify(tags));
 
+        const originalUrl = 'https://app.ringfuel.io/api/publisher/ping?' + params.toString();
+        const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
+
+        // Use GET method with the proxy
         fetch(proxyUrl, {
-          method: 'POST',
+          method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            url: 'https://app.ringfuel.io/api/publisher/ping',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: requestBody
-          })
+            'Accept': 'application/json'
+          }
         })
         .then(response => {
           return response.text().then(text => {
@@ -392,19 +394,14 @@
             return;
           }
 
-          let apiResponse = body;
-          if (body && body.response) {
-            apiResponse = body.response;
-          }
-
           if (status >= 200 && status < 300) {
             let msg = '<strong>Lead submitted successfully!</strong><br>';
             
-            if (apiResponse && typeof apiResponse === 'object') {
-              const available = apiResponse.available !== undefined ? apiResponse.available : 'N/A';
-              const count = apiResponse.targets?.count ?? 'N/A';
-              const dialNumber = apiResponse.dialNumber || 'N/A';
-              const pingId = apiResponse.pingId || 'N/A';
+            if (body && typeof body === 'object') {
+              const available = body.available !== undefined ? body.available : 'N/A';
+              const count = body.targets?.count ?? 'N/A';
+              const dialNumber = body.dialNumber || 'N/A';
+              const pingId = body.pingId || 'N/A';
               
               msg += '<div style="margin-top:8px;">';
               msg += '<div><strong>Available:</strong> ' + available + '</div>';
@@ -412,8 +409,8 @@
               msg += '<div><strong>Dial Number:</strong> ' + dialNumber + '</div>';
               msg += '<div><strong>Ping ID:</strong> ' + pingId + '</div>';
               
-              if (apiResponse.targets) {
-                const t = apiResponse.targets;
+              if (body.targets) {
+                const t = body.targets;
                 if (t.highBid !== undefined) {
                   msg += '<div><strong>High Bid:</strong> ' + t.highBid + ' | ';
                   msg += '<strong>Avg Bid:</strong> ' + t.avgBid + ' | ';
@@ -424,6 +421,8 @@
               
               if (available === true) {
                 msg = '<strong>Target Available!</strong><br><div style="font-size:18px; margin:8px 0; padding:10px; background:#d4edda; border-radius:4px; text-align:center;">📞 Dial: ' + dialNumber + '</div>' + msg;
+              } else {
+                msg = '<strong>No targets currently available</strong><br>' + msg;
               }
             } else {
               msg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + (rawText || 'OK') + '</pre>';
@@ -435,8 +434,8 @@
           } 
           else {
             let errMsg = '<strong>Request failed (Status: ' + status + ')</strong><br>';
-            if (apiResponse && typeof apiResponse === 'object') {
-              errMsg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + JSON.stringify(apiResponse, null, 2) + '</pre>';
+            if (body && typeof body === 'object') {
+              errMsg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + JSON.stringify(body, null, 2) + '</pre>';
             } else {
               errMsg += 'Response: ' + (rawText || 'No additional info');
             }
