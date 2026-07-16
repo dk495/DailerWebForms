@@ -365,7 +365,7 @@
         params.append('tags', JSON.stringify(tags));
 
         const originalUrl = 'https://app.ringfuel.io/api/publisher/ping?' + params.toString();
-        const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
+        const proxyUrl = 'https://api.formifyweb.com/proxifynew.php?url=' + encodeURIComponent(originalUrl);
 
         // Use GET method with the proxy
         fetch(proxyUrl, {
