@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calls H API Form</title>
+  <title>Publisher API Form</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <style>
     body {
@@ -37,17 +37,11 @@
       margin-top: 15px;
       border-radius: 4px;
     }
-    .mt-3 {
-      margin-top: 15px;
-    }
-    .mb-2 {
-      margin-bottom: 10px;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Calls H API Form</h2>
+    <h2>Publisher API Form</h2>
     
     <form id="leadForm" novalidate>
       <div class="row">
@@ -147,7 +141,7 @@
       const stateSelect = document.getElementById('state');
       const zipInput = document.getElementById('zip');
 
-      // API credentials (stored in code, not visible in UI)
+      // API credentials
       const API_KEY = 'rfp_c0dccd5443b004f43a6f41b8806bd0f3eff60f9fbf9b8316';
       const CAMPAIGN_ID = 'c60aaee7-4a24-4a73-b318-8ded54134e15';
 
@@ -199,6 +193,7 @@
 
         const callerNumber = '+1' + phone;
         
+        // Build the request body for RingFuel API
         const requestBody = {
           apiKey: API_KEY,
           campaignId: CAMPAIGN_ID,
@@ -210,27 +205,25 @@
           }
         };
 
-        const proxyUrl = 'https://api.formifyweb.com/proxify.php';
+        // Use the proxy with a simpler GET approach (like in the original code)
+        // This avoids CORS issues by using URL parameters
+        const params = new URLSearchParams();
+        params.append('apiKey', API_KEY);
+        params.append('campaignId', CAMPAIGN_ID);
+        params.append('callerNumber', callerNumber);
+        params.append('callerState', state);
+        params.append('callerZip', zip);
+        params.append('tags', JSON.stringify({ source: 'publisher-form' }));
 
+        const originalUrl = 'https://app.ringfuel.io/api/publisher/ping?' + params.toString();
+        const proxyUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
+
+        // Use GET method like the original working code
         fetch(proxyUrl, {
-          method: 'POST',
+          method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-API-Key': API_KEY,
-            'Authorization': 'Bearer ' + API_KEY
-          },
-          body: JSON.stringify({
-            url: 'https://app.ringfuel.io/api/publisher/ping',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'X-API-Key': API_KEY,
-              'Authorization': 'Bearer ' + API_KEY
-            },
-            body: requestBody
-          })
+            'Accept': 'application/json'
+          }
         })
         .then(response => {
           return response.text().then(text => {
@@ -247,25 +240,21 @@
           submitBtn.disabled = false;
           submitBtn.textContent = 'Submit';
 
+          // Check if we got a valid response
           if (body && body.error) {
             showAlert('Error: ' + body.error, 'danger');
             return;
           }
 
-          let apiResponse = body;
-          if (body && body.response) {
-            apiResponse = body.response;
-          }
-
           if (status >= 200 && status < 300) {
             let msg = '<strong>Success</strong><br>';
             
-            if (apiResponse && typeof apiResponse === 'object') {
-              const available = apiResponse.available !== undefined ? apiResponse.available : 'N/A';
-              const count = apiResponse.targets?.count ?? 'N/A';
-              const dialNumber = apiResponse.dialNumber || 'N/A';
-              const pingId = apiResponse.pingId || 'N/A';
-              const ttl = apiResponse.ttl || '300';
+            if (body && typeof body === 'object') {
+              const available = body.available !== undefined ? body.available : 'N/A';
+              const count = body.targets?.count ?? 'N/A';
+              const dialNumber = body.dialNumber || 'N/A';
+              const pingId = body.pingId || 'N/A';
+              const ttl = body.ttl || '300';
               
               msg += '<div style="margin-top:8px;">';
               msg += '<div><strong>Available:</strong> ' + available + '</div>';
@@ -274,8 +263,8 @@
               msg += '<div><strong>Ping ID:</strong> ' + pingId + '</div>';
               msg += '<div><strong>TTL:</strong> ' + ttl + 's</div>';
               
-              if (apiResponse.targets) {
-                const t = apiResponse.targets;
+              if (body.targets) {
+                const t = body.targets;
                 if (t.highBid !== undefined) {
                   msg += '<div><strong>High Bid:</strong> ' + t.highBid + ' | ';
                   msg += '<strong>Avg Bid:</strong> ' + t.avgBid + ' | ';
@@ -296,8 +285,8 @@
           } 
           else {
             let errMsg = '<strong>Request failed (Status: ' + status + ')</strong><br>';
-            if (apiResponse && typeof apiResponse === 'object') {
-              errMsg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + JSON.stringify(apiResponse, null, 2) + '</pre>';
+            if (body && typeof body === 'object') {
+              errMsg += '<pre style="background:#f5f5f5; padding:10px; border-radius:4px; margin-top:8px;">' + JSON.stringify(body, null, 2) + '</pre>';
             } else {
               errMsg += 'Response: ' + (rawText || 'No additional info');
             }
