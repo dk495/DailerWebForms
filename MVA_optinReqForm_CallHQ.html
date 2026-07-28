@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MVA Optin Request Form</title>
+    <!-- Bootstrap 4 + Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(145deg, #f0f4f8 0%, #d9e2ec 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* header */
+        .mva-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .mva-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0a2a44;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+        .mva-header h1 i {
+            color: #ff8c1a;
+            margin-right: 12px;
+        }
+        .mva-header .subhead {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            opacity: 0.8;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* main card – big MVA button */
+        .mva-giant-card {
+            background: white;
+            border-radius: 70px;
+            padding: 3.5rem 4rem;
+            box-shadow: 0 30px 50px -15px rgba(10, 42, 68, 0.3);
+            max-width: 700px;
+            width: 100%;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 140, 26, 0.2);
+            text-align: center;
+            margin: 10px auto;
+        }
+        .mva-giant-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 40px 65px -12px rgba(10, 42, 68, 0.45);
+            border-color: #ff8c1a;
+        }
+        .mva-giant-card:active {
+            transform: scale(0.97);
+        }
+        .mva-giant-card .mva-big-text {
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: 12px;
+            background: linear-gradient(145deg, #0a2a44, #1a4a7a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            line-height: 1.2;
+        }
+        .mva-giant-card .mva-big-text i {
+            -webkit-text-fill-color: #ff8c1a;
+            background: none;
+            margin-right: 15px;
+        }
+        .mva-giant-card .card-sub {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1f3a5f;
+            margin-top: 12px;
+            letter-spacing: 2px;
+            border-top: 2px dashed #e1e8f0;
+            padding-top: 18px;
+            display: inline-block;
+        }
+        .mva-giant-card .click-hint {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #6b7f96;
+            background: #f0f4f8;
+            border-radius: 60px;
+            padding: 8px 22px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        .mva-giant-card .click-hint i {
+            margin-right: 8px;
+            color: #ff8c1a;
+        }
+
+        /* small footer */
+        .mva-footer {
+            margin-top: 45px;
+            color: #2c3e50;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        .mva-footer i {
+            color: #ff8c1a;
+        }
+
+        @media (max-width: 576px) {
+            .mva-header h1 { font-size: 2.2rem; }
+            .mva-giant-card { padding: 2.5rem 1.5rem; border-radius: 50px; }
+            .mva-giant-card .mva-big-text { font-size: 5.5rem; letter-spacing: 6px; }
+            .mva-giant-card .card-sub { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="mva-header">
+        <h1><i class="fas fa-file-signature"></i> MVA Optin Request Form</h1>
+        <div class="subhead"><i class="fas fa-arrow-right mr-2" style="color:#ff8c1a;"></i> Click the big card below to continue</div>
+    </div>
+
+    <!-- GIANT MVA CARD – acts as a big button -->
+    <div class="mva-giant-card" id="mvaRedirectBtn" role="button" tabindex="0" aria-label="Redirect to MVA optin form">
+        <div class="mva-big-text">
+            <i class="fas fa-motorcycle"></i> MVA
+        </div>
+        <div class="card-sub">
+            <i class="fas fa-chevron-circle-right mr-2" style="color:#ff8c1a;"></i> Motor Vehicle Accident
+        </div>
+        <div class="click-hint">
+            <i class="fas fa-hand-pointer"></i> Tap to open optin form
+        </div>
+    </div>
+
+    <!-- subtle footer -->
+    <div class="mva-footer">
+        <i class="fas fa-shield-alt mr-2"></i> 2026 · CallsHQ MVA · secure redirect
+    </div>
+
+    <script>
+        (function() {
+            // redirect target
+            const TARGET_URL = "http://144.126.132.18:5001/callhq_mvaOptin.html";
+
+            const card = document.getElementById('mvaRedirectBtn');
+
+            // redirect function
+            function redirectToForm(e) {
+                // prevent any default if needed
+                if (e) {
+                    e.preventDefault ? e.preventDefault() : (e.returnValue = false);
+                }
+                // open in same tab (standard redirect)
+                window.location.href = TARGET_URL;
+            }
+
+            // click handler
+            card.addEventListener('click', redirectToForm);
+
+            // keyboard support (Enter or Space)
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    redirectToForm(e);
+                }
+            });
+
+            // (optional) visual feedback on touch devices
+            card.addEventListener('touchstart', function() {
+                // just a tiny haptic-like style feedback (no action yet)
+                this.style.transition = 'transform 0.1s';
+                this.style.transform = 'scale(0.98)';
+            }, { passive: true });
+            card.addEventListener('touchend', function() {
+                this.style.transform = '';
+            }, { passive: true });
+
+            console.log('MVA giant card ready – redirects to:', TARGET_URL);
+        })();
+    </script>
+
+    <!-- Bootstrap JS (optional, for any collapse etc., but not required) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
