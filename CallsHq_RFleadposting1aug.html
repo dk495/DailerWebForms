@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RingFuel · SSDI Calls</title>
+  <!-- Bootstrap 4.3 + custom styling -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    /* ----- modern, clean form style ----- */
+    body {
+      background-color: #f4f7fc;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem 0;
+    }
+    .container {
+      max-width: 780px;
+      background: #ffffff;
+      padding: 2.5rem 2.8rem;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px -12px rgba(0, 20, 40, 0.2);
+      transition: 0.25s ease;
+    }
+    h2 {
+      color: #0b2b4a;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      border-left: 6px solid #1e7aff;
+      padding-left: 20px;
+      margin-bottom: 2rem;
+    }
+    .form-group label {
+      font-weight: 500;
+      color: #1f3a5f;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+    .form-control {
+      border-radius: 40px;
+      padding: 12px 20px;
+      border: 1.5px solid #e2e9f3;
+      background: #fafcff;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+    .form-control:focus {
+      border-color: #1e7aff;
+      box-shadow: 0 0 0 4px rgba(30, 122, 255, 0.15);
+      background: #ffffff;
+    }
+    .btn-primary {
+      background: #1a6eff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: 0.2s;
+      box-shadow: 0 8px 18px rgba(26, 110, 255, 0.25);
+    }
+    .btn-primary:hover {
+      background: #0d4edb;
+      transform: scale(1.01);
+      box-shadow: 0 10px 22px rgba(26, 110, 255, 0.35);
+    }
+    .btn-primary:disabled {
+      opacity: 0.65;
+      transform: none;
+      box-shadow: none;
+    }
+    .alert {
+      border-radius: 40px;
+      padding: 16px 24px;
+      font-size: 0.95rem;
+      border: none;
+      margin-top: 1.8rem;
+      background: #f8faff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .alert-success {
+      background: #e5f5e9;
+      color: #0b5533;
+      border-left: 6px solid #27ae60;
+    }
+    .alert-danger {
+      background: #ffedef;
+      color: #a12b3a;
+      border-left: 6px solid #e74c3c;
+    }
+    .badge-ringfuel {
+      background: #0b2b4a;
+      color: white;
+      font-size: 0.7rem;
+      padding: 4px 14px;
+      border-radius: 40px;
+      letter-spacing: 0.4px;
+      display: inline-block;
+      margin-top: 0.25rem;
+    }
+    .row .col-md-6 {
+      margin-bottom: 0.25rem;
+    }
+    hr {
+      margin: 1.5rem 0 1rem;
+      border-color: #eaf0f8;
+    }
+    .form-note {
+      color: #5b6f87;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      background: #f2f6fd;
+      border-radius: 40px;
+      display: inline-block;
+    }
+    .response-details {
+      background: rgba(0,0,0,0.02);
+      padding: 12px 16px;
+      border-radius: 30px;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      word-break: break-all;
+    }
+    .response-details code {
+      background: rgba(0,0,0,0.05);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    .required-star {
+      color: #e74c3c;
+      margin-left: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📞 SSDI Calls · RingFuel</h2>
+    <p class="text-muted" style="font-size:0.95rem; margin-top:-0.5rem; margin-bottom:1.8rem;">
+      <span class="badge-ringfuel">publisher · ping API</span>
+      <span style="margin-left:12px; font-size:0.8rem;">campaign: SSDI CPQ</span>
+    </p>
+
+    <!-- main form -->
+    <form id="leadForm" novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="firstName" placeholder="e.g. John" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="lastName" placeholder="e.g. Doe" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone">📱 Phone Number <span class="required-star">*</span></label>
+            <input type="tel" class="form-control" id="phone" placeholder="e.g. 5551234567" required>
+            <small style="color: #6c757d; font-size: 0.75rem;">10 digits, no spaces or dashes</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">✉️ Email Address <span class="required-star">*</span></label>
+            <input type="email" class="form-control" id="email" placeholder="e.g. john@example.com" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="trustedForm">🔒 Trusted Form / Jornaya Leadid <span class="required-star">*</span></label>
+            <input type="text" class="form-control" id="trustedForm" placeholder="https://cert.trustedform.com/xxxxx" required>
+            <small style="color: #6c757d; font-size: 0.75rem;">Enter the full TrustedForm certification URL</small>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        🚀 Submit Lead to RingFuel
+      </button>
+    </form>
+
+    <!-- alert container: dynamic messages -->
+    <div id="alertContainer"></div>
+
+    <!-- tiny footer note -->
+    <div style="margin-top: 2.2rem; font-size:0.8rem; color:#8ba0b9; text-align:center; border-top:1px solid #ecf2f9; padding-top:1.2rem;">
+      <span>🔑 API key: rfp_28862ca8… · campaign: 790dfb68-1dfc-41b4-9ea3-e955f5fddb1e</span>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    (function() {
+      "use strict";
+
+      // ----- DOM refs -----
+      const form = document.getElementById('leadForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const alertContainer = document.getElementById('alertContainer');
+      const firstNameInput = document.getElementById('firstName');
+      const lastNameInput = document.getElementById('lastName');
+      const phoneInput = document.getElementById('phone');
+      const emailInput = document.getElementById('email');
+      const trustedFormInput = document.getElementById('trustedForm');
+
+      // ----- RingFuel credentials -----
+      const API_KEY = 'rfp_28862ca8868f81692ae671cfd29041e9f252065d5c916436';
+      const CAMPAIGN_ID = '790dfb68-1dfc-41b4-9ea3-e955f5fddb1e';
+
+      // ----- helper: show alert (auto-clear previous) -----
+      function showAlert(message, type = 'success') {
+        alertContainer.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = `alert alert-${type}`;
+        wrapper.role = 'alert';
+        wrapper.innerHTML = message;
+        alertContainer.appendChild(wrapper);
+      }
+
+      // ----- main submit handler -----
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // get values
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const email = emailInput.value.trim();
+        const trustedForm = trustedFormInput.value.trim();
+
+        // validation
+        if (!firstName) {
+          showAlert('❌ First Name is required.', 'danger');
+          return;
+        }
+        if (!lastName) {
+          showAlert('❌ Last Name is required.', 'danger');
+          return;
+        }
+        if (!phone || phone.length < 10 || !/^\d{10}$/.test(phone)) {
+          showAlert('📱 Please enter a valid 10-digit phone number (e.g. 5551234567).', 'danger');
+          return;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showAlert('✉️ Please enter a valid email address.', 'danger');
+          return;
+        }
+        if (!trustedForm) {
+          showAlert('🔒 Trusted Form / Jornaya Leadid is required.', 'danger');
+          return;
+        }
+
+        // disable button to prevent double-submit
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Submitting…';
+
+        // clear old alerts
+        alertContainer.innerHTML = '';
+
+        // Format phone to E.164
+        const callerNumber = '+1' + phone;
+
+        // Build request body for RingFuel
+        const requestBody = {
+          apiKey: API_KEY,
+          campaign_id: CAMPAIGN_ID,
+          caller_number: callerNumber,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          trustedform_url: trustedForm
+        };
+
+        // Use proxy to avoid CORS issues
+        const proxyUrl = 'https://api.formifyweb.com/proxify.php';
+
+        // Make the request through proxy
+        fetch(proxyUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            url: 'https://app.ringfuel.io/api/publisher/ping',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'x-api-key': API_KEY
+            },
+            body: requestBody
+          })
+        })
+        .then(response => {
+          return response.text().then(text => {
+            let parsed;
+            try {
+              parsed = JSON.parse(text);
+            } catch (_) {
+              parsed = { raw: text };
+            }
+            return { status: response.status, body: parsed, rawText: text };
+          });
+        })
+        .then(({ status, body, rawText }) => {
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🚀 Submit Lead to RingFuel';
+
+          // Check if we got an error from the proxy
+          if (body && body.error) {
+            showAlert(`❌ Proxy error: ${body.error}`, 'danger');
+            return;
+          }
+
+          // If the response contains the actual API response
+          let apiResponse = body;
+          if (body && body.response) {
+            apiResponse = body.response;
+          }
+
+          // Check if we have a valid response
+          if (status >= 200 && status < 300) {
+            let msg = `<strong>✅ Submission successful (${status})</strong><br>`;
+            
+            if (apiResponse && typeof apiResponse === 'object') {
+              const available = apiResponse.available !== undefined ? apiResponse.available : 'n/a';
+              const count = apiResponse.targets?.count ?? '–';
+              const dialNumber = apiResponse.dialNumber || '–';
+              const pingId = apiResponse.pingId || '–';
+              const ttl = apiResponse.ttl || '300';
+              
+              msg += `
+                <div class="response-details">
+                  <div><strong>available:</strong> <code>${available}</code> &nbsp;|&nbsp; <strong>targets:</strong> <code>${count}</code></div>
+                  <div><strong>dialNumber:</strong> <code>${dialNumber}</code></div>
+                  <div><strong>pingId:</strong> <code>${pingId}</code> &nbsp;|&nbsp; <strong>ttl:</strong> <code>${ttl}s</code></div>
+              `;
+              
+              if (apiResponse.targets) {
+                const t = apiResponse.targets;
+                if (t.highBid !== undefined) {
+                  msg += `<div style="margin-top:6px;">💰 highBid: <code>${t.highBid}</code>  ·  avgBid: <code>${t.avgBid}</code>  ·  lowBid: <code>${t.lowBid}</code></div>`;
+                }
+              }
+              msg += `</div>`;
+              
+              if (available === true) {
+                msg = `<strong>✅ Target available!</strong><br>
+                       <div style="font-size:1.2rem; margin:8px 0; padding:10px; background:#d4edda; border-radius:30px; text-align:center;">
+                         📞 Dial: <strong style="font-size:1.4rem;">${dialNumber}</strong>
+                       </div>
+                       ${msg}`;
+              } else if (available === false) {
+                msg = `<strong>⏳ No targets currently available</strong><br>${msg}`;
+              }
+            } else {
+              msg += `Response: <pre style="background:#f0f4fa; padding:10px; border-radius:20px; margin-top:8px;">${rawText || 'ok'}</pre>`;
+            }
+            showAlert(msg, 'success');
+          } 
+          else {
+            let errMsg = `<strong>❌ Request failed (${status})</strong><br>`;
+            if (apiResponse && typeof apiResponse === 'object') {
+              errMsg += `<pre style="background:#fff0f0; padding:10px; border-radius:20px; margin-top:8px;">${JSON.stringify(apiResponse, null, 2)}</pre>`;
+            } else {
+              errMsg += `Response: ${rawText || 'no additional info'}`;
+            }
+            showAlert(errMsg, 'danger');
+          }
+        })
+        .catch(error => {
+          // network / fetch error
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🚀 Submit Lead to RingFuel';
+          console.error('Fetch error:', error);
+          showAlert(`🌐 Network error: ${error.message || 'please check your connection'}`, 'danger');
+        });
+      });
+
+      // ----- right-click disable (as in original) -----
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>
