@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drivetech RTB · Auto posting</title>
+  <!-- Font & minimal styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 1.5rem;
+    }
+    .card {
+      max-width: 780px;
+      width: 100%;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 40px;
+      padding: 2rem 2.2rem 2.5rem;
+      box-shadow: 0 20px 40px -12px rgba(0,20,40,0.35), 0 8px 24px -8px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.5);
+      transition: all 0.2s ease;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0a2540;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.2rem;
+    }
+    h1 small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #2b6c8c;
+      background: #d4e6f2;
+      padding: 0.15rem 0.9rem;
+      border-radius: 40px;
+      letter-spacing: 0.3px;
+    }
+    .subhead {
+      color: #3a5b72;
+      font-size: 0.95rem;
+      margin-top: -0.2rem;
+      margin-bottom: 1.8rem;
+      border-left: 3px solid #1f7a9c;
+      padding-left: 1rem;
+      background: rgba(31, 122, 156, 0.04);
+      border-radius: 0 12px 12px 0;
+    }
+    .form-group {
+      margin-bottom: 1.6rem;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      color: #1d3b4f;
+      margin-bottom: 0.3rem;
+    }
+    .label-hint {
+      font-weight: 400;
+      color: #4f708a;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+    select, input[type="tel"] {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 60px;
+      border: 1px solid #cbdde9;
+      background: white;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: 0.2s;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0,20,30,0.03);
+    }
+    select:focus, input[type="tel"]:focus {
+      border-color: #1f7a9c;
+      box-shadow: 0 0 0 4px rgba(31, 122, 156, 0.15);
+      background: #ffffff;
+    }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231f7a9c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.2rem center;
+      background-size: 1.2rem;
+      cursor: pointer;
+    }
+    .phone-wrapper {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 60px;
+      border: 1px solid #cbdde9;
+      transition: 0.2s;
+      padding-right: 0.2rem;
+      box-shadow: 0 2px 6px rgba(0,20,30,0.03);
+    }
+    .phone-wrapper:focus-within {
+      border-color: #1f7a9c;
+      box-shadow: 0 0 0 4px rgba(31, 122, 156, 0.15);
+    }
+    .phone-prefix {
+      padding: 0 0 0 1.2rem;
+      font-weight: 500;
+      color: #1f4b66;
+      background: transparent;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    .phone-wrapper input {
+      border: none;
+      padding: 0.8rem 0.8rem 0.8rem 0.4rem;
+      border-radius: 60px;
+      background: transparent;
+      box-shadow: none;
+      flex: 1;
+    }
+    .phone-wrapper input:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+    .phone-wrapper input::placeholder {
+      color: #9ab3c7;
+      font-weight: 400;
+    }
+    .btn {
+      background: #0a2c44;
+      border: none;
+      padding: 0.9rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #1f5a7a;
+      box-shadow: 0 6px 14px rgba(10, 44, 68, 0.25);
+      letter-spacing: 0.3px;
+      width: 100%;
+    }
+    .btn:hover {
+      background: #124a6a;
+      transform: scale(1.01);
+      box-shadow: 0 10px 20px -6px #0a2c4466;
+    }
+    .btn:active {
+      transform: scale(0.97);
+    }
+    .response-area {
+      margin-top: 2rem;
+      background: #f2f8fe;
+      border-radius: 28px;
+      padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+      border: 1px solid rgba(31, 122, 156, 0.15);
+      transition: 0.2s;
+    }
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1.5rem 0.2rem 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1f6582;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    #responseContainer {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+      border-radius: 24px;
+      min-height: 70px;
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+      color: #0f283b;
+      border: 1px solid #e2edf5;
+      margin: 0.2rem;
+      transition: 0.15s;
+    }
+    #responseContainer:empty::before {
+      content: "📡  response will appear here …";
+      color: #8cafc4;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .badge-proxy {
+      background: #dfecf5;
+      color: #12455f;
+      border-radius: 60px;
+      padding: 0.1rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+    .badge-method {
+      background: #d4f0e6;
+      color: #0d5a4a;
+      border-radius: 60px;
+      padding: 0.1rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+    .flex-row {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    @media (max-width: 480px) {
+      .card { padding: 1.5rem; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;">
+    <h1>
+      Drivetech RTB 
+      <small>Auto posting</small>
+    </h1>
+    <div style="display: flex; gap: 0.4rem; align-items: center;">
+      <span class="badge-method">⬆ POST</span>
+      <span class="badge-proxy">⚡ proxify</span>
+    </div>
+  </div>
+  <div class="subhead">
+    Select policy · enter 10-digit US phone · send to RTB endpoint via POST
+  </div>
+
+  <!-- form -->
+  <form id="rtbForm">
+    <!-- dropdown -->
+    <div class="form-group">
+      <label for="policySelect">Insurance policy <span class="label-hint">(select type)</span></label>
+      <select id="policySelect" name="policy" required>
+        <option value="uninsured">Auto Insurance Uninsured</option>
+        <option value="insured">Auto Insurance Insured</option>
+      </select>
+    </div>
+
+    <!-- phone input with USA prefix -->
+    <div class="form-group">
+      <label for="phoneInput">Phone number <span class="label-hint">10 digits · USA</span></label>
+      <div class="phone-wrapper">
+        <span class="phone-prefix">🇺🇸 +1</span>
+        <input type="tel" id="phoneInput" placeholder="(555) 123-4567" maxlength="14" 
+               inputmode="numeric" pattern="[0-9\s\-\(\)]{10,14}" required
+               value="">
+      </div>
+      <div style="font-size: 0.7rem; color: #4f7a94; margin-top: 0.3rem; padding-left: 0.5rem;">
+        only digits · will be trimmed to 10 digits
+      </div>
+    </div>
+
+    <!-- submit -->
+    <button type="submit" class="btn" id="submitBtn">
+      <span>🚀</span> Send RTB POST
+    </button>
+  </form>
+
+  <!-- response container -->
+  <div class="response-area">
+    <div class="response-header">
+      <span>📬 Response</span>
+      <span id="timestamp"></span>
+    </div>
+    <div id="responseContainer"></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- CONFIG ----------
+    const PROXY_BASE = 'https://api.formifyweb.com/proxifynew.php?url=';
+
+    // endpoints (without caller_number)
+    const ENDPOINTS = {
+      uninsured: 'https://rtb.retreaver.com/rtbs.json?key=6af51244-bd48-4ee9-9172-996e39bbef2f',
+      insured: 'https://rtb.retreaver.com/rtbs.json?key=2bf11506-da53-4723-bb3e-c7a39c21af3b'
+    };
+
+    // DOM elements
+    const form = document.getElementById('rtbForm');
+    const policySelect = document.getElementById('policySelect');
+    const phoneInput = document.getElementById('phoneInput');
+    const responseContainer = document.getElementById('responseContainer');
+    const timestampEl = document.getElementById('timestamp');
+
+    // Helper: clean phone to 10 digits (USA)
+    function cleanPhone(raw) {
+      // remove all non-digit
+      let digits = raw.replace(/\D/g, '');
+      // if starts with 1 (country code) and length 11 => remove first digit
+      if (digits.length === 11 && digits.startsWith('1')) {
+        digits = digits.slice(1);
+      }
+      // take first 10 digits if longer, pad if shorter? we'll enforce 10
+      if (digits.length > 10) digits = digits.slice(0, 10);
+      return digits; // may be less than 10, but we'll validate
+    }
+
+    // update timestamp
+    function setTimestamp() {
+      const now = new Date();
+      timestampEl.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    setTimestamp();
+
+    // handle submit
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // 1. get phone & clean
+      const rawPhone = phoneInput.value.trim();
+      const phoneDigits = cleanPhone(rawPhone);
+      
+      // validate: exactly 10 digits
+      if (phoneDigits.length !== 10) {
+        responseContainer.textContent = `⚠️  Invalid phone number. Must be exactly 10 digits (got ${phoneDigits.length} digits).`;
+        responseContainer.style.color = '#a13d3d';
+        setTimestamp();
+        return;
+      }
+      responseContainer.style.color = '#0f283b'; // reset
+
+      // 2. get policy
+      const policyValue = policySelect.value; // 'uninsured' or 'insured'
+      let baseEndpoint = '';
+      let policyLabel = '';
+      if (policyValue === 'uninsured') {
+        baseEndpoint = ENDPOINTS.uninsured;
+        policyLabel = 'Uninsured';
+      } else {
+        baseEndpoint = ENDPOINTS.insured;
+        policyLabel = 'Insured';
+      }
+
+      // 3. construct endpoint with caller_number
+      const separator = baseEndpoint.includes('?') ? '&' : '?';
+      const endpointWithCaller = `${baseEndpoint}${separator}caller_number=${phoneDigits}`;
+
+      // 4. proxy url (proxifynew.php expects url as GET param, but we'll POST to it)
+      const proxyUrl = `${PROXY_BASE}${encodeURIComponent(endpointWithCaller)}`;
+
+      // show sending state
+      responseContainer.textContent = `⏳ Sending POST ${policyLabel} · +1${phoneDigits} ...`;
+      setTimestamp();
+
+      try {
+        // 5. POST via proxy 
+        // The proxy forwards the request. We'll POST to the proxy with the target URL as a param.
+        // Some proxies expect the request body to be forwarded. We'll send empty body or form data.
+        const response = await fetch(proxyUrl, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // send caller_number in body as well (some endpoints might expect it)
+          body: `caller_number=${phoneDigits}`
+        });
+
+        // 6. read response (text or json)
+        let responseText = '';
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const jsonData = await response.json();
+          responseText = JSON.stringify(jsonData, null, 2);
+        } else {
+          responseText = await response.text();
+        }
+
+        // 7. show response with status
+        const statusMsg = `[${response.status} ${response.statusText}] · POST ${policyLabel} · +1${phoneDigits}\n\n`;
+        responseContainer.textContent = statusMsg + responseText;
+
+        // if response is empty / error
+        if (!responseText || responseText.length < 2) {
+          responseContainer.textContent = statusMsg + '⚠️  Empty response from server.';
+        }
+
+        // if status not ok, add hint
+        if (!response.ok) {
+          responseContainer.style.color = '#a13d3d';
+        } else {
+          responseContainer.style.color = '#0f283b';
+        }
+
+      } catch (error) {
+        // network / cors / other
+        responseContainer.textContent = `❌ Request failed: ${error.message || 'unknown error'}`;
+        responseContainer.style.color = '#a13d3d';
+      }
+
+      setTimestamp();
+    });
+
+    // phone input: allow only digits, (, ), -, space
+    phoneInput.addEventListener('input', function(e) {
+      if (this.value.length > 14) {
+        this.value = this.value.slice(0, 14);
+      }
+    });
+
+    // timestamp update every 30s
+    setInterval(setTimestamp, 30000);
+  })();
+</script>
+</body>
+</html>
