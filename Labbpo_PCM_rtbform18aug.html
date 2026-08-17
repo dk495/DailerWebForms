@@ -16,11 +16,6 @@
     }
     h2 {
       color: #007bff;
-      margin-bottom: 5px;
-    }
-    .subtitle {
-      color: #6c757d;
-      font-size: 0.95rem;
       margin-bottom: 20px;
     }
     .form-control {
@@ -62,13 +57,6 @@
     .campaign-list {
       margin: 12px 0 16px;
     }
-    .publisher-id {
-      font-family: monospace;
-      background: #f1f3f5;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-    }
     .response-box {
       background: #f8f9fa;
       border-radius: 8px;
@@ -100,7 +88,6 @@
 <body>
   <div class="container mt-4 mb-5">
     <h2 class="text-center">Lab BPO RTB Form</h2>
-   
 
     <!-- Campaign selection -->
     <div class="campaign-list text-center">
@@ -112,13 +99,12 @@
 
     <form id="leadForm">
       <div class="form-group">
-        <label for="caller_number">Phone Number </label>
-        <input type="tel" class="form-control" id="caller_number" placeholder="e.g., 7103847563" required>
-        <small class="form-text text-muted">Enter Phone Number.</small>
+        <label for="caller_number">Phone Number</label>
+        <input type="tel" class="form-control" id="caller_number" placeholder="+17103847563" required>
       </div>
       <div class="form-group">
         <label for="caller_zip">Zip Code</label>
-        <input type="text" class="form-control" id="caller_zip" placeholder="e.g., 90210" required>
+        <input type="text" class="form-control" id="caller_zip" placeholder="90210" required>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -128,19 +114,20 @@
             <option value="transfer">Transfer</option>
           </select>
         </div>
-        
+        <div class="form-group col-md-6">
+          <label for="sub_id">Sub ID <span class="text-muted">(optional)</span></label>
+          <input type="text" class="form-control" id="sub_id" placeholder="Tracking sub-source">
+        </div>
       </div>
 
       <button type="button" class="btn btn-primary btn-block" id="submitBtn" onclick="runRTB()">
-        <span class="step-badge"></span> Ping
+        <span class="step-badge">1</span> Ping &amp; <span class="step-badge">2</span> Post
       </button>
     </form>
 
     <!-- Status / Response Display -->
     <div id="alertContainer"></div>
-    <div id="apiResponse" class="alert alert-secondary mt-3" role="alert">
-    
-    </div>
+    <div id="apiResponse" class="alert alert-secondary mt-3" role="alert" style="display:none;"></div>
 
     <!-- Detailed response log -->
     <div id="responseLog" class="response-box" style="display:none;"></div>
@@ -156,9 +143,8 @@
     const PING_URL = 'https://api.call.intelhouse.net/v1/rtb/ping';
     const POST_URL = 'https://api.call.intelhouse.net/v1/rtb/post';
 
-    let selectedCampaignId = 'b38f15fb-0f88-42d8-940b-8545c9deda63'; // default: Insured
+    let selectedCampaignId = 'b38f15fb-0f88-42d8-940b-8545c9deda63';
 
-    // --- UI Helpers ---
     function selectCampaign(el) {
       document.querySelectorAll('.badge-campaign').forEach(b => b.classList.remove('active'));
       el.classList.add('active');
@@ -170,6 +156,7 @@
       if (!container) return;
       container.innerHTML = message;
       container.className = 'alert alert-' + type + ' mt-3';
+      container.style.display = 'block';
     }
 
     function showResponseLog(data) {
@@ -186,34 +173,21 @@
         '<span class="step-badge">1</span> Ping &amp; <span class="step-badge">2</span> Post';
     }
 
-    // --- Core RTB Logic ---
     function runRTB() {
-      // Gather inputs
       const callerNumber = document.getElementById('caller_number').value.trim();
       const callerZip = document.getElementById('caller_zip').value.trim();
       const callType = document.getElementById('call_type').value;
       const subId = document.getElementById('sub_id').value.trim();
 
-      // Validation
-      if (!callerNumber) {
-        setAlert('apiResponse', '❌ Please enter a phone number in E.164 format (e.g., +17103847563).', 'danger');
-        return;
-      }
-      if (!callerNumber.startsWith('+')) {
-        setAlert('apiResponse', '❌ Phone number must start with "+" (E.164 format).', 'danger');
-        return;
-      }
-      if (!callerZip) {
-        setAlert('apiResponse', '❌ Please enter a zip code.', 'danger');
+      if (!callerNumber || !callerZip) {
+        setAlert('apiResponse', '❌ Please fill in all required fields.', 'danger');
         return;
       }
 
-      // Disable button, clear previous logs
       setButtonLoading(true);
       document.getElementById('responseLog').style.display = 'none';
       setAlert('apiResponse', '⏳ Sending Ping request...', 'info');
 
-      // --- 1. PING REQUEST ---
       const pingPayload = {
         publisher_id: PUBLISHER_ID,
         campaign_id: selectedCampaignId,
@@ -229,11 +203,9 @@
         body: JSON.stringify(pingPayload)
       })
       .then(response => {
-        // Log raw response for debugging
         return response.json().then(data => ({ status: response.status, data }));
       })
       .then(({ status, data }) => {
-        // Display ping response
         showResponseLog({ step: 'Ping Response', status, data });
 
         if (status === 200 && data.status === 'success') {
@@ -243,8 +215,7 @@
             setButtonLoading(false);
             return;
           }
-          // Proceed to POST
-          setAlert('apiResponse', '✅ Ping accepted! Token received. Sending Post request...', 'success');
+          setAlert('apiResponse', '✅ Ping accepted! Sending Post request...', 'success');
           return postRTB(token, callerNumber, callerZip, callType, subId);
         } else {
           const errMsg = data.message || data.error || 'Unknown error';
@@ -262,7 +233,6 @@
       });
     }
 
-    // --- 2. POST REQUEST ---
     function postRTB(token, callerNumber, callerZip, callType, subId) {
       const postPayload = {
         publisher_id: PUBLISHER_ID,
@@ -279,7 +249,6 @@
         return response.json().then(data => ({ status: response.status, data }));
       })
       .then(({ status, data }) => {
-        // Display post response
         showResponseLog({ step: 'Post Response', status, data });
 
         if (status === 200 && data.status === 'success') {
@@ -298,23 +267,9 @@
       });
     }
 
-    // --- Form submit handler ---
     document.getElementById('leadForm').addEventListener('submit', function(e) {
       e.preventDefault();
       runRTB();
-    });
-
-    // --- Optional: auto-format phone with +1 if missing ---
-    document.getElementById('caller_number').addEventListener('blur', function() {
-      let val = this.value.trim();
-      if (val && !val.startsWith('+')) {
-        // if it looks like a 10-digit US number, prepend +1
-        if (/^\d{10}$/.test(val)) {
-          this.value = '+1' + val;
-        } else if (/^\d{11}$/.test(val) && val.startsWith('1')) {
-          this.value = '+' + val;
-        }
-      }
     });
   </script>
 </body>
