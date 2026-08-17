@@ -100,10 +100,7 @@
 <body>
   <div class="container mt-4 mb-5">
     <h2 class="text-center">Lab BPO RTB Form</h2>
-    <p class="text-center subtitle">
-      <span class="publisher-id">Publisher: PulseCallMedia</span>
-      <span class="publisher-id ml-2">ID: 6957582c-670c-4b59-b92b-9e217a0ba2f3</span>
-    </p>
+   
 
     <!-- Campaign selection -->
     <div class="campaign-list text-center">
@@ -131,21 +128,18 @@
             <option value="transfer">Transfer</option>
           </select>
         </div>
-        <div class="form-group col-md-6">
-          <label for="sub_id">Sub ID <span class="text-muted">(optional)</span></label>
-          <input type="text" class="form-control" id="sub_id" placeholder="Tracking sub-source">
-        </div>
+        
       </div>
 
       <button type="button" class="btn btn-primary btn-block" id="submitBtn" onclick="runRTB()">
-        <span class="step-badge">1</span> Ping &amp; <span class="step-badge">2</span> Post
+        <span class="step-badge"></span> Ping
       </button>
     </form>
 
     <!-- Status / Response Display -->
     <div id="alertContainer"></div>
     <div id="apiResponse" class="alert alert-secondary mt-3" role="alert">
-      <strong>Ready.</strong> Fill in the fields and click the button.
+    
     </div>
 
     <!-- Detailed response log -->
