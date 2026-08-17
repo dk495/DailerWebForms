@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lab BPO RTB Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      color: #6c757d;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 50px;
+    }
+    .btn-primary {
+      border-radius: 50px;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .btn-primary:disabled {
+      opacity: 0.65;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+    .badge-campaign {
+      background-color: #e9ecef;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin: 4px 6px 4px 0;
+      display: inline-block;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .badge-campaign:hover {
+      border-color: #007bff;
+    }
+    .badge-campaign.active {
+      border-color: #007bff;
+      background-color: #cce5ff;
+    }
+    .campaign-list {
+      margin: 12px 0 16px;
+    }
+    .publisher-id {
+      font-family: monospace;
+      background: #f1f3f5;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+    }
+    .response-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+      margin-top: 8px;
+    }
+    .step-badge {
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4 mb-5">
+    <h2 class="text-center">Lab BPO RTB Form</h2>
+    <p class="text-center subtitle">
+      <span class="publisher-id">Publisher: PulseCallMedia</span>
+      <span class="publisher-id ml-2">ID: 6957582c-670c-4b59-b92b-9e217a0ba2f3</span>
+    </p>
+
+    <!-- Campaign selection -->
+    <div class="campaign-list text-center">
+      <span class="badge-campaign active" data-campaign="b38f15fb-0f88-42d8-940b-8545c9deda63" onclick="selectCampaign(this)">Auto Insurance - Insured - PT</span>
+      <span class="badge-campaign" data-campaign="3e7fdba3-4fbe-4417-99d5-ff31e2454dc4" onclick="selectCampaign(this)">Auto Insurance - UnInsured - PT</span>
+    </div>
+
+    <hr>
+
+    <form id="leadForm">
+      <div class="form-group">
+        <label for="caller_number">Phone Number <span class="text-muted">(E.164 format)</span></label>
+        <input type="tel" class="form-control" id="caller_number" placeholder="e.g., +17103847563" required>
+        <small class="form-text text-muted">Enter with country code, e.g., +1 for US.</small>
+      </div>
+      <div class="form-group">
+        <label for="caller_zip">Zip Code</label>
+        <input type="text" class="form-control" id="caller_zip" placeholder="e.g., 90210" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="call_type">Call Type</label>
+          <select class="form-control" id="call_type">
+            <option value="inbound" selected>Inbound</option>
+            <option value="transfer">Transfer</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="sub_id">Sub ID <span class="text-muted">(optional)</span></label>
+          <input type="text" class="form-control" id="sub_id" placeholder="Tracking sub-source">
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id="submitBtn" onclick="runRTB()">
+        <span class="step-badge">1</span> Ping &amp; <span class="step-badge">2</span> Post
+      </button>
+    </form>
+
+    <!-- Status / Response Display -->
+    <div id="alertContainer"></div>
+    <div id="apiResponse" class="alert alert-secondary mt-3" role="alert">
+      <strong>Ready.</strong> Fill in the fields and click the button.
+    </div>
+
+    <!-- Detailed response log -->
+    <div id="responseLog" class="response-box" style="display:none;"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    // --- Configuration ---
+    const PUBLISHER_ID = '6957582c-670c-4b59-b92b-9e217a0ba2f3';
+    const PING_URL = 'https://api.call.intelhouse.net/v1/rtb/ping';
+    const POST_URL = 'https://api.call.intelhouse.net/v1/rtb/post';
+
+    let selectedCampaignId = 'b38f15fb-0f88-42d8-940b-8545c9deda63'; // default: Insured
+
+    // --- UI Helpers ---
+    function selectCampaign(el) {
+      document.querySelectorAll('.badge-campaign').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      selectedCampaignId = el.dataset.campaign;
+    }
+
+    function setAlert(containerId, message, type) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = message;
+      container.className = 'alert alert-' + type + ' mt-3';
+    }
+
+    function showResponseLog(data) {
+      const log = document.getElementById('responseLog');
+      log.style.display = 'block';
+      log.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function setButtonLoading(loading) {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = loading;
+      btn.innerHTML = loading ?
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...' :
+        '<span class="step-badge">1</span> Ping &amp; <span class="step-badge">2</span> Post';
+    }
+
+    // --- Core RTB Logic ---
+    function runRTB() {
+      // Gather inputs
+      const callerNumber = document.getElementById('caller_number').value.trim();
+      const callerZip = document.getElementById('caller_zip').value.trim();
+      const callType = document.getElementById('call_type').value;
+      const subId = document.getElementById('sub_id').value.trim();
+
+      // Validation
+      if (!callerNumber) {
+        setAlert('apiResponse', '❌ Please enter a phone number in E.164 format (e.g., +17103847563).', 'danger');
+        return;
+      }
+      if (!callerNumber.startsWith('+')) {
+        setAlert('apiResponse', '❌ Phone number must start with "+" (E.164 format).', 'danger');
+        return;
+      }
+      if (!callerZip) {
+        setAlert('apiResponse', '❌ Please enter a zip code.', 'danger');
+        return;
+      }
+
+      // Disable button, clear previous logs
+      setButtonLoading(true);
+      document.getElementById('responseLog').style.display = 'none';
+      setAlert('apiResponse', '⏳ Sending Ping request...', 'info');
+
+      // --- 1. PING REQUEST ---
+      const pingPayload = {
+        publisher_id: PUBLISHER_ID,
+        campaign_id: selectedCampaignId,
+        caller_number: callerNumber,
+        caller_zip: callerZip,
+        call_type: callType
+      };
+      if (subId) pingPayload.sub_id = subId;
+
+      fetch(PING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pingPayload)
+      })
+      .then(response => {
+        // Log raw response for debugging
+        return response.json().then(data => ({ status: response.status, data }));
+      })
+      .then(({ status, data }) => {
+        // Display ping response
+        showResponseLog({ step: 'Ping Response', status, data });
+
+        if (status === 200 && data.status === 'success') {
+          const token = data.token;
+          if (!token) {
+            setAlert('apiResponse', '⚠️ Ping succeeded but no token returned.', 'warning');
+            setButtonLoading(false);
+            return;
+          }
+          // Proceed to POST
+          setAlert('apiResponse', '✅ Ping accepted! Token received. Sending Post request...', 'success');
+          return postRTB(token, callerNumber, callerZip, callType, subId);
+        } else {
+          const errMsg = data.message || data.error || 'Unknown error';
+          setAlert('apiResponse', '❌ Ping failed. Status: ' + status + ' — ' + errMsg, 'danger');
+          setButtonLoading(false);
+          throw new Error('Ping failed');
+        }
+      })
+      .catch(error => {
+        console.error('Ping error:', error);
+        if (!document.getElementById('apiResponse').innerHTML.includes('Ping failed')) {
+          setAlert('apiResponse', '❌ Network error during Ping. Check console.', 'danger');
+        }
+        setButtonLoading(false);
+      });
+    }
+
+    // --- 2. POST REQUEST ---
+    function postRTB(token, callerNumber, callerZip, callType, subId) {
+      const postPayload = {
+        publisher_id: PUBLISHER_ID,
+        campaign_id: selectedCampaignId,
+        token: token
+      };
+
+      return fetch(POST_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postPayload)
+      })
+      .then(response => {
+        return response.json().then(data => ({ status: response.status, data }));
+      })
+      .then(({ status, data }) => {
+        // Display post response
+        showResponseLog({ step: 'Post Response', status, data });
+
+        if (status === 200 && data.status === 'success') {
+          const number = data.number || 'N/A';
+          setAlert('apiResponse', `✅ Call routed successfully! Connect to: <strong>${number}</strong>`, 'success');
+        } else {
+          const errMsg = data.message || data.error || 'Unknown error';
+          setAlert('apiResponse', '❌ Post failed. Status: ' + status + ' — ' + errMsg, 'danger');
+        }
+        setButtonLoading(false);
+      })
+      .catch(error => {
+        console.error('Post error:', error);
+        setAlert('apiResponse', '❌ Network error during Post. Check console.', 'danger');
+        setButtonLoading(false);
+      });
+    }
+
+    // --- Form submit handler ---
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      runRTB();
+    });
+
+    // --- Optional: auto-format phone with +1 if missing ---
+    document.getElementById('caller_number').addEventListener('blur', function() {
+      let val = this.value.trim();
+      if (val && !val.startsWith('+')) {
+        // if it looks like a 10-digit US number, prepend +1
+        if (/^\d{10}$/.test(val)) {
+          this.value = '+1' + val;
+        } else if (/^\d{11}$/.test(val) && val.startsWith('1')) {
+          this.value = '+' + val;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
