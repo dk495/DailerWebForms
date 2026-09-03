@@ -40,23 +40,35 @@
     <h2 class="text-center">Dailx1 Api Form(RTB)</h2>
    <form id="leadForm">
  <div class="row">
-             
-            
-  <div class="col-md-12">
+       <div class="col-md-6">
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+      </div>
+    </div>
+ <div class="col-md-6">
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+      </div>
+    </div>
+      
+ </div>   
+     <div class="row">
+  <div class="col-md-6">
   <div class="form-group">
     <label for="caller_id">Phone Number</label>
     <input type="tel" class="form-control" id="caller_id" placeholder="Enter phone number..." required>
   </div>
 </div>
-</div>
 
 
 
-<div class="row">
+
              
-<div class="col-md-4">
+<div class="col-md-6">
   <div class="form-group">
-    <label for="state">State</label>
+    <label for="state">Incident State</label>
     <select class="form-control" id="state" required>
       <option value="" disabled selected>Select a state</option>
       <option value="AL">Alabama</option>
@@ -113,19 +125,8 @@
     </select>
   </div>
 </div>
- <div class="col-md-4">
-      <div class="form-group">
-        <label for="zip">Zip</label>
-        <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" required>
-      </div>
-    </div>
 
-<div class="col-md-4">
-  <div class="form-group">
-    <label for="age">Age</label>
-    <input type="text" class="form-control" id="age" placeholder="Enter age" required>
-  </div>
-</div>
+
 
    </div>
 
@@ -144,7 +145,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://js.formifyweb.com/Dailx1_Ret9july.js?ver=1"></script>
+  <script src="https://js.formifyweb.com/Dailx1_Ret9july.js?ver=2"></script>
   <!-- Custom script for form submission and notification -->
    <script>
         document.addEventListener("contextmenu", function (e) {
