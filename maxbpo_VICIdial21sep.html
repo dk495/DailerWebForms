@@ -5,12 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Maxbpo VICIdial Agent Availability Ping</title>
+    <title>MaxBPO Agent Availability Ping</title>
 
-    <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    >
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <style>
         body {
@@ -21,12 +19,12 @@
             background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         h2 {
             color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .form-control {
@@ -35,31 +33,29 @@
 
         .btn-primary {
             border-radius: 50px;
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            padding-left: 25px;
+            padding-right: 25px;
         }
 
         .alert {
-            margin-top: 20px;
+            margin-top: 25px;
             word-break: break-word;
+        }
+
+        #apiResponse {
+            white-space: pre-wrap;
+            font-family: monospace;
         }
     </style>
 </head>
-
 
 <body>
 
 <div class="container mt-5">
 
     <h2 class="text-center">
-      Maxbpo Agent Availability Ping
+        MaxBPO Agent Availability Ping
     </h2>
-
 
     <form id="leadForm">
 
@@ -77,16 +73,21 @@
                         type="text"
                         class="form-control"
                         id="user_group"
+                        name="user_group"
                         value="Fronters"
-                        readonly
+                        placeholder="Enter VICIdial User Group"
+                        required
                     >
+
+                    <small class="form-text text-muted">
+                        Example: Fronters
+                    </small>
 
                 </div>
 
             </div>
 
         </div>
-
 
         <button
             type="submit"
@@ -98,144 +99,128 @@
 
     </form>
 
-
     <div id="alertContainer"></div>
 
 </div>
 
 
-<!-- Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
 <script>
 
-/*
-=================================================
-    VICIDIAL AGENT AVAILABILITY API
-=================================================
-*/
+document.getElementById('leadForm').addEventListener(
+    'submit',
+    async function(event) {
 
-document.getElementById('leadForm')
-.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    event.preventDefault();
+        const submitBtn =
+            document.getElementById('submitBtn');
 
+        const alertContainer =
+            document.getElementById('alertContainer');
 
-    const submitBtn =
-        document.getElementById('submitBtn');
-
-    const alertContainer =
-        document.getElementById('alertContainer');
-
-    const userGroup =
-        document.getElementById('user_group').value;
+        const userGroup =
+            document.getElementById('user_group')
+            .value
+            .trim();
 
 
-    // Disable button while checking
+        // Check user group
 
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Checking...';
+        if (!userGroup) {
 
+            alertContainer.innerHTML = `
+                <div class="alert alert-danger">
+                    Please enter a User Group.
+                </div>
+            `;
 
-    // Clear old response
-
-    alertContainer.innerHTML = '';
-
-
-    /*
-    =============================================
-        BUILD VICIDIAL API PARAMETERS
-    =============================================
-    */
-
-    const params = new URLSearchParams();
-
-    params.append(
-        'source',
-        'LeadVendor'
-    );
-
-    params.append(
-        'user',
-        '9060'
-    );
-
-    // Insert your current API password here
-    params.append(
-        'pass',
-        'apiLeadVendorpingstring9060'
-    );
-
-    params.append(
-        'function',
-        'user_group_status'
-    );
-
-    params.append(
-        'user_groups',
-        userGroup
-    );
-
-    params.append(
-        'header',
-        'NO'
-    );
+            return;
+        }
 
 
-    /*
-    =============================================
-        ORIGINAL VICIDIAL API URL
-    =============================================
-    */
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Checking...';
 
-    const originalUrl =
-        'http://12.109.206.74/vicidial/non_agent_api2.php?'
-        + params.toString();
-
-
-    /*
-    =============================================
-        FORMIFY PROXY
-    =============================================
-
-    Your website is HTTPS while VICIdial is HTTP.
-
-    Send the VICIdial request through your
-    existing Formify proxy.
-    */
-
-    const url =
-        'https://api.formifyweb.com/proxify.php?url='
-        + encodeURIComponent(originalUrl);
+        alertContainer.innerHTML = `
+            <div class="alert alert-info">
+                Contacting VICIdial...
+            </div>
+        `;
 
 
-    console.log(
-        'VICIdial Request:',
-        originalUrl
-    );
+        /*
+        ==========================================
+        VICIDIAL PARAMETERS
+        ==========================================
+        */
+
+        const params = new URLSearchParams();
+
+        params.set('source', 'LeadVendor');
+
+        params.set('user', '9060');
+
+        params.set(
+            'pass',
+            'apiLeadVendorpingstring9060'
+        );
+
+        params.set(
+            'function',
+            'user_group_status'
+        );
+
+        params.set(
+            'user_groups',
+            userGroup
+        );
+
+        params.set(
+            'header',
+            'NO'
+        );
 
 
-    /*
-    =============================================
-        SEND REQUEST
-    =============================================
-    */
+        /*
+        ==========================================
+        VICIDIAL URL
+        ==========================================
+        */
 
-    fetch(url, {
+        const vicidialUrl =
+            'http://12.109.206.74/vicidial/non_agent_api2.php?'
+            + params.toString();
 
-        method: 'GET'
 
-    })
+        /*
+        ==========================================
+        FORMIFY PROXY URL
+        ==========================================
+        */
 
-    .then(response => {
+        const proxyUrl =
+            'https://api.formifyweb.com/proxify.php?url='
+            + encodeURIComponent(vicidialUrl);
 
-        return response.text()
-        .then(responseBody => {
+
+        console.log(
+            'Requesting:',
+            vicidialUrl
+        );
+
+
+        try {
+
+            const response =
+                await fetch(proxyUrl, {
+                    method: 'GET',
+                    cache: 'no-store'
+                });
+
+
+            const responseBody =
+                await response.text();
+
 
             console.log(
                 'HTTP Status:',
@@ -243,170 +228,130 @@ document.getElementById('leadForm')
             );
 
             console.log(
-                'VICIdial Response:',
+                'API Response:',
                 responseBody
             );
 
 
             /*
-            =====================================
-                SUCCESS
-            =====================================
+            ======================================
+            HTTP ERROR
+            ======================================
             */
 
-            if (response.ok) {
+            if (!response.ok) {
 
-                const successAlert = `
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
 
-                    <div
-                        class="alert alert-success"
-                        role="alert"
-                    >
-
-                        <strong>
-                            ${response.status}
-                            : Agent Availability Ping Successful
-                        </strong>
-
-                        <br><br>
-
-                        <strong>
-                            User Group:
-                        </strong>
-
-                        ${userGroup}
-
-                        <br><br>
-
-                        <strong>
-                            API Response:
-                        </strong>
-
-                        <br>
-
-                        ${escapeHtml(responseBody)}
-
-                    </div>
-
-                `;
-
-
-                alertContainer.innerHTML =
-                    successAlert;
-
-            }
-
-
-            /*
-            =====================================
-                HTTP ERROR
-            =====================================
-            */
-
-            else {
-
-                const errorAlert = `
-
-                    <div
-                        class="alert alert-danger"
-                        role="alert"
-                    >
-
-                        <strong>
+                        <h5>
                             API Request Failed
+                        </h5>
+
+                        <hr>
+
+                        <strong>
+                            HTTP Status:
                         </strong>
 
-                        <br><br>
-
-                        HTTP Status:
                         ${response.status}
 
                         <br><br>
 
-                        Response:
+                        <strong>
+                            Response:
+                        </strong>
 
-                        <br>
-
-                        ${escapeHtml(responseBody)}
+                        <div id="apiResponse">
+                            ${escapeHtml(responseBody)}
+                        </div>
 
                     </div>
-
                 `;
 
-
-                alertContainer.innerHTML =
-                    errorAlert;
-
+                return;
             }
 
-        });
 
-    })
+            /*
+            ======================================
+            SUCCESS
+            ======================================
+            */
+
+            alertContainer.innerHTML = `
+                <div class="alert alert-success">
+
+                    <h5>
+                        Agent Availability Ping Successful
+                    </h5>
+
+                    <hr>
+
+                    <strong>
+                        User Group:
+                    </strong>
+
+                    ${escapeHtml(userGroup)}
+
+                    <br><br>
+
+                    <strong>
+                        HTTP Status:
+                    </strong>
+
+                    ${response.status}
+
+                    <br><br>
+
+                    <strong>
+                        VICIdial Response:
+                    </strong>
+
+                    <div id="apiResponse">
+                        ${escapeHtml(responseBody)}
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+        catch(error) {
+
+            console.error(
+                'Request Error:',
+                error
+            );
+
+            alertContainer.innerHTML = `
+                <div class="alert alert-danger">
+
+                    <h5>
+                        Connection Error
+                    </h5>
+
+                    <hr>
+
+                    ${escapeHtml(error.message)}
+
+                </div>
+            `;
+
+        }
+
+        finally {
+
+            submitBtn.disabled = false;
+
+            submitBtn.textContent = 'Ping';
+
+        }
+
+    }
+);
 
 
-    /*
-    =============================================
-        CONNECTION ERROR
-    =============================================
-    */
-
-    .catch(error => {
-
-        console.error(
-            'API Error:',
-            error
-        );
-
-
-        const errorAlert = `
-
-            <div
-                class="alert alert-danger"
-                role="alert"
-            >
-
-                <strong>
-                    Connection Error
-                </strong>
-
-                <br><br>
-
-                ${escapeHtml(error.message)}
-
-            </div>
-
-        `;
-
-
-        alertContainer.innerHTML =
-            errorAlert;
-
-    })
-
-
-    /*
-    =============================================
-        ENABLE BUTTON AGAIN
-    =============================================
-    */
-
-    .finally(() => {
-
-        submitBtn.disabled = false;
-
-        submitBtn.innerHTML =
-            'Ping';
-
-    });
-
-});
-
-
-/*
-=================================================
-    ESCAPE API RESPONSE BEFORE DISPLAYING
-=================================================
-*/
 
 function escapeHtml(value) {
 
@@ -414,30 +359,12 @@ function escapeHtml(value) {
         document.createElement('div');
 
     div.textContent =
-        value;
+        String(value);
 
     return div.innerHTML;
-
 }
 
-
-/*
-=================================================
-    DISABLE RIGHT CLICK
-=================================================
-*/
-
-document.addEventListener(
-    'contextmenu',
-    function(event) {
-
-        event.preventDefault();
-
-    }
-);
-
 </script>
-
 
 </body>
 </html>
