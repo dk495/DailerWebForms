@@ -203,17 +203,18 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
   <script>
-    // ================== CONFIG — UPDATED WITH PROVIDED KEY & ENDPOINT ==================
+    // ================== CONFIG ==================
     const API_KEY = 'e83d7e4e6b208b87bfd030aa098460c1cd381cfa881db58b1f9edd52f82048b5';
     const SRC     = 'Test';
     const TEST_MODE = true;
-    const API_ENDPOINT = 'https://sunshineadvance.leadportal.com/new_api/index.php?action=detail&func=pingPostLead&TYPE=49';
+    // API base URL per documentation (gateway URL for Get/Post methods)
+    const API_BASE_URL = 'https://sunshineadvance.leadportal.com/new_api/api.php';
 
-    // Static values — appended in JS only, never shown in the form
+    // Static values (appended in JS only — never shown in the form)
     const STATIC_TCPA_TEXT = "By clicking the submit button, I expressly consent to receive marketing calls and texts (including via automatic telephone dialing system or by artificial/pre-recorded message) and emails on this website and multiple partner companies (including Insurance Supermarket Inc.) or their agents at the telephone number above (even if my number is currently listed on any state, federal, local, or corporate Do Not Call list) including my wireless number, if provided. I understand that consent is not a condition of purchase. Message and data rates may apply.";
     const STATIC_TCPA_OPTIN = "Yes";
     const STATIC_LANDING_PAGE = "https://legacycoveragequotes.com/";
-    // ==================================================================================
+    // ============================================
 
     function formatDOB(dateValue) {
         if (!dateValue) return '';
@@ -227,6 +228,7 @@
         const formData = new FormData();
         formData.append('Mode', 'ping');
         formData.append('Key', API_KEY);
+        formData.append('API_Action', 'pingPostLead');
         formData.append('TYPE', '49');
         formData.append('Return_Best_Price', '1');
         if (TEST_MODE) formData.append('Test_Lead', '1');
@@ -242,9 +244,7 @@
 
         api_tester(document.getElementById('caller_id').value);
 
-        const baseUrl = API_ENDPOINT;
-        const separator = baseUrl.includes('?') ? '&' : '?';
-        const originalUrl = baseUrl + separator + new URLSearchParams(formData).toString();
+        const originalUrl = API_BASE_URL + '?' + new URLSearchParams(formData).toString();
         const apiUrl = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
 
         fetch(apiUrl)
@@ -284,6 +284,7 @@
         const postData = {
             Mode: 'post',
             Key: API_KEY,
+            API_Action: 'pingPostLead',
             TYPE: '49',
             Lead_ID: leadId,
             IP_Address: document.getElementById('ip_address').value,
@@ -305,9 +306,7 @@
             LeadiD_Token: document.getElementById('jornaya_leadid').value
         };
 
-        const baseUrl = API_ENDPOINT;
-        const separator = baseUrl.includes('?') ? '&' : '?';
-        const originalUrl = baseUrl + separator + new URLSearchParams(postData).toString();
+        const originalUrl = API_BASE_URL + '?' + new URLSearchParams(postData).toString();
         const url = 'https://api.formifyweb.com/proxify.php?url=' + encodeURIComponent(originalUrl);
 
         fetch(url)
