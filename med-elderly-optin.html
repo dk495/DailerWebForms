@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MED Elderly · OPTIN Request Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#23392e;
+    --green-soft:#2f5d4a;
+    --cream:#fdf8f1;
+    --peach:#fbeee4;
+    --coral:#c8563c;
+    --line:#dfe7df;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:
+      radial-gradient(720px 460px at 85% 0%, var(--peach) 0%, rgba(251,238,228,0) 62%),
+      radial-gradient(560px 380px at 4% 100%, #f4efe4 0%, rgba(244,239,228,0) 62%),
+      var(--cream);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:32px 16px;
+  }
+
+  .card{
+    width:100%;max-width:560px;
+    background:#fff;
+    border-radius:24px;
+    padding:30px 30px 26px;
+    box-shadow:0 30px 70px -34px rgba(35,57,46,.45), 0 0 0 1px rgba(35,57,46,.05);
+  }
+
+  .head{margin-bottom:22px}
+  .head h1{
+    font-family:'Lora',Georgia,serif;
+    font-size:27px;line-height:1.2;letter-spacing:-.3px;
+    margin:0 0 6px;color:var(--green);font-weight:600;
+  }
+  .head .sub{
+    margin:0;font-size:11px;font-weight:800;letter-spacing:2px;
+    text-transform:uppercase;color:var(--coral);
+  }
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:14px}
+  label.lbl{display:block;font-size:13px;font-weight:800;color:#3c4a40;margin-bottom:7px}
+  .input{
+    width:100%;height:50px;padding:0 14px;
+    border:1px solid var(--line);border-radius:14px;background:#fbfdf9;
+    font-family:inherit;font-size:15px;color:var(--green);
+    transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  select.input{
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232f5d4a' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:40px;
+  }
+  .input::placeholder{color:#a3ab9f}
+  .input:focus{outline:none;background:#fff;border-color:var(--green-soft);box-shadow:0 0 0 4px rgba(47,93,74,.12)}
+  .input:disabled{background:#f1f4ef;color:#9aa298}
+
+  .medicaid{
+    border:1px dashed #d8e2d6;border-radius:16px;background:#f7faf5;
+    padding:13px 14px;display:flex;align-items:center;justify-content:space-between;
+    gap:12px;flex-wrap:wrap;margin:2px 0 18px;
+  }
+  .medicaid .q{font-size:13.5px;font-weight:700;color:#3c4a40}
+  .chips{display:flex;gap:8px}
+  .chip{position:relative}
+  .chip input{position:absolute;opacity:0;pointer-events:none}
+  .chip span{
+    display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border-radius:999px;
+    border:1px solid #dbe4d8;background:#fff;font-size:13px;font-weight:700;color:#5b6a5f;
+    cursor:pointer;transition:all .15s;
+  }
+  .chip span::before{content:"";width:13px;height:13px;border-radius:50%;border:2px solid #c6d3c3;transition:all .15s}
+  .chip input:checked + span{border-color:var(--green-soft);background:#eef4ee;color:var(--green)}
+  .chip input:checked + span::before{border-color:var(--green-soft);background:var(--green-soft);box-shadow:inset 0 0 0 3px #fff}
+  .chip input:focus-visible + span{box-shadow:0 0 0 3px rgba(47,93,74,.18)}
+
+  .btn-submit{
+    width:100%;height:56px;border:0;border-radius:14px;cursor:pointer;
+    background:linear-gradient(180deg,var(--green-soft),var(--green));
+    color:#fff;font-family:inherit;font-size:15.5px;font-weight:800;letter-spacing:.2px;
+    box-shadow:0 16px 30px -16px rgba(35,57,46,.85);
+    transition:transform .15s, box-shadow .15s, filter .15s;
+  }
+  .btn-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 20px 36px -16px rgba(35,57,46,.95)}
+  .btn-submit:disabled{filter:grayscale(.5);opacity:.6;cursor:not-allowed;box-shadow:none}
+
+  .loading{
+    display:none;align-items:center;justify-content:center;gap:10px;
+    margin-top:16px;color:var(--green-soft);font-size:13px;font-weight:700;text-align:center;
+  }
+  .spinner{
+    width:16px;height:16px;border-radius:50%;flex:0 0 auto;
+    border:2.5px solid #d9e6da;border-top-color:var(--green-soft);
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .alert{
+    display:none;margin-top:16px;border-radius:14px;padding:12px 16px;
+    font-size:13.5px;font-weight:700;line-height:1.5;
+  }
+  .alert.success{background:#f2f9f3;color:#215840;border-left:4px solid #3f8f63}
+  .alert.danger{background:#fdf4f1;color:#9c4128;border-left:4px solid #c8563c}
+
+  .results{
+    display:none;margin-top:18px;border-radius:16px;padding:16px 16px 4px;
+    background:#f7faf5;border:1px solid #e0e9de;
+  }
+  .results .title{
+    font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--green-soft);margin-bottom:12px;
+  }
+  .value-block{margin-bottom:12px}
+  .field-label{
+    font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+    color:#8a9389;margin-bottom:5px;
+  }
+  .copy-badge{
+    display:inline-flex;align-items:center;gap:8px;max-width:100%;
+    padding:7px 12px;border-radius:999px;
+    background:#fff;border:1px solid #dbe4d8;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;color:var(--green);cursor:pointer;word-break:break-all;
+    transition:background .15s, border-color .15s;
+  }
+  .copy-badge:hover{background:#f2f8f1;border-color:#bfd3bd}
+  .copy-badge svg{flex:0 0 auto;width:12px;height:12px;stroke:var(--green-soft)}
+
+  @media (max-width:540px){
+    body{padding:18px 12px}
+    .card{padding:24px 20px 22px;border-radius:20px}
+    .row{grid-template-columns:1fr;gap:0}
+    .head h1{font-size:23px}
+  }
+</style>
+</head>
+<body>
+
+<form class="card" id="leadForm" novalidate>
+  <div class="head">
+    <h1>MED Elderly</h1>
+    <p class="sub">OPTIN Request Form</p>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label class="lbl" for="first_name">First Name</label>
+      <input class="input" id="first_name" name="first_name" type="text" placeholder="First Name" autocomplete="given-name" required pattern="[A-Za-z\s'\-]+">
+    </div>
+    <div class="field">
+      <label class="lbl" for="last_name">Last Name</label>
+      <input class="input" id="last_name" name="last_name" type="text" placeholder="Last Name" autocomplete="family-name" required pattern="[A-Za-z\s'\-]+">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label class="lbl" for="phone_number">Phone Number</label>
+      <input class="input" id="phone_number" name="phone_number" type="tel" inputmode="numeric" placeholder="10-digit phone" autocomplete="tel-national" maxlength="10" required pattern="\d{10}">
+    </div>
+    <div class="field">
+      <label class="lbl" for="zipcode">Zip Code</label>
+      <input class="input" id="zipcode" name="zipcode" type="text" inputmode="numeric" placeholder="5-digit ZIP" autocomplete="postal-code" maxlength="5" required pattern="\d{5}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="lbl" for="state">State</label>
+    <select class="input" id="state" name="state" required>
+      <option value="">Select State</option>
+      <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>
+      <option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option>
+      <option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="FL">Florida</option>
+      <option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option>
+      <option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option>
+      <option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option>
+      <option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option>
+      <option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option>
+      <option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option>
+      <option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
+      <option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option>
+      <option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option>
+      <option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option>
+      <option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option>
+      <option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option>
+      <option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option>
+      <option value="WI">Wisconsin</option><option value="WY">Wyoming</option><option value="DC">District of Columbia</option>
+    </select>
+  </div>
+
+  <div class="medicaid">
+    <span class="q">Do you also have Medicaid?</span>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="medicaid" id="medicaid_yes" value="yes"><span>Yes</span></label>
+      <label class="chip"><input type="radio" name="medicaid" id="medicaid_no" value="no" checked><span>No</span></label>
+    </div>
+  </div>
+
+  <button class="btn-submit" id="submitBtn" type="submit">Submit</button>
+
+  <div class="loading" id="loading">
+    <span class="spinner"></span>
+    <span>Submitting request ... may take up to 4 minutes. Please wait.</span>
+  </div>
+
+  <div class="alert" id="alertBox" role="alert"></div>
+
+  <div class="results" id="results">
+    <div class="title">Submission result</div>
+    <div id="resultsList"></div>
+  </div>
+</form>
+
+<script>
+(function () {
+  "use strict";
+
+  var FORM_ENDPOINT = "https://app.formifyweb.com/process_json";
+  var API_KEY = "5a299b54a50d9d910f51a8f38840ee30015c05d28605e712";
+  var CAMPAIGN = "medelderly";
+  var TIMEOUT_MS = 240000;
+
+  var COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+  var form = document.getElementById("leadForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var loading = document.getElementById("loading");
+  var alertBox = document.getElementById("alertBox");
+  var results = document.getElementById("results");
+  var resultsList = document.getElementById("resultsList");
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function showAlert(kind, message) {
+    alertBox.className = "alert " + kind;
+    alertBox.innerHTML = message;
+    alertBox.style.display = "block";
+  }
+
+  function addBadge(label, value, isUrl) {
+    if (value === undefined || value === null || value === "") {
+      return;
+    }
+    var display = isUrl ? String(value).replace(/^https?:\/\//, "") : String(value);
+    if (display.length > 46) {
+      display = display.slice(0, 43) + "…";
+    }
+
+    var block = document.createElement("div");
+    block.className = "value-block";
+
+    var labelEl = document.createElement("div");
+    labelEl.className = "field-label";
+    labelEl.textContent = label;
+    block.appendChild(labelEl);
+
+    var badge = document.createElement("span");
+    badge.className = "copy-badge";
+    badge.setAttribute("data-copy", value);
+
+    var text = document.createElement("span");
+    text.textContent = display;
+    badge.appendChild(text);
+
+    var icon = document.createElement("span");
+    icon.innerHTML = COPY_ICON;
+    badge.appendChild(icon);
+
+    badge.addEventListener("click", function () {
+      if (!navigator.clipboard) {
+        return;
+      }
+      navigator.clipboard.writeText(String(value)).then(function () {
+        var original = badge.innerHTML;
+        badge.innerHTML = "Copied!";
+        setTimeout(function () { badge.innerHTML = original; }, 1200);
+      }).catch(function () {});
+    });
+
+    block.appendChild(badge);
+    resultsList.appendChild(block);
+  }
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    alertBox.style.display = "none";
+    alertBox.innerHTML = "";
+    results.style.display = "none";
+    resultsList.innerHTML = "";
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      showAlert("danger", "Please fill all fields correctly.");
+      return;
+    }
+
+    var medicaid = document.getElementById("medicaid_yes").checked ? "yes" : "no";
+
+    var payload = {
+      first_name: document.getElementById("first_name").value.trim(),
+      last_name: document.getElementById("last_name").value.trim(),
+      phone_number: document.getElementById("phone_number").value.trim(),
+      zipcode: document.getElementById("zipcode").value.trim(),
+      state: document.getElementById("state").value,
+      campaign: CAMPAIGN,
+      medicaid: medicaid
+    };
+
+    var inputs = form.querySelectorAll("input, select, button");
+    inputs.forEach(function (el) { el.disabled = true; });
+    submitBtn.disabled = true;
+    loading.style.display = "flex";
+
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, TIMEOUT_MS);
+
+    try {
+      var response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": API_KEY
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+
+      clearTimeout(timer);
+
+      var body = null;
+      try { body = await response.json(); } catch (e) { body = null; }
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          showAlert("danger", "This form is not allowed to submit from this address.");
+        } else if (response.status === 401) {
+          showAlert("danger", "The server rejected the request (authorization).");
+        } else if (response.status === 400 && body && body.error) {
+          showAlert("danger", escapeHtml(body.error));
+        } else {
+          showAlert("danger", "Submission failed. Server returned error. Please try again.");
+        }
+        return;
+      }
+
+      var data = body || {};
+      if (data.result && typeof data.result === "string") {
+        try { data = JSON.parse(data.result); } catch (e) { /* keep outer object */ }
+      }
+
+      if (data.status === "done" || data.status === "done_with_error") {
+        form.reset();
+        document.getElementById("medicaid_no").checked = true;
+
+        addBadge("Status", data.status);
+        addBadge("IP address", data.ip_address);
+        addBadge("TrustedForm cert", data.trusted_form_cert, true);
+        addBadge("Lead ID token", data.lead_id_token);
+        addBadge("Phone", data.phone);
+        addBadge("Fill time", data.fill_seconds != null ? data.fill_seconds + " s" : null);
+        addBadge("Timestamp", data.timestamp);
+
+        results.style.display = "block";
+        showAlert("success", "✔ Quote request succeeded! Lead submitted.");
+      } else {
+        showAlert("danger", escapeHtml(data.error || data.submit_result || "The request could not be completed."));
+      }
+    } catch (error) {
+      clearTimeout(timer);
+      if (error && error.name === "AbortError") {
+        showAlert("danger", "Request timed out after 4 minutes. The server did not respond in time. Please retry.");
+      } else {
+        showAlert("danger", "Network error or request timeout (>4 minutes). " + escapeHtml(error && error.message ? error.message : error));
+      }
+    } finally {
+      submitBtn.disabled = false;
+      inputs.forEach(function (el) { el.disabled = false; });
+      loading.style.display = "none";
+    }
+  });
+})();
+</script>
+</body>
+</html>
