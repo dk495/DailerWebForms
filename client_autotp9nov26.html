@@ -1,0 +1,141 @@
+<html>
+<head>
+  <title>AUTO TP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body { background-color: #f8f9fa; }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+    }
+    h2 { color: #007bff; margin-bottom: 20px; }
+    .form-control { border-radius: 50px; }
+    .btn-primary { border-radius: 50px; background-color: #007bff; border-color: #007bff; }
+    .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+    .alert { margin-top: 20px; word-break: break-word; }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">AUTO TP</h2>
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="caller_id">Phone (ex: 7123456789)</label>
+            <input type="text" class="form-control" id="caller_id" placeholder="10 digit phone" maxlength="10" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="zip">Zipcode</label>
+            <input type="text" class="form-control" id="zip" placeholder="5 digit zipcode" maxlength="5" required>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Ping/Post</button>
+    </form>
+
+    <div id="alertContainer"></div>
+    <div class="alert alert-info mt-3" role="alert" id="apiResponse"></div>
+  </div>
+
+  <script>
+    // ---- Lead Penguin - check_for_available_buyers_on_auto_ib ----
+    const TRACKDRIVE_NUMBER = '+18888014253';
+    const TRAFFIC_SOURCE_ID = 'P092401';
+    const PING_URL = 'https://the-lead-penguin.trackdrive.com/api/v1/inbound_webhooks/ping/check_for_available_buyers_on_auto_ib';
+    const POST_URL = 'https://the-lead-penguin.trackdrive.com/api/v1/inbound_webhooks/post/check_for_available_buyers_on_auto_ib';
+    const PROXY = 'https://api.formifyweb.com/proxifynew.php?url=';
+    const proxied = url => PROXY + encodeURIComponent(url);
+
+    function showResponse(html, type) {
+      const box = document.getElementById('apiResponse');
+      box.innerHTML = html;
+      box.className = 'alert mt-3 alert-' + type;
+    }
+
+    function getInputs() {
+      const phone = document.getElementById('caller_id').value.replace(/\D/g, '');
+      const zip = document.getElementById('zip').value.trim();
+      if (phone.length !== 10) { showResponse('Phone must be 10 digits.', 'danger'); return null; }
+      if (!/^\d{5}$/.test(zip)) { showResponse('Zipcode must be 5 digits.', 'danger'); return null; }
+      return { phone: '+1' + phone, zip: zip };
+    }
+
+    function pingAPI() {
+      const inp = getInputs();
+      if (!inp) return;
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('alertContainer').innerHTML = '';
+      showResponse('Pinging...', 'info');
+
+      const pingData = {
+        trackdrive_number: TRACKDRIVE_NUMBER,
+        traffic_source_id: TRAFFIC_SOURCE_ID,
+        caller_id: inp.phone,
+        zip: inp.zip
+      };
+
+      fetch(proxied(PING_URL + '?' + new URLSearchParams(pingData).toString()))
+        .then(r => r.json())
+        .then(data => {
+          const pingId = data.try_all_buyers_ping_id || (data.try_all_buyers && data.try_all_buyers.ping_id);
+          if (data.success && pingId) {
+            showResponse('Ping accepted. Ping ID: ' + pingId + ' &mdash; posting...', 'info');
+            postPingId(pingId, inp);
+          } else {
+            showResponse('Ping ok but. Error: ' + ((data.errors || []).join(', ') || JSON.stringify(data)), 'danger');
+            document.getElementById('submitBtn').disabled = false;
+          }
+        })
+        .catch(() => {
+          showResponse('Error fetching data from the API.', 'danger');
+          document.getElementById('submitBtn').disabled = false;
+        });
+    }
+
+    function postPingId(pingId, inp) {
+      const postData = {
+        trackdrive_number: TRACKDRIVE_NUMBER,
+        traffic_source_id: TRAFFIC_SOURCE_ID,
+        caller_id: inp.phone,
+        zip: inp.zip,
+        ping_id: pingId
+      };
+
+      fetch(proxied(POST_URL + '?' + new URLSearchParams(postData).toString()))
+        .then(response => response.text().then(body => ({ status: response.status, body: body })))
+        .then(res => {
+          let extra = '';
+          try {
+            const j = JSON.parse(res.body);
+            if (j.forwarding_number) extra = '<br><strong>Forwarding Number: ' + j.forwarding_number + '</strong>';
+          } catch (e) {}
+          const ok = res.status === 200 || res.status === 201;
+          const cls = ok ? 'success' : 'danger';
+          const msg = ok ? 'Form submitted successfully!' : (res.status === 422 ? 'Error.' : 'Form submission failed. Please try again.');
+          document.getElementById('alertContainer').innerHTML =
+            '<div class="alert alert-' + cls + '" role="alert">' + msg + extra + '<br>Response Body: ' + res.body + '</div>';
+          showResponse('Ping ID: ' + pingId, 'info');
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          showResponse('Error posting to the API.', 'danger');
+        })
+        .finally(() => { document.getElementById('submitBtn').disabled = false; });
+    }
+
+    document.getElementById('leadForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      pingAPI();
+    });
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+  </script>
+</body>
+</html>
