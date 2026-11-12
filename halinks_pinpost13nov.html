@@ -1,0 +1,131 @@
+<html>
+<head>
+  <title>TD pinpost</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body { background-color: #f8f9fa; }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+    }
+    h2 { color: #007bff; margin-bottom: 20px; }
+    .form-control { border-radius: 50px; }
+    .btn-primary { border-radius: 50px; background-color: #007bff; border-color: #007bff; }
+    .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+    .alert { margin-top: 20px; word-break: break-word; }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">TD pinpost</h2>
+    <form id="leadForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="caller_id">Phone (ex: 7123456789)</label>
+            <input type="text" class="form-control" id="caller_id" placeholder="10 digit phone" maxlength="10" required>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Ping/Post</button>
+    </form>
+
+    <div id="alertContainer"></div>
+    <div class="alert alert-info mt-3" role="alert" id="apiResponse"></div>
+  </div>
+
+  <script>
+    // ---- HA Links - check for available agents ----
+    const TRACKDRIVE_NUMBER = '+18779264222';
+    const TRAFFIC_SOURCE_ID = '1001';
+    const PING_URL = 'https://halinks99.trackdrive.com/api/v1/inbound_webhooks/ping/6989bc053192bb23bc0fc14dd626643e';
+    const POST_URL = 'https://halinks99.trackdrive.com/api/v1/inbound_webhooks/post/6989bc053192bb23bc0fc14dd626643e';
+    const PROXY = 'https://api.formifyweb.com/proxifynew.php?url=';
+    const proxied = url => PROXY + encodeURIComponent(url);
+
+    function showResponse(html, type) {
+      const box = document.getElementById('apiResponse');
+      box.innerHTML = html;
+      box.className = 'alert mt-3 alert-' + type;
+    }
+
+    function getInputs() {
+      const phone = document.getElementById('caller_id').value.replace(/\D/g, '');
+      if (phone.length !== 10) { showResponse('Phone must be 10 digits.', 'danger'); return null; }
+      return { phone: '+1' + phone };
+    }
+
+    function pingAPI() {
+      const inp = getInputs();
+      if (!inp) return;
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('alertContainer').innerHTML = '';
+      showResponse('Pinging...', 'info');
+
+      const pingData = {
+        trackdrive_number: TRACKDRIVE_NUMBER,
+        traffic_source_id: TRAFFIC_SOURCE_ID,
+        caller_id: inp.phone
+      };
+
+      fetch(proxied(PING_URL + '?' + new URLSearchParams(pingData).toString()))
+        .then(r => r.json())
+        .then(data => {
+          const pingId = data.try_all_buyers_ping_id || (data.try_all_buyers && data.try_all_buyers.ping_id);
+          if (data.success && pingId) {
+            showResponse('Ping accepted. Ping ID: ' + pingId + ' &mdash; posting...', 'info');
+            postPingId(pingId, inp);
+          } else {
+            showResponse('Ping ok but. Error: ' + ((data.errors || []).join(', ') || JSON.stringify(data)), 'danger');
+            document.getElementById('submitBtn').disabled = false;
+          }
+        })
+        .catch(() => {
+          showResponse('Error fetching data from the API.', 'danger');
+          document.getElementById('submitBtn').disabled = false;
+        });
+    }
+
+    function postPingId(pingId, inp) {
+      const postData = {
+        trackdrive_number: TRACKDRIVE_NUMBER,
+        traffic_source_id: TRAFFIC_SOURCE_ID,
+        caller_id: inp.phone,
+        ping_id: pingId
+      };
+
+      fetch(proxied(POST_URL + '?' + new URLSearchParams(postData).toString()))
+        .then(response => response.text().then(body => ({ status: response.status, body: body })))
+        .then(res => {
+          let extra = '';
+          try {
+            const j = JSON.parse(res.body);
+            if (j.forwarding_number) extra = '<br><strong>Forwarding Number: ' + j.forwarding_number + '</strong>';
+          } catch (e) {}
+          const ok = res.status === 200 || res.status === 201;
+          const cls = ok ? 'success' : 'danger';
+          const msg = ok ? 'Form submitted successfully!' : (res.status === 422 ? 'Error.' : 'Form submission failed. Please try again.');
+          document.getElementById('alertContainer').innerHTML =
+            '<div class="alert alert-' + cls + '" role="alert">' + msg + extra + '<br>Response Body: ' + res.body + '</div>';
+          showResponse('Ping ID: ' + pingId, 'info');
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          showResponse('Error posting to the API.', 'danger');
+        })
+        .finally(() => { document.getElementById('submitBtn').disabled = false; });
+    }
+
+    document.getElementById('leadForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      pingAPI();
+    });
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+  </script>
+</body>
+</html>
